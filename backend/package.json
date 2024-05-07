@@ -1,0 +1,21 @@
+{
+  "name": "jinsook_online_gallery_backend",
+  "version": "1.0.0",
+  "description": "the backend of jinsook online gallery. Developed by Rain Ruan",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "devStart": "nodemon index.js"
+  },
+  "author": "Rain Ruan",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.3.4",
+    "validator": "^13.11.0"
+  }
+}
