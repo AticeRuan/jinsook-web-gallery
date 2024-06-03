@@ -16,6 +16,7 @@ const ArtworkSchema = new Schema(
     dimensions: { type: String },
     imageUrl: { type: String },
     theme: { type: String },
+    featured: { type: Boolean, default: false },
   },
   { timestamps: true },
 )

@@ -3,8 +3,9 @@ const validateCategory = (req, res, next) => {
   const allowedCategories = [
     'paintings',
     'illustrations',
-    'childrensBooks',
+    'childrens-books',
     'handcrafts',
+    'feature',
   ]
 
   if (!allowedCategories.includes(category)) {
