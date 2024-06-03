@@ -84,7 +84,7 @@ const NavBar = () => {
   }
   return (
     <nav
-      className="font-heading font-bold text-[1.5rem] fixed top-0 w-screen  h-[150px] flex items-center justify-center z-50  "
+      className="font-heading font-bold text-[1.5rem] fixed top-0 w-screen md:h-[150px] flex items-center justify-center z-50  "
       style={containerStyle}
     >
       {/* large screen menu */}
@@ -103,7 +103,7 @@ const NavBar = () => {
         </div>
       </div>
       {/* Responsive menu */}
-      {/* hamburger */}
+
       <div className="lg:hidden flex items-center justify-between">
         {/* menu list */}
         {open && (
@@ -126,10 +126,10 @@ const NavBar = () => {
             ))}
           </motion.div>
         )}
-
+        {/* hamburger */}
         <button
           className="w-10 h-8 flex flex-col justify-between z-50 md:hidden 
-          mr-10 fixed top-10 right-2"
+           fixed top-10 right-5"
           onClick={() => setOpen((prev) => !prev)}
         >
           <motion.div

@@ -24,7 +24,7 @@ const Home = () => {
       {/* owner's title section */}
       <div>
         <Heading text="Artistry & Storytelling" />
-        <div className="bg-white rounded-lg flex items-center justify-center md:gap-20 gap-10 flex-col md:flex-row mt-10 p-10">
+        <div className="bg-white rounded-lg flex items-center justify-center md:gap-20 gap-10 flex-col md:flex-row mt-10 px-10 py-28">
           <IntroComponent
             imgUrl={intro01}
             heading="Hand-draw Artworks"
@@ -45,9 +45,9 @@ const Home = () => {
       {/* feature products */}
       <div>
         <Heading text="Featured Artworks" />
-        <div className="bg-white rounded-lg grid grid-cols-2 md:grid-cols-3 mt-10 p-10 gap-8 md:gap-20 ">
+        <div className="bg-white rounded-lg grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-10 p-10 gap-8 md:gap-20 ">
           {featuredArtworks.map((artwork) => (
-            <ProductItem item={artwork} key={artwork._id} />
+            <ProductItem item={artwork} key={artwork._id} forFeatured={true} />
           ))}
         </div>
       </div>
