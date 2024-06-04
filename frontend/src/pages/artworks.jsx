@@ -22,11 +22,10 @@ const Artworks = () => {
   const handcraftsHeader =
     headerArtworks &&
     headerArtworks.filter((artwork) => artwork.category === 'handcrafts')
-  console.log('illustrationsHeader', illustrationsHeader)
 
   if (loading) {
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center justify-center z-10 relative ">
         Loading...
       </div>
     )
@@ -34,14 +33,14 @@ const Artworks = () => {
 
   if (error) {
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center justify-center z-10 relative">
         Error: {error.message}
       </div>
     )
   }
 
   return (
-    <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-5 md:pt-[150px] flex flex-col items-center gap-20">
+    <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-5 md:pt-[150px] flex flex-col items-center gap-20 z-10 relative">
       <div className="text-start w-full mt-10">
         <PageTitle
           heading="Artworks"

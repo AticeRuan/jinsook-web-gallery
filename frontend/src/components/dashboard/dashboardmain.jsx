@@ -5,14 +5,31 @@ import ArtworkForm from './artworkForm'
 import DeleteConfirmation from './deleteConfirmation'
 import useDelete from '../../hooks/useDelete'
 import ChangePasswordForm from '../auth/changePassword'
-const DashboardMain = ({ user, data }) => {
+const DashboardMain = ({
+  user,
+  paintings,
+  illustrations,
+  books,
+  handcrafts,
+  featured,
+  headers,
+  paintingsThemes,
+  illustrationsThemes,
+  booksThemes,
+  handcraftsThemes,
+}) => {
   const [showUpdateModal, setShowUpdateModal] = useState(false)
   const [showCreateModal, setShowCreateModal] = useState(false)
   const [showPasswordUpdate, setShowPasswordUpdate] = useState(false)
   const [selectedItem, setSelectedItem] = useState(null)
   const [showConfirm, setShowConfirm] = useState(false)
+  const [currectData, setCurrentData] = useState(paintings)
+  const [currentThemes, setCurrentThemes] = useState(paintingsThemes)
+  const [activeCategory, setActiveCategory] = useState('paintings')
+
   //   const [deleteItemId, setDeleteItemId] = useState(null)
   const { deleteData, loading: deleteLoading } = useDelete()
+  const isEmpty = currentThemes && currentThemes.length === 0
   const handleCreateClick = () => {
     setShowCreateModal(true)
   }
@@ -52,57 +69,181 @@ const DashboardMain = ({ user, data }) => {
   }
 
   return (
-    <section className="relative w-screen h-fit">
-      <h1>Dashboard</h1>
-      <p>Welcome back {user.username}</p>
-      <Logout />
-      <button onClick={handleChangepasswordClick}>Change password</button>
-      <div className="flex items-center justify-center gap-6 relative flex-col">
-        <button onClick={handleCreateClick}>Create</button>
-        <div className="flex items-center justify-start flex-wrap gap-7 ">
-          {data &&
-            data.map((item) => (
-              <ArtworkItem
-                item={item}
-                key={item._id}
-                user={user}
-                onUpdateClick={handleUpdateClick}
-                onDeleteClick={handleDeleteClick}
-              />
-            ))}
+    <section className="relative lg:w-[80vh] h-[80vh] lg:h-[50vh] md:w-[80%]  z-10 bg-white rounded-2xl lg:m-10 sm:p-10 p-5 overflow-auto flex flex-col gap-5 ">
+      <div className="flex gap-3 md:gap-10 md:items-center flex-col lg:flex-row items-start place-content-center">
+        <p className="text-[1.5rem] font-body text-jinsook-green tracking-widest font-bold ">
+          Welcome back {user.username}!
+        </p>
+        <div className="flex items-center justify-start gap-2 flex-wrap md:gap-5">
+          <Logout />
+          <button
+            onClick={handleChangepasswordClick}
+            className="bg-jinsook-yellow hover:bg-white text-black hover:text-jinsook-yellow font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline transition duration-500 ease-in-out w-[175px] md:w-[220px] h-[35px] md:h-[40px] border-jinsook-yellow hover:border-2 uppercase flex items-center justify-center text-[.8rem] md:text-[1rem] font-heading "
+          >
+            Change password
+          </button>
+          <button
+            onClick={handleCreateClick}
+            className="text-[1.5rem] md:text-[2rem] font-bold rounded-full border-2 border-jinsook-green md:w-[50px] md:h-[50px] w-[35px] h-[35px] flex items-center justify-center text-jinsook-green font-heading hover:bg-jinsook-green hover:text-white transition duration-500 ease-in-out "
+          >
+            +
+          </button>
         </div>
-        {showCreateModal && (
-          <div className="absolute flex  justify-center w-screen h-full backdrop-blur-lg top-0">
+      </div>
+      <div className="flex lg:flex-col lg:gap-10 mt-10 ">
+        <div className="flex items-center justify-start flex-col lg:flex-row gap-16 lg:gap-0">
+          <button
+            className="text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-green hover:text-white transition duration-500 ease-in-out"
+            onClick={() => {
+              setCurrentData(paintings)
+              setCurrentThemes(paintingsThemes)
+              setActiveCategory('paintings')
+            }}
+            style={
+              activeCategory === 'paintings'
+                ? { backgroundColor: '#009379', color: '#fff' }
+                : {}
+            }
+          >
+            Paintings
+          </button>
+          <button
+            className="text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-green hover:text-white transition duration-500 ease-in-out"
+            onClick={() => {
+              setCurrentData(illustrations)
+              setCurrentThemes(illustrationsThemes)
+              setActiveCategory('illustrations')
+            }}
+            style={
+              activeCategory === 'illustrations'
+                ? { backgroundColor: '#009379', color: '#fff' }
+                : {}
+            }
+          >
+            Illustrations
+          </button>
+          <button
+            className="text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-green hover:text-white transition duration-500 ease-in-out"
+            onClick={() => {
+              setCurrentData(books)
+              setCurrentThemes(booksThemes)
+              setActiveCategory('books')
+            }}
+            style={
+              activeCategory === 'books'
+                ? { backgroundColor: '#009379', color: '#fff' }
+                : {}
+            }
+          >
+            Children&apos;s Books
+          </button>
+          <button
+            className="text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-green hover:text-white transition duration-500 ease-in-out"
+            onClick={() => {
+              setCurrentData(handcrafts)
+              setCurrentThemes(handcraftsThemes)
+              setActiveCategory('handcrafts')
+            }}
+            style={
+              activeCategory === 'handcrafts'
+                ? { backgroundColor: '#009379', color: '#fff' }
+                : {}
+            }
+          >
+            Handcrafts
+          </button>
+          <button
+            className="text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-green hover:text-white transition duration-500 ease-in-out"
+            onClick={() => {
+              setCurrentData(featured)
+              setCurrentThemes([])
+              setActiveCategory('featured')
+            }}
+            style={
+              activeCategory === 'featured'
+                ? { backgroundColor: '#009379', color: '#fff' }
+                : {}
+            }
+          >
+            Featured
+          </button>
+          <button
+            className="text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-green hover:text-white transition duration-500 ease-in-out"
+            onClick={() => {
+              setCurrentData(headers)
+              setCurrentThemes([])
+              setActiveCategory('headers')
+            }}
+            style={
+              activeCategory === 'headers'
+                ? { backgroundColor: '#009379', color: '#fff' }
+                : {}
+            }
+          >
+            Header
+          </button>
+        </div>
+        <div className="  w-full overflow-y-auto overflow-x-hidden flex flex-col gap-10">
+          {currentThemes &&
+            currentThemes.length !== 0 &&
+            currentThemes.map((theme) => (
+              <div key={theme} className="flex flex-col gap-8  ">
+                <h1 className="text-[1.2rem] font-bold font-heading pl-4">
+                  {theme}
+                </h1>
+                <div className="grid grid-cols-2 lg:flex flex-wrap gap-1 place-content-start">
+                  {currectData &&
+                    currectData
+                      .filter((artwork) => artwork.theme === theme)
+                      .map((artwork) => (
+                        <ArtworkItem
+                          item={artwork}
+                          key={artwork._id}
+                          user={user}
+                          onUpdateClick={handleUpdateClick}
+                          onDeleteClick={handleDeleteClick}
+                        />
+                      ))}
+                </div>
+              </div>
+            ))}
+          <div className="grid grid-cols-2 lg:flex flex-wrap gap-1 place-content-start">
+            {isEmpty &&
+              currectData &&
+              currectData.map((artwork) => (
+                <ArtworkItem
+                  item={artwork}
+                  key={artwork._id}
+                  user={user}
+                  onUpdateClick={handleUpdateClick}
+                  onDeleteClick={handleDeleteClick}
+                />
+              ))}
+          </div>
+
+          {showCreateModal && (
             <div className="">
-              <span className="cursor-pointer" onClick={handleCloseCreateModal}>
-                &times;
-              </span>
               <ArtworkForm onClose={handleCloseCreateModal} />
             </div>
-          </div>
-        )}
-        {showUpdateModal && selectedItem && (
-          <div className="absolute flex items-center justify-center w-screen h-fit backdrop-blur-lg top-0">
+          )}
+          {showUpdateModal && selectedItem && (
             <div className="">
-              <span className="cursor-pointer" onClick={handleCloseUpdateModal}>
-                &times;
-              </span>
               <ArtworkForm
                 item={selectedItem}
                 onClose={handleCloseUpdateModal}
               />
             </div>
-          </div>
-        )}
-        <DeleteConfirmation
-          show={showConfirm}
-          onConfirm={handleDelete}
-          onCancel={() => setShowConfirm(false)}
-          loading={deleteLoading}
-        />
-        {showPasswordUpdate && (
-          <ChangePasswordForm onClose={handleChangepasswordClose} />
-        )}
+          )}
+          <DeleteConfirmation
+            show={showConfirm}
+            onConfirm={handleDelete}
+            onCancel={() => setShowConfirm(false)}
+            loading={deleteLoading}
+          />
+          {showPasswordUpdate && (
+            <ChangePasswordForm onClose={handleChangepasswordClose} />
+          )}
+        </div>
       </div>
     </section>
   )

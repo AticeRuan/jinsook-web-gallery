@@ -6,20 +6,20 @@ const AllArtworks = () => {
 
   if (loading)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative justify-center">
         Loading...
       </div>
     )
 
   if (error)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative justify-center">
         Error: {error.message}
       </div>
     )
 
   return (
-    <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20">
+    <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative">
       <div className="text-start w-full mt-10">
         <PageTitle
           heading="All Artworks"

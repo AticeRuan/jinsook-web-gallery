@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import useRead from '../hooks/useRead'
 import PageTitle from '../components/ui/pageTitle'
 import Heading from '../components/ui/heading'
@@ -42,29 +42,28 @@ const SingleArtwork = () => {
 
   const { data: allArtwork } = useRead('/api/artworks/')
 
-  const artworkFromSameTheme = allArtwork?.filter(
-    (items) => items.theme === artwork.theme,
-  )
+  const artworkFromSameTheme =
+    !loading && allArtwork?.filter((items) => items.theme === artwork.theme)
 
   console.log(artworkFromSameTheme)
 
   if (loading)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center z-10 relative justify-center">
         Loading...
       </div>
     )
   if (error)
     return (
-      <div className="w-screen xl:w-[1200px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center">
+      <div className="w-screen xl:w-[1200px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center justify-center z-10 relative">
         Error: {error.message}
       </div>
     )
   return (
-    <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center">
+    <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center z-10 relative">
       {/* heading */}
       <div className="mt-10 text-left w-full">
-        <PageTitle heading={trimLastLetter(getCategoryName(category))} />
+        <PageTitle heading={getCategoryName(category)} />
       </div>
       {/* details */}
       <div className="rounded-xl flex bg-white  flex-col p-20 w-[90vw] lg:w-[80vw] md:w-[85vw] xl:w-full gap-12 lg:gap-40">
@@ -104,15 +103,21 @@ const SingleArtwork = () => {
               </span>
               {artwork.dimensions}
             </p>
+            <Link
+              to="/contact"
+              className="rounded-full bg-jinsook-green hover:bg-white hover:border-2 border-jinsook-green transition duration-500 ease-in-out text-white hover:text-jinsook-green uppercase h-[40px] w-[100px] py-2 font-[600] text-[.8rem] px-4 flex items-center justify-center"
+            >
+              Enquiry
+            </Link>
           </div>
         </div>
         {/* related artworks */}
-        <div className="flex flex-col items-start gap-6">
+        <div className="flex flex-col items-start gap-6 w-full">
           <Heading
             text={`From the "${artwork.theme}" Theme`}
             color={getBackgroundColor()}
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 place-content-around w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5  w-full">
             {Array.isArray(artworkFromSameTheme) &&
               artworkFromSameTheme.map((artwork) => (
                 <ProductItem item={artwork} key={artwork._id} />

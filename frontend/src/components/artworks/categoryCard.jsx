@@ -20,7 +20,7 @@ const CategoryCard = ({
             {desc}
           </p>
           <Link to={`/artworks/${category}`}>
-            <button className="rounded-full bg-jinsook-green hover:bg-white hover:border-2 border-jinsook-green transition duration-500 ease-in-out text-white hover:text-jinsook-green uppercase h-[40px] w-fit py-2 font-[600] text-[.8rem] px-4">
+            <button className="rounded-full bg-jinsook-green hover:bg-white hover:border-2 border-jinsook-green transition duration-500 ease-in-out text-white hover:text-jinsook-green uppercase h-[40px] w-fit py-2 font-[600] text-[.8rem] px-4 flex items-center">
               View All {categoryname(category)}
             </button>
           </Link>

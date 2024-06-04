@@ -10,13 +10,13 @@ const Home = () => {
   const { data: artworks, loading, error } = useRead('/api/artworks')
   if (loading)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative justify-center">
         Loading...
       </div>
     )
   if (error)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative justify-center">
         Error: {error.message}
       </div>
     )
@@ -24,7 +24,7 @@ const Home = () => {
     artworks && artworks.filter((artwork) => artwork.featured === true)
 
   return (
-    <section className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20">
+    <section className="max-w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative">
       <div className="mt-20 h-[30vh] flex items-center">
         <PageTitle
           heading="Jinsook Taylor"
@@ -34,10 +34,10 @@ const Home = () => {
       {/* owner's title section */}
       <div>
         <Heading text="Artistry & Storytelling" />
-        <div className="bg-white rounded-lg flex items-center justify-center md:gap-20 gap-10 flex-col md:flex-row mt-10 px-10 py-28">
+        <div className="bg-white rounded-lg flex items-center justify-center md:gap-20 gap-10 flex-col md:flex-row mt-10 px-10 py-28 w-[80vw] md:w-auto">
           <IntroComponent
             imgUrl={intro01}
-            heading="Hand-draw Artworks"
+            heading="Hand-drawn Artworks"
             desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim"
           />
           <IntroComponent
