@@ -26,6 +26,10 @@ app.use(
 app.use('/api/artworks', artworkRoutes)
 app.use('/api/users', userRoutes)
 
+app.get('/', (req, res) => {
+  res.json({ message: 'Hello from Express on Vercel!' })
+})
+
 //connect to mongodb
 mongoose
   .connect(process.env.MONGO_URI)
