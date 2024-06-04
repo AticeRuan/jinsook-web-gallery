@@ -12,9 +12,9 @@ const Home = () => {
   if (error) return <div>Error: {error.message}</div>
   const featuredArtworks =
     artworks && artworks.filter((artwork) => artwork.featured === true)
-  console.log(featuredArtworks)
+
   return (
-    <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center gap-20">
+    <section className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20">
       <div className="mt-20 h-[30vh] flex items-center">
         <PageTitle
           heading="Jinsook Taylor"
@@ -51,7 +51,7 @@ const Home = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   )
 }
 

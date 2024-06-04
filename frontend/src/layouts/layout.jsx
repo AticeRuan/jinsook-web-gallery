@@ -31,7 +31,7 @@ const Layout = () => {
   }
   return (
     <div
-      className={`w-screen h-fit ${getBackgroundColor()} flex justify-center`}
+      className={`w-screen h-fit ${getBackgroundColor()} flex justify-center  `}
     >
       <NavBar />
       <div className="xl:w-[800px] w-full">

@@ -10,15 +10,16 @@ const ArtworkForm = ({ item, onClose }) => {
     category: '',
     price: '',
     imageUrl: '',
-    featured: 'false',
+    featured: false,
     theme: '',
+    header: false,
   })
 
-  const handleRadioChange = (e) => {
-    const value = e.target.value === 'true'
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target
     setFormData((prevData) => ({
       ...prevData,
-      featured: value,
+      [name]: checked,
     }))
   }
 
@@ -44,6 +45,7 @@ const ArtworkForm = ({ item, onClose }) => {
         imageUrl: item.imageUrl || '',
         theme: item.theme,
         featured: item.featured,
+        header: item.header,
       })
     }
   }, [item, isUpdate])
@@ -71,7 +73,11 @@ const ArtworkForm = ({ item, onClose }) => {
       const endpoint = `/api/artworks/${item.category}/${item._id}`
       updateData(endpoint, formData)
     } else {
-      createData(formData)
+      const formDataWithHeader = {
+        ...formData,
+        header: formData.header, // Include header in the formData
+      }
+      createData(formDataWithHeader)
     }
     onClose()
   }
@@ -120,35 +126,31 @@ const ArtworkForm = ({ item, onClose }) => {
             onChange={handleChange}
           />
         </label>
-        {/* radio section */}
+        {/* set feature */}
         <div>
           <p>Featured:</p>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name="featured"
-                value="true"
-                checked={formData.featured === true}
-                onChange={handleRadioChange}
-              />
-              Yes
-            </label>
-          </div>
-          <div>
-            <label>
-              <input
-                type="radio"
-                name="featured"
-                value="false"
-                checked={formData.featured === false}
-                onChange={handleRadioChange}
-              />
-              No
-            </label>
-          </div>
+          <label>
+            <input
+              type="checkbox"
+              name="featured"
+              checked={formData.featured}
+              onChange={handleCheckboxChange}
+            />
+            Featured
+          </label>
         </div>
-
+        {/* set header */}
+        <div>
+          <label>
+            <input
+              type="checkbox"
+              name="header"
+              checked={formData.header}
+              onChange={handleCheckboxChange}
+            />
+            Use for category header
+          </label>
+        </div>
         <input type="file" onChange={handleFileChange} />
         {uploadProgress > 0 && (
           <progress value={uploadProgress} max="100">

@@ -1,4 +1,4 @@
-const Artworks = require('../models/artWorkModel')
+const Artworks = require('../models/artworkModel')
 const mongoose = require('mongoose')
 
 // Get all artworks
@@ -49,6 +49,8 @@ const createArtwork = async (req, res) => {
     theme,
     medium,
     dimensions,
+    featured,
+    header,
   } = req.body
   let emptyFields = []
   //input validation
@@ -77,6 +79,8 @@ const createArtwork = async (req, res) => {
       theme,
       medium,
       dimensions,
+      featured,
+      header,
     })
     res.status(200).json(artwork)
   } catch (error) {

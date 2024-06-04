@@ -9,16 +9,17 @@ const {
   deleteArtwork,
 } = require('../controllers/artworkController')
 const validateCategory = require('../middlewares/validateCategory')
+const ensureSingleHeader = require('../middlewares/ensureSingleHeader')
 const requireAuth = require('../middlewares/requireAuth')
 
 router.get('/', getArtworks)
-router.post('/', requireAuth, createArtwork)
+router.post('/', requireAuth, ensureSingleHeader, createArtwork)
 
 router.use('/:category', validateCategory)
 router.get('/:category', getArtworksByCategory)
 
 router.get('/:category/:id', getOneArtwork)
-router.patch('/:category/:id', requireAuth, updateArtwork)
+router.patch('/:category/:id', requireAuth, ensureSingleHeader, updateArtwork)
 router.delete('/:category/:id', requireAuth, deleteArtwork)
 
 module.exports = router
