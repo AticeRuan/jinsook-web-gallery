@@ -12,12 +12,14 @@ const Dashboard = () => {
   useRead('/api/artworks')
   const { artworks } = useArtworksContext()
 
-  const paintings = artworks?.filter(
-    (artwork) => artwork.category === 'paintings',
-  )
+  const paintings = artworks?.filter((artwork) => {
+    return artwork.category === 'paintings'
+  })
+
   const paintingsThemes = [
     ...new Set(paintings?.map((artwork) => artwork.theme)),
   ]
+
   const illustrations = artworks?.filter(
     (artwork) => artwork.category === 'illustrations',
   )
@@ -94,7 +96,7 @@ const Dashboard = () => {
           className="lg:w-[200px] w-[150px] fixed top-3 left-3 z-10"
         />
       </div>
-      <div className=" flex items-center justify-center flex-col  ">
+      <div className=" flex items-center justify-center flex-col w-[90%] xl:w-[80%] 2xl:w-[1200px]">
         {' '}
         <DashboardMain
           user={user}

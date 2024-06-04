@@ -1,10 +1,11 @@
 import Logout from '../auth/logout'
 import ArtworkItem from './artworkItem'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ArtworkForm from './artworkForm'
 import DeleteConfirmation from './deleteConfirmation'
 import useDelete from '../../hooks/useDelete'
 import ChangePasswordForm from '../auth/changePassword'
+
 const DashboardMain = ({
   user,
   paintings,
@@ -33,6 +34,12 @@ const DashboardMain = ({
   const handleCreateClick = () => {
     setShowCreateModal(true)
   }
+
+  useEffect(() => {
+    if (paintings) {
+      setCurrentData(paintings)
+    }
+  }, [paintings])
 
   const handleCloseCreateModal = () => {
     setShowCreateModal(false)
@@ -69,7 +76,7 @@ const DashboardMain = ({
   }
 
   return (
-    <section className="relative lg:w-[80vh] h-[80vh] lg:h-[50vh] md:w-[80%]  z-10 bg-white rounded-2xl lg:m-10 sm:p-10 p-5 overflow-auto flex flex-col gap-5 ">
+    <section className="relative  h-[80vh] lg:h-[50vh] w-full  z-10 bg-white rounded-2xl lg:m-10 sm:p-10 p-5 overflow-auto flex flex-col gap-5 ">
       <div className="flex gap-3 md:gap-10 md:items-center flex-col lg:flex-row items-start place-content-center">
         <p className="text-[1.5rem] font-body text-jinsook-green tracking-widest font-bold ">
           Welcome back {user.username}!
@@ -90,7 +97,7 @@ const DashboardMain = ({
           </button>
         </div>
       </div>
-      <div className="flex lg:flex-col lg:gap-10 mt-10 ">
+      <div className="flex lg:flex-col lg:gap-10 mt-8 lg:mt-10  ">
         <div className="flex items-center justify-start flex-col lg:flex-row gap-16 lg:gap-0">
           <button
             className="text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-green hover:text-white transition duration-500 ease-in-out"
@@ -183,7 +190,7 @@ const DashboardMain = ({
             Header
           </button>
         </div>
-        <div className="  w-full overflow-y-auto overflow-x-hidden flex flex-col gap-10">
+        <div className=" border-l-2 lg:border-none border-jinsook-green  w-full overflow-y-auto overflow-x-hidden flex flex-col gap-10 -ml-6 lg:ml-0 ">
           {currentThemes &&
             currentThemes.length !== 0 &&
             currentThemes.map((theme) => (
@@ -191,7 +198,7 @@ const DashboardMain = ({
                 <h1 className="text-[1.2rem] font-bold font-heading pl-4">
                   {theme}
                 </h1>
-                <div className="grid grid-cols-2 lg:flex flex-wrap gap-1 place-content-start">
+                <div className="grid grid-cols-2 md:flex flex-wrap gap-1 place-content-start">
                   {currectData &&
                     currectData
                       .filter((artwork) => artwork.theme === theme)
