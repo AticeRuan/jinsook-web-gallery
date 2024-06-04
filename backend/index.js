@@ -10,7 +10,8 @@ const app = express()
 app.use(express.json())
 app.use(
   cors({
-    origin: 'https://jinsook-web-gallery-frontend.vercel.app/',
+    // origin: 'http://localhost:5173',
+    origin: 'https://jinsook-web-gallery-frontend.vercel.app',
     credentials: true,
     methods: ['GET', 'POST', 'HEAD', 'PUT', 'PATCH', 'DELETE'],
   }),
