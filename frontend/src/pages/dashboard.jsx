@@ -37,7 +37,6 @@ const Dashboard = () => {
   const featuredItems = artworks?.filter((artwork) => artwork.featured === true)
   const headers = artworks?.filter((artwork) => artwork.header === true)
 
-  console.log('painting', headers)
   if (!user) {
     return (
       <>
