@@ -17,6 +17,8 @@ const Layout = () => {
       return 'bg-jinsook-pink'
     } else if (path === '/artworks') {
       return 'bg-jinsook-blue'
+    } else if (path === '/dashboard') {
+      return 'bg-jinsook-green'
     } else if (path.startsWith('/artworks/') && category == 'paintings') {
       return 'bg-jinsook-light-pink'
     } else if (path.startsWith('/artworks/') && category == 'childrens-books') {

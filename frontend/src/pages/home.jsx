@@ -8,8 +8,18 @@ import ProductItem from '../components/ui/productItem'
 import useRead from '../hooks/useRead'
 const Home = () => {
   const { data: artworks, loading, error } = useRead('/api/artworks')
-  if (loading) return <div>Loading...</div>
-  if (error) return <div>Error: {error.message}</div>
+  if (loading)
+    return (
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20">
+        Loading...
+      </div>
+    )
+  if (error)
+    return (
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20">
+        Error: {error.message}
+      </div>
+    )
   const featuredArtworks =
     artworks && artworks.filter((artwork) => artwork.featured === true)
 

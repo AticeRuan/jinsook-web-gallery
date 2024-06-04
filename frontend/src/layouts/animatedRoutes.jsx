@@ -9,6 +9,8 @@ import SingleCategory from '../pages/singleCategory'
 import SingleArtwork from '../pages/singleArtwork'
 import Artworks from '../pages/artworks'
 import Layout from './layout'
+import AllArtworks from '../pages/allArtworks'
+import AllArtworksByTheme from '../pages/allArtworksByTheme'
 
 const AnimatedRoutes = () => {
   const location = useLocation()
@@ -23,6 +25,8 @@ const AnimatedRoutes = () => {
           <Route path="/artworks" element={<Artworks />} />
           <Route path="/artworks/:category" element={<SingleCategory />} />
           <Route path="/artworks/:category/:id" element={<SingleArtwork />} />
+          <Route path="/artworks/all" element={<AllArtworks />} />
+          <Route path="/artworks/themes" element={<AllArtworksByTheme />} />
           <Route path="/contact" element={<Contact />} />
         </Route>
       </Routes>

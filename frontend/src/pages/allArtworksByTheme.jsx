@@ -1,36 +1,11 @@
-import { useParams } from 'react-router-dom'
 import PageTitle from '../components/ui/pageTitle'
 import useRead from '../hooks/useRead'
 import Heading from '../components/ui/heading'
 import ProductItem from '../components/ui/productItem'
-const SingleCategory = () => {
-  const { category } = useParams()
-
-  const categoryname = (category) => {
-    if (category === 'childrens-books') return "Children's Books"
-    else return category
-  }
-  const {
-    data: artworks,
-    loading,
-    error,
-  } = useRead(`/api/artworks/${category}`)
+const AllArtworksByTheme = () => {
+  const { data: artworks, loading, error } = useRead(`/api/artworks/`)
 
   const themes = [...new Set(artworks?.map((artwork) => artwork.theme))]
-
-  const getBackgroundColor = () => {
-    if (category == 'paintings') {
-      return '#FDEADF'
-    } else if (category == 'childrens-books') {
-      return '#009379'
-    } else if (category == 'illustrations') {
-      return '#CE88BA'
-    } else if (category == 'handcrafts') {
-      return '#CDE7E3'
-    } else {
-      return '#CDE7E3'
-    }
-  }
 
   if (loading)
     return (
@@ -50,7 +25,7 @@ const SingleCategory = () => {
     <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20">
       <div className="text-start w-full mt-10">
         <PageTitle
-          heading={categoryname(category)}
+          heading="All Themes"
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
         />
       </div>
@@ -58,7 +33,7 @@ const SingleCategory = () => {
         <div className="flex flex-col items-center justify-center gap-10">
           {themes.map((theme) => (
             <div key={theme} className="text-center border-gray-200 py-5 ">
-              <Heading text={theme} color={getBackgroundColor()} />
+              <Heading text={theme} color="#CDE7E3" />
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-10 mt-10">
                 {artworks
                   .filter((artwork) => artwork.theme === theme)
@@ -74,4 +49,4 @@ const SingleCategory = () => {
   )
 }
 
-export default SingleCategory
+export default AllArtworksByTheme

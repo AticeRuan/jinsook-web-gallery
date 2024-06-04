@@ -37,7 +37,7 @@ const About = () => {
         </div>
       </div>
       {/* detail */}
-      <div className="md:w-[800px] px-20 flex flex-col items-center justify-center gap-5">
+      <div className="md:w-[800px] px-20 flex flex-col items-center justify-center gap-5 mb-10">
         <p className="font-heading text-[1.2rem] font-[500]">
           Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, consectetur
           adipiscing elit. Quisque dignissim enim et eros porttitor, vitae
