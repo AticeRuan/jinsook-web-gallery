@@ -1,8 +1,8 @@
 {
   "version": 2,
   "routes": [
-    { "src": "/dashboard", "dest": "/dashboard" },
-    { "src": "/artworks", "dest": "/artworks" },
+    { "src": "/dashboard", "dest": "/" },
+    { "src": "/artworks", "dest": "/" },
     { "src": "/artworks/**/*", "dest": "/artworks/" },
     { "src": "/", "dest": "/" }
   ]
