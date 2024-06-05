@@ -194,7 +194,9 @@ const Layout = () => {
     } else if (path.endsWith('all')) {
       return '-bottom-[40rem] -right-[20vw] w-[70rem] h-[80rem] -rotate-[90deg] '
     } else if (path.startsWith('/artworks/')) {
-      return '-bottom-[20rem] -left-[25rem] w-[60rem] h-[60rem] -rotate-[135deg] '
+      return '-bottom-[30rem] -left-[25rem] w-[60rem] h-[60rem] -rotate-[135deg] '
+    } else {
+      return '-bottom-[20rem] -left-[20rem] rotate-90 xl:w-[42rem] lg:w-[30rem] xl:h-[42rem] lg:h-[30rem]'
     }
   }
 

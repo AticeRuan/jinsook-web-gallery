@@ -198,7 +198,7 @@ const DashboardMain = ({
                 <h1 className="text-[1.2rem] font-bold font-heading pl-4">
                   {theme}
                 </h1>
-                <div className="grid grid-cols-2 md:flex flex-wrap gap-1 place-content-start">
+                <div className="flex sm:grid sm:grid-cols-4 md:flex flex-wrap gap-1 sm:place-content-center md:justify-start justify-between mx-[20%] sm:mx-0">
                   {currectData &&
                     currectData
                       .filter((artwork) => artwork.theme === theme)

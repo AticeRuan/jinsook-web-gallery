@@ -5,9 +5,10 @@ import { useAuthContext } from '../hooks/useAuthContext'
 import useRead from '../hooks/useRead'
 import logo from '../assets/logo_white&transparent.png'
 import logoBlack from '../assets/logo_black&transparent.png'
+import { Link } from 'react-router-dom'
 
 const Dashboard = () => {
-  const { user } = useAuthContext()
+  const { user, isExpired } = useAuthContext()
 
   useRead('/api/artworks')
   const { artworks } = useArtworksContext()
@@ -39,7 +40,7 @@ const Dashboard = () => {
   const featuredItems = artworks?.filter((artwork) => artwork.featured === true)
   const headers = artworks?.filter((artwork) => artwork.header === true)
 
-  if (!user) {
+  if (!user || isExpired) {
     return (
       <>
         {' '}
@@ -58,13 +59,13 @@ const Dashboard = () => {
           />
         </div>
         <div className="w-screen h-screen flex items-center justify-center flex-col bg-jinsook-green  ">
-          <div>
+          <Link to="/">
             <img
               src={logo}
               alt="logo"
               className="lg:w-[200px] w-[150px] fixed top-3 left-3 z-10"
             />
-          </div>
+          </Link>
           <div>
             <Login />
           </div>
@@ -89,13 +90,13 @@ const Dashboard = () => {
           className={`w-[52rem] h-[60rem] rounded-full -translate-y-[10rem] -translate-x-[10rem]  z-[2] fixed  bg-jinsook-green `}
         />
       </div>
-      <div>
+      <Link to="/">
         <img
           src={logoBlack}
           alt="logo"
           className="lg:w-[200px] w-[150px] fixed top-3 left-3 z-10"
         />
-      </div>
+      </Link>
       <div className=" flex items-center justify-center flex-col w-[90%] xl:w-[80%] 2xl:w-[1200px]">
         {' '}
         <DashboardMain

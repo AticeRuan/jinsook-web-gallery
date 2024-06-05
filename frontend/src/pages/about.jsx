@@ -3,9 +3,9 @@ import portrait from '../assets/portrait.jpg'
 
 const About = () => {
   return (
-    <section className="max-w-screen  min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center gap-16 md:gap-28 z-10 relative">
+    <section className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center gap-16 md:gap-28 z-10 relative">
       {/* heading */}
-      <div className="flex items-start justify-start w-full mt-10">
+      <div className="flex items-center  w-full mt-10 ">
         <PageTitle heading="About Jinsook" />
       </div>
       {/* bio */}

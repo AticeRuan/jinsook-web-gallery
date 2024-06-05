@@ -10,7 +10,7 @@ const Footer = () => {
     const path = location.pathname
 
     if (path === '/') {
-      return '#CE88BA'
+      return '#009379'
     } else if (path === '/about') {
       return '#009379'
     } else if (path === '/contact') {
@@ -24,7 +24,7 @@ const Footer = () => {
     } else if (path.startsWith('/artworks/') && category == 'childrens-books') {
       return '#CDE7E3'
     } else if (path.startsWith('/artworks/') && category == 'illustrations') {
-      return '#CDE7E3'
+      return '#009379'
     } else if (path.startsWith('/artworks/') && category == 'handcrafts') {
       return '#CE88BA'
     } else {
