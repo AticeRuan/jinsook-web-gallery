@@ -69,7 +69,7 @@ const SingleArtwork = () => {
       <div className="rounded-xl flex bg-white  flex-col p-20 w-[90vw] lg:w-[80vw] md:w-[85vw] xl:w-full gap-12 lg:gap-40">
         {/* items details */}
         <div className="flex flex-col md:flex-row gap-12 lg:gap-10">
-          <div className="w-full h-1/2 lg:h-full md:w-3/5 lg:w-1/2 rounded-lg overflow-hidden">
+          <div className="w-full h-1/2 md:h-full md:w-3/5 lg:w-1/2 rounded-lg overflow-hidden">
             <img src={artwork.imageUrl} />
           </div>
           <div className="flex flex-col items-start justify-between gap-4">
