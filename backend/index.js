@@ -4,10 +4,12 @@ const artworkRoutes = require('./routes/artworks')
 const userRoutes = require('./routes/user')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const serverless = require('serverless-http')
 
 const app = express()
 
 app.use(express.json())
+
 app.use(
   cors({
     // origin: 'http://localhost:5173',
@@ -40,3 +42,6 @@ mongoose
     })
   })
   .catch((err) => console.log(err))
+
+module.exports = app
+module.exports.handler = serverless(app)

@@ -34,14 +34,14 @@ const SingleCategory = () => {
 
   if (loading)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 justify-center">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 justify-center relative z-10">
         Loading...
       </div>
     )
 
   if (error)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 justify-center">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 justify-center relative z-10">
         Error: {error.message}
       </div>
     )
