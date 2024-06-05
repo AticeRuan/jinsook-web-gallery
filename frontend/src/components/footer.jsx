@@ -41,11 +41,11 @@ const Footer = () => {
           <div className="w-[20px] md:w-[30px]">
             <Facebook color={getForegroundColor()} />
           </div>
-          <div className="h-[20px] md:h-[30px]">
+          <div className="w-[20px] md:w-[30px]">
             <Email color={getForegroundColor()} />
           </div>
         </div>
-        <p className="font-heading text-xs tracking-[0.2rem] font-[500]">
+        <p className="font-heading text-xs tracking-[0.1rem] sm:tracking-[0.2rem] font-[500]">
           © {year} Jinsook Taylor All Right Reserved
         </p>
       </div>

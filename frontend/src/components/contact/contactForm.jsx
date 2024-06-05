@@ -22,7 +22,7 @@ const ContactForm = () => {
   }
 
   return (
-    <div className="w-full  mx-auto ">
+    <div className="w-full  ">
       <form
         onSubmit={handleSubmit}
         className="bg-white  rounded px-8 pt-6 pb-8 mb-4 gap-4 flex flex-col"

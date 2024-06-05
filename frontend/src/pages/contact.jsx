@@ -3,12 +3,12 @@ import PageTitle from '../components/ui/pageTitle'
 
 const Contact = () => {
   return (
-    <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-5 md:pt-[150px] flex flex-col items-center gap-28 z-10 relative">
+    <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center gap-28 z-10 relative">
       {/* heading */}
       <div className="text-start w-full mt-10">
         <PageTitle heading="Contact Jinsook " />
       </div>
-      <div className="flex flex-col lg:flex-row w-full px-20 items-start gap-10 xl:px-5  ">
+      <div className="flex flex-col lg:flex-row w-full px-5 md:px-20 items-start gap-10 xl:px-5  ">
         {/* blurb */}
         <div className="flex flex-col gap-12 md:gap-20 items-start justify-center lg:w-1/2 lg:pr-10 ">
           <p className="font-heading font-[700] text-[2rem]">

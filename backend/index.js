@@ -41,4 +41,3 @@ mongoose
 
 module.exports = app
 module.exports.handler = serverless(app)
-cd

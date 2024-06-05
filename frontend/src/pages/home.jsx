@@ -25,7 +25,7 @@ const Home = () => {
     artworks && artworks.filter((artwork) => artwork.featured === true)
 
   return (
-    <section className="max-w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative">
+    <section className="max-w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative">
       <div className="mt-20 h-[30vh] flex items-center">
         <PageTitle
           heading="Jinsook Taylor"
@@ -56,7 +56,7 @@ const Home = () => {
       {/* feature products */}
       <div>
         <Heading text="Featured Artworks" />
-        <div className="bg-white rounded-lg grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-10 p-10 gap-8 md:gap-20 ">
+        <div className="bg-white rounded-lg grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-10 p-28 sm:p-20 md:p-10 gap-8 md:gap-20 ">
           {featuredArtworks.map((artwork) => (
             <ProductItem item={artwork} key={artwork._id} forFeatured={true} />
           ))}

@@ -50,7 +50,7 @@ const SingleArtwork = () => {
 
   if (loading)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center z-10 relative justify-center">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center z-10 relative justify-center">
         <Loader />
       </div>
     )
