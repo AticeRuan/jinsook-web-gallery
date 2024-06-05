@@ -29,7 +29,7 @@ app.use('/api/artworks', artworkRoutes)
 app.use('/api/users', userRoutes)
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Hello from Express on Vercel!' })
+  res.json({ message: 'Hello from Jinsook Gallery on Vercel!' })
 })
 
 //connect to mongodb
