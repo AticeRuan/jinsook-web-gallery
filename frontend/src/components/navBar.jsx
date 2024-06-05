@@ -229,7 +229,9 @@ const NavBar = () => {
                 </div>
               </Link>
               {link.sublinks && hoveredLink === index && (
-                <div className="absolute flex flex-col items-start backdrop-blur-lg p-5 rounded-b-xl rounded-tr-xl gap-2 w-[210px] ">
+                <div
+                  className={`absolute flex flex-col items-start backdrop-blur-lg p-5 rounded-b-xl rounded-tr-xl gap-2 w-[210px] ${getBackgroundColor()} shadow-xl`}
+                >
                   {link.sublinks.map((sublink, subIndex) => (
                     <Link
                       to={sublink.url}
