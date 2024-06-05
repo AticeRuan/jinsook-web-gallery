@@ -6,12 +6,13 @@ import intro03 from '../assets/intro-03.png'
 import IntroComponent from '../components/home/introComponent'
 import ProductItem from '../components/ui/productItem'
 import useRead from '../hooks/useRead'
+import Loader from '../components/ui/loader'
 const Home = () => {
   const { data: artworks, loading, error } = useRead('/api/artworks')
   if (loading)
     return (
       <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative justify-center">
-        Loading...
+        <Loader />
       </div>
     )
   if (error)

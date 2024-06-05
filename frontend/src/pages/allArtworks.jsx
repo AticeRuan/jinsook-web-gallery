@@ -1,13 +1,14 @@
 import PageTitle from '../components/ui/pageTitle'
 import useRead from '../hooks/useRead'
 import ProductItem from '../components/ui/productItem'
+import Loader from '../components/ui/loader'
 const AllArtworks = () => {
   const { data: artworks, loading, error } = useRead(`/api/artworks/`)
 
   if (loading)
     return (
       <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative justify-center">
-        Loading...
+        <Loader />
       </div>
     )
 

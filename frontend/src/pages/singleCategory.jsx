@@ -3,6 +3,7 @@ import PageTitle from '../components/ui/pageTitle'
 import useRead from '../hooks/useRead'
 import Heading from '../components/ui/heading'
 import ProductItem from '../components/ui/productItem'
+import Loader from '../components/ui/loader'
 const SingleCategory = () => {
   const { category } = useParams()
 
@@ -35,7 +36,7 @@ const SingleCategory = () => {
   if (loading)
     return (
       <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 justify-center relative z-10">
-        Loading...
+        <Loader />
       </div>
     )
 

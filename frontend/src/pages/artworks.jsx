@@ -1,5 +1,6 @@
 import CategoryCard from '../components/artworks/categoryCard'
 import Heading from '../components/ui/heading'
+import Loader from '../components/ui/loader'
 import PageTitle from '../components/ui/pageTitle'
 import useRead from '../hooks/useRead'
 const Artworks = () => {
@@ -26,7 +27,7 @@ const Artworks = () => {
   if (loading) {
     return (
       <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center justify-center z-10 relative ">
-        Loading...
+        <Loader />
       </div>
     )
   }

@@ -3,6 +3,7 @@ import useRead from '../hooks/useRead'
 import PageTitle from '../components/ui/pageTitle'
 import Heading from '../components/ui/heading'
 import ProductItem from '../components/ui/productItem'
+import Loader from '../components/ui/loader'
 const SingleArtwork = () => {
   const { category, id } = useParams()
   const getBackgroundColor = () => {
@@ -50,7 +51,7 @@ const SingleArtwork = () => {
   if (loading)
     return (
       <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center z-10 relative justify-center">
-        Loading...
+        <Loader />
       </div>
     )
   if (error)
