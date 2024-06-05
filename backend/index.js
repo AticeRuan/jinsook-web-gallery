@@ -1,7 +1,7 @@
 require('dotenv').config()
 const express = require('express')
-const artworkRoutes = require('../routes/artworks')
-const userRoutes = require('../routes/user')
+const artworkRoutes = require('./routes/artworks')
+const userRoutes = require('./routes/user')
 const mongoose = require('mongoose')
 const cors = require('cors')
 
