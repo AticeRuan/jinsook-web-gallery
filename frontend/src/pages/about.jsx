@@ -26,7 +26,7 @@ const About = () => {
           {/* bio blurb */}
           <div className="flex flex-col items-start justify-center w-[300px] md:w-auto text-justify">
             <p className="font-heading font-bold text-[1.2rem]">Bio</p>
-            <p className="font-body font-[500]">
+            <p className="font-body font-[500] text-sm md:text-[1rem]">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
               commodo varius dignissim. Nulla maximus sed est sed molestie.
               Curabitur nec neque volutpat, eleifend neque ut, dignissim orci.
@@ -37,12 +37,12 @@ const About = () => {
         </div>
       </div>
       {/* detail */}
-      <div className="md:w-[800px] px-20 flex flex-col items-center justify-center gap-5 mb-10">
-        <p className="font-heading text-[1.2rem] font-[500]">
-          Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, consectetur
-          adipiscing elit. Quisque dignissim enim et eros porttitor, vitae
-          elementum arcu placerat. Nunc porttitor urna scelerisque risus
-          fermentum pharetra.onsectetur adipiscing elit.{' '}
+      <div className="md:w-[800px] px-12 md:px-20 flex flex-col items-center justify-center gap-5 mb-10 text-sm md:text-[1rem]">
+        <p className="font-heading font-[500]">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+          dignissim enim et eros porttitor, vitae elementum arcu placerat. Nunc
+          porttitor urna scelerisque risus fermentum pharetra.onsectetur
+          adipiscing elit.{' '}
         </p>
         <div className="flex flex-col gap-3 items-start w-full">
           <p className="text-white font-body font-[500] bg-jinsook-green w-full">

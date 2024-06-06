@@ -70,63 +70,17 @@ const Layout = () => {
       return 'bg-jinsook-light-pink'
     }
   }
-  // const getCircleOnePosition = (path) => {
-  //   if (path === '/') {
-  //     return {
-  //       x: '-20rem',
-  //       y: '-20rem',
-  //       rotate: '-45deg',
-  //       backgroundColor: '#CE88BA',
-  //     }
-  //   } else if (path === '/about') {
-  //     return {
-  //       x: '-30rem',
-  //       y: '0',
-  //       rotate: '-45deg',
-  //       backgroundColor: '#009379',
-  //     }
-  //   } else if (path === '/artworks') {
-  //     return {
-  //       x: '-20rem',
-  //       y: '-20rem',
-  //       rotate: '-45deg',
-  //       backgroundColor: '#fff',
-  //     }
-  //   } else
-  //     return {
-  //       x: '-20rem',
-  //       y: '-20rem',
-  //       rotate: '-45deg',
-  //       backgroundColor: '#CE88BA',
-  //     }
-  // }
 
-  // const previous = getCircleOnePosition(previousPath)
-  // const current = getCircleOnePosition(currentPath)
-
-  // const circleOneVariants = {
-  //   previous: {
-  //     x: previous.x,
-  //     y: previous.y,
-  //     rotate: previous.rotate,
-  //   },
-  //   current: {
-  //     x: current.x,
-  //     y: current.y,
-  //     rotate: current.rotate,
-  //   },
-  // }
-  console.log(location.pathname.endsWith(id))
   const getCircleOnePosition = () => {
     const path = location.pathname
     if (path === '/') {
-      return '-top-[20rem] -right-0 rotate-45 w-[42rem] h-[36rem] '
+      return '-top-[20rem] -right-0 rotate-45 w-[25rem] h-[25rem] md:w-[42rem] md:h-[36rem] '
     } else if (path === '/artworks') {
-      return 'top-50 -left-[20rem] rotate-75 w-[42rem] h-[36rem] '
+      return '-top-7 -left-[10rem] md:-left-[20rem] rotate-75 w-[25rem] h-[25rem] md:w-[42rem] md:h-[36rem]'
     } else if (path === '/about') {
       return '-bottom-[30rem] -right-[35rem] md:w-[70rem] md:h-[85rem] w-[30rem] h-[45rem] '
     } else if (path === '/contact') {
-      return '-bottom-[5rem] -left-[10rem] rotate-90 w-[42rem] h-[36rem] '
+      return '-bottom-[10rem] md:-bottom-[5rem] md:-left-[10rem] rotate-90  w-[25rem] h-[25rem] md:w-[42rem] md:h-[36rem] '
     } else if (path === '/artworks/themes') {
       return '-top-[5rem] -left-[10rem] rotate-90 w-[42rem] h-[36rem] '
     } else if (path.endsWith(id)) {
@@ -140,13 +94,13 @@ const Layout = () => {
   const getCircleTwoPosition = () => {
     const path = location.pathname
     if (path === '/') {
-      return '-top-30 -right-80 w-[42rem] h-[36rem]'
+      return '-top-30 -right-80  w-[30rem] h-[25rem] md:w-[42rem] md:h-[36rem]'
     } else if (path === '/artworks') {
-      return 'top-[10rem] left-[0rem] rotate-75 w-[42rem] h-[36rem]'
+      return 'top-[1rem] md:top-[5rem] left-[0rem] rotate-75 w-[25rem] h-[25rem] md:w-[42rem] md:h-[36rem]'
     } else if (path === '/about') {
       return '-bottom-[20rem] -right-[0rem] w-[30rem] h-[45rem]  lg:w-[70rem] lg:h-[85rem]'
     } else if (path === '/contact') {
-      return '-bottom-[20rem] left-[3rem] w-[42rem] h-[36rem]'
+      return '-bottom-[20rem] left-[10rem] md:-bottom-[20rem] md:left-[3rem] w-[42rem] h-[36rem]'
     } else if (path === '/artworks/themes') {
       return '-top-[10rem] left-[10rem] w-[42rem] h-[36rem]'
     } else if (path.endsWith(id)) {
@@ -160,9 +114,9 @@ const Layout = () => {
   const getCircleThreePosition = () => {
     const path = location.pathname
     if (path === '/') {
-      return '-top-10 -right-20 rotate-90'
+      return '-top-10 -right-20 rotate-90  w-[20rem] h-[25rem] md:w-[42rem] md:h-[36rem]'
     } else if (path === '/artworks') {
-      return '-top-60 left-[10rem] rotate-75'
+      return '-top-[20rem] md:-top-60 left-[3rem] md:left-[10rem] rotate-75  w-[42rem] h-[36rem]'
     } else if (path === '/about') {
       return 'hidden'
     } else if (path === '/contact') {
@@ -212,7 +166,7 @@ const Layout = () => {
         className={` rounded-full z-[1] fixed ${getCircleColor()}  ${getCircleTwoPosition()} `}
       />
       <span
-        className={`w-[42rem] h-[40rem] rounded-full z-[1] fixed ${getCircleColor()}  ${getCircleThreePosition()} `}
+        className={` rounded-full z-[1] fixed ${getCircleColor()}  ${getCircleThreePosition()} `}
       />
       <span
         className={` rounded-full   z-[2] fixed   ${getCircleColor()} ${getCircleFourPosition()}`}
