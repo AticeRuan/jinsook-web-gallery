@@ -1,10 +1,12 @@
 import { useState } from 'react'
+import useCreate from '../../hooks/useCreate'
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    message: '',
+    msg: '',
+    unread: true,
   })
 
   const handleChange = (e) => {
@@ -71,7 +73,7 @@ const ContactForm = () => {
           <textarea
             id="message"
             name="message"
-            value={formData.message}
+            value={formData.msg}
             onChange={handleChange}
             className=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="What can I help you with?"

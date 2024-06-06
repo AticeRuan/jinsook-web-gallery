@@ -7,8 +7,10 @@ import IntroComponent from '../components/home/introComponent'
 import ProductItem from '../components/ui/productItem'
 import useRead from '../hooks/useRead'
 import Loader from '../components/ui/loader'
+import { useArtworksContext } from '../hooks/useArtworksContext'
 const Home = () => {
-  const { data: artworks, loading, error } = useRead('/api/artworks')
+  const { loading, error } = useRead('/api/artworks')
+  const { artworks } = useArtworksContext()
   if (loading)
     return (
       <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] flex items-center z-10 relative justify-center">

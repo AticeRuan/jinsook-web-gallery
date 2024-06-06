@@ -1,7 +1,6 @@
 import { Outlet, useLocation, useParams } from 'react-router-dom'
 import NavBar from '../components/navBar'
 import Footer from '../components/footer'
-// import usePreviousPath from '../hooks/usePreviousPath'
 
 const Layout = () => {
   const location = useLocation()
