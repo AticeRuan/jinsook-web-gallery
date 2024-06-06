@@ -111,19 +111,19 @@ const ArtworkForm = ({ item, onClose }) => {
   const error = isUpdate ? updateError : createError
 
   return (
-    <div className="fixed top-0 left-0 flex w-screen h-screen items-start md:items-center justify-center backdrop-contrast-[0.25] mt-10 md:mt-0 overflow-auto ">
-      <div className="flex flex-col gap-10 bg-jinsook-blue p-10 rounded-xl items-center w-[90%] ">
+    <div className="fixed top-0 left-0 flex  w-screen h-screen items-start md:items-center justify-center backdrop-contrast-[0.25] pt-10 md:mt-0 overflow-y-auto ">
+      <div className="flex flex-col gap-10 bg-jinsook-blue p-10 rounded-xl items-center w-[90%] 2xl:w-[50%] ">
         <Heading
           text={isUpdate ? 'Update Artwork' : 'Create Artwork'}
           color="#009379"
         />
 
-        <div className="flex flex-col lg:flex-row gap-10">
+        <div className="flex flex-col lg:flex-row gap-10 items-start justify-start">
           {formData.imageUrl ? (
             <img
               src={formData.imageUrl}
               alt="Preview"
-              className="h-[300px] object-cover rounded-xl"
+              className="w-[300px] object-contain rounded-xl"
             />
           ) : (
             <div className="bg-white w-[200px] h-[300px] rounded-lg" />

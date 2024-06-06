@@ -35,20 +35,20 @@ const SingleCategory = () => {
 
   if (loading)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center gap-20 justify-center relative z-10">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)]  flex  items-centerjustify-center relative z-10">
         <Loader />
       </div>
     )
 
   if (error)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 justify-center relative z-10">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)]  flex items-center justify-center relative z-10">
         Error: {error.message}
       </div>
     )
 
   return (
-    <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative">
+    <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative">
       <div className="text-start w-full mt-10">
         <PageTitle
           heading={categoryname(category)}
@@ -56,7 +56,7 @@ const SingleCategory = () => {
         />
       </div>
       <div className="rounded-xl bg-white h-fit  p-10 ">
-        <div className="flex flex-col items-center justify-center gap-10">
+        <div className="flex flex-col items-center justify-center gap-10 mt-10 p-16 w-auto md:p-10">
           {themes.map((theme) => (
             <div key={theme} className="text-center border-gray-200 py-5 ">
               <Heading text={theme} color={getBackgroundColor()} />

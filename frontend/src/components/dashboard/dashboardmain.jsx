@@ -76,7 +76,7 @@ const DashboardMain = ({
   }
 
   return (
-    <section className="relative  h-[80vh] lg:h-[50vh] w-full  z-10 bg-white rounded-2xl lg:m-10 sm:p-10 p-5 overflow-auto flex flex-col gap-5 ">
+    <section className="relative  h-fit lg:h-[60vh] w-full  z-10 bg-white rounded-2xl lg:m-10 sm:p-10 p-5flex flex-col gap-5 overflow-y-auto ">
       <div className="flex gap-3 md:gap-10 md:items-center flex-col lg:flex-row items-start place-content-center">
         <p className="text-[1.5rem] font-body text-jinsook-green tracking-widest font-bold ">
           Welcome back {user.username}!
@@ -97,10 +97,10 @@ const DashboardMain = ({
           </button>
         </div>
       </div>
-      <div className="flex lg:flex-col lg:gap-10 mt-8 lg:mt-10  ">
+      <div className="flex lg:flex-col lg:gap-10 mt-8 lg:mt-10  overflow-y-auto  ">
         <div className="flex items-center justify-start flex-col lg:flex-row gap-16 lg:gap-0">
           <button
-            className="text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-green hover:text-white transition duration-500 ease-in-out"
+            className="hover:text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-blue bg-jinsook-green text-white transition duration-500 ease-in-out"
             onClick={() => {
               setCurrentData(paintings)
               setCurrentThemes(paintingsThemes)
@@ -108,14 +108,14 @@ const DashboardMain = ({
             }}
             style={
               activeCategory === 'paintings'
-                ? { backgroundColor: '#009379', color: '#fff' }
+                ? { backgroundColor: '#fff', color: '#009379' }
                 : {}
             }
           >
             Paintings
           </button>
           <button
-            className="text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-green hover:text-white transition duration-500 ease-in-out"
+            className="hover:text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-blue bg-jinsook-green text-white transition duration-500 ease-in-out"
             onClick={() => {
               setCurrentData(illustrations)
               setCurrentThemes(illustrationsThemes)
@@ -123,14 +123,14 @@ const DashboardMain = ({
             }}
             style={
               activeCategory === 'illustrations'
-                ? { backgroundColor: '#009379', color: '#fff' }
+                ? { backgroundColor: '#fff', color: '#009379' }
                 : {}
             }
           >
             Illustrations
           </button>
           <button
-            className="text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-green hover:text-white transition duration-500 ease-in-out"
+            className="hover:text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-blue bg-jinsook-green text-white transition duration-500 ease-in-out"
             onClick={() => {
               setCurrentData(books)
               setCurrentThemes(booksThemes)
@@ -138,14 +138,14 @@ const DashboardMain = ({
             }}
             style={
               activeCategory === 'books'
-                ? { backgroundColor: '#009379', color: '#fff' }
+                ? { backgroundColor: '#fff', color: '#009379' }
                 : {}
             }
           >
             Children&apos;s Books
           </button>
           <button
-            className="text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-green hover:text-white transition duration-500 ease-in-out"
+            className="hover:text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-blue bg-jinsook-green text-white transition duration-500 ease-in-out"
             onClick={() => {
               setCurrentData(handcrafts)
               setCurrentThemes(handcraftsThemes)
@@ -153,14 +153,14 @@ const DashboardMain = ({
             }}
             style={
               activeCategory === 'handcrafts'
-                ? { backgroundColor: '#009379', color: '#fff' }
+                ? { backgroundColor: '#fff', color: '#009379' }
                 : {}
             }
           >
             Handcrafts
           </button>
           <button
-            className="text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-green hover:text-white transition duration-500 ease-in-out"
+            className="hover:text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-blue bg-jinsook-green text-white transition duration-500 ease-in-out"
             onClick={() => {
               setCurrentData(featured)
               setCurrentThemes([])
@@ -168,14 +168,14 @@ const DashboardMain = ({
             }}
             style={
               activeCategory === 'featured'
-                ? { backgroundColor: '#009379', color: '#fff' }
+                ? { backgroundColor: '#fff', color: '#009379' }
                 : {}
             }
           >
             Featured
           </button>
           <button
-            className="text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-green hover:text-white transition duration-500 ease-in-out"
+            className="hover:text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-blue bg-jinsook-green text-white transition duration-500 ease-in-out"
             onClick={() => {
               setCurrentData(headers)
               setCurrentThemes([])
@@ -183,7 +183,7 @@ const DashboardMain = ({
             }}
             style={
               activeCategory === 'headers'
-                ? { backgroundColor: '#009379', color: '#fff' }
+                ? { backgroundColor: '#fff', color: '#009379' }
                 : {}
             }
           >
@@ -198,7 +198,7 @@ const DashboardMain = ({
                 <h1 className="text-[1.2rem] font-bold font-heading pl-4">
                   {theme}
                 </h1>
-                <div className="flex sm:grid sm:grid-cols-4 md:flex flex-wrap gap-1 sm:place-content-center md:justify-start justify-between mx-[20%] sm:mx-0">
+                <div className="flex sm:grid sm:grid-cols-4 md:flex flex-wrap gap-1 sm:justify-items-center md:justify-start justify-between mx-[20%] sm:mx-0">
                   {currectData &&
                     currectData
                       .filter((artwork) => artwork.theme === theme)
@@ -227,30 +227,26 @@ const DashboardMain = ({
                 />
               ))}
           </div>
-
-          {showCreateModal && (
-            <div className="">
-              <ArtworkForm onClose={handleCloseCreateModal} />
-            </div>
-          )}
-          {showUpdateModal && selectedItem && (
-            <div className="">
-              <ArtworkForm
-                item={selectedItem}
-                onClose={handleCloseUpdateModal}
-              />
-            </div>
-          )}
-          <DeleteConfirmation
-            show={showConfirm}
-            onConfirm={handleDelete}
-            onCancel={() => setShowConfirm(false)}
-            loading={deleteLoading}
-          />
-          {showPasswordUpdate && (
-            <ChangePasswordForm onClose={handleChangepasswordClose} />
-          )}
-        </div>
+        </div>{' '}
+        {showCreateModal && (
+          <div className="">
+            <ArtworkForm onClose={handleCloseCreateModal} />
+          </div>
+        )}
+        {showUpdateModal && selectedItem && (
+          <div className="">
+            <ArtworkForm item={selectedItem} onClose={handleCloseUpdateModal} />
+          </div>
+        )}
+        <DeleteConfirmation
+          show={showConfirm}
+          onConfirm={handleDelete}
+          onCancel={() => setShowConfirm(false)}
+          loading={deleteLoading}
+        />
+        {showPasswordUpdate && (
+          <ChangePasswordForm onClose={handleChangepasswordClose} />
+        )}
       </div>
     </section>
   )

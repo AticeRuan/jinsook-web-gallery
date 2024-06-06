@@ -74,7 +74,7 @@ const Dashboard = () => {
     )
   }
   return (
-    <div className="overflow-hidden w-screen h-screen  bg-jinsook-blue flex items-center justify-center">
+    <div className="overflow-hidden w-screen h-screen  bg-jinsook-blue flex items-center justify-center relative">
       {' '}
       <div className="fixed z-[1] top-[10vh] left-[1vw] lg:left-[5vw] xl:left-[20vw] ">
         <span

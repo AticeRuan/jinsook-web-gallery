@@ -82,7 +82,7 @@ const NavBar = () => {
     } else if (path.startsWith('/artworks/') && category == 'illustrations') {
       return 'bg-jinsook-dark-pink'
     } else if (path.startsWith('/artworks/') && category == 'handcrafts') {
-      return 'bg-jinsook-blue'
+      return 'bg-jinsook-pink'
     } else {
       return 'bg-jinsook-blue'
     }

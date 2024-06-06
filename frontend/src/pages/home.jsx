@@ -11,13 +11,13 @@ const Home = () => {
   const { data: artworks, loading, error } = useRead('/api/artworks')
   if (loading)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative justify-center">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] flex items-center z-10 relative justify-center">
         <Loader />
       </div>
     )
   if (error)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[5px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative justify-center">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] flex items-center z-10 relative justify-center">
         Error: {error.message}
       </div>
     )
@@ -33,7 +33,7 @@ const Home = () => {
         />
       </div>
       {/* owner's title section */}
-      <div>
+      <div className="mt-20">
         <Heading text="Artistry & Storytelling" />
         <div className="bg-white rounded-lg flex items-center justify-center md:gap-20 gap-10 flex-col md:flex-row mt-10 px-10 py-28 w-[80vw] md:w-auto">
           <IntroComponent
@@ -56,7 +56,7 @@ const Home = () => {
       {/* feature products */}
       <div>
         <Heading text="Featured Artworks" />
-        <div className="bg-white rounded-lg grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-10 p-28 sm:p-20 md:p-10 gap-8 md:gap-20 ">
+        <div className="bg-white rounded-lg grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-10 p-16 sm:p-20 w-auto md:p-10 gap-8 md:gap-20 place-content-center">
           {featuredArtworks.map((artwork) => (
             <ProductItem item={artwork} key={artwork._id} forFeatured={true} />
           ))}

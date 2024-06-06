@@ -1,12 +1,14 @@
 import { useAuthContext } from '../../hooks/useAuthContext'
 import { useLogout } from '../../hooks/useLogout'
+import { useNavigate } from 'react-router-dom'
 
 const Logout = () => {
   const { user } = useAuthContext()
   const { logout } = useLogout()
-
+  const navigate = useNavigate()
   const handleClick = () => {
     logout()
+    navigate(0, { replace: true })
   }
 
   return (

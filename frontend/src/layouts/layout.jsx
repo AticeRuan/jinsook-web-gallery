@@ -124,13 +124,13 @@ const Layout = () => {
     } else if (path === '/artworks') {
       return 'top-50 -left-[20rem] rotate-75 w-[42rem] h-[36rem] '
     } else if (path === '/about') {
-      return '-bottom-[30rem] -right-[35rem] w-[70rem] h-[85rem] '
+      return '-bottom-[30rem] -right-[35rem] md:w-[70rem] md:h-[85rem] w-[30rem] h-[45rem] '
     } else if (path === '/contact') {
       return '-bottom-[5rem] -left-[10rem] rotate-90 w-[42rem] h-[36rem] '
     } else if (path === '/artworks/themes') {
       return '-top-[5rem] -left-[10rem] rotate-90 w-[42rem] h-[36rem] '
     } else if (path.endsWith(id)) {
-      return 'top-[15rem] -right-[15rem] w-[50rem] h-[60rem] rotate-45  2xl:w-[100rem] 2xl:h-[120rem] xl:rotate-90'
+      return 'top-[15rem] -right-[15rem] md:w-[50rem] md:h-[60rem] rotate-45  2xl:w-[100rem] 2xl:h-[120rem] xl:rotate-90'
     } else if (path.endsWith('all')) {
       return '-top-[40rem] left-[25rem] w-[70rem] h-[60rem] -rotate-[135deg] '
     } else if (path.startsWith('/artworks/')) {
@@ -144,13 +144,13 @@ const Layout = () => {
     } else if (path === '/artworks') {
       return 'top-[10rem] left-[0rem] rotate-75 w-[42rem] h-[36rem]'
     } else if (path === '/about') {
-      return '-bottom-[20rem] -right-[0rem]  w-[70rem] h-[85rem]'
+      return '-bottom-[20rem] -right-[0rem] w-[30rem] h-[45rem]  lg:w-[70rem] lg:h-[85rem]'
     } else if (path === '/contact') {
       return '-bottom-[20rem] left-[3rem] w-[42rem] h-[36rem]'
     } else if (path === '/artworks/themes') {
       return '-top-[10rem] left-[10rem] w-[42rem] h-[36rem]'
     } else if (path.endsWith(id)) {
-      return '-bottom-[15rem] -left-[15rem] w-[50rem] h-[60rem]  rotate-45 '
+      return '-bottom-[15rem] -left-[15rem] md:w-[50rem] md:h-[60rem] w-[30rem] h-[45rem] rotate-45 '
     } else if (path.endsWith('all')) {
       return '-top-[10rem] -left-[15rem] w-[50rem] h-[60rem] -rotate-[135deg] '
     } else if (path.startsWith('/artworks/')) {
@@ -170,11 +170,11 @@ const Layout = () => {
     } else if (path === '/artworks/themes') {
       return '-top-[10rem] left-[30rem] '
     } else if (path.endsWith(id)) {
-      return 'top-[3rem] left-[15rem] w-[50rem] h-[60rem] -rotate-[35deg]  2xl:w-[100rem] 2xl:h-[120rem]'
+      return 'top-[3rem] left-[15rem] md:w-[50rem] md:h-[60rem] -rotate-[35deg]  2xl:w-[100rem] 2xl:h-[120rem]'
     } else if (path.endsWith('all')) {
       return 'top-[3rem] left-[15rem] w-[50rem] h-[60rem] -rotate-[35deg] '
     } else if (path.startsWith('/artworks/')) {
-      return 'top-[10rem] right-[10rem] w-[42rem] h-[36rem] -rotate-[135deg] '
+      return 'top-[10rem] right-[10rem] w-[42rem] h-[36rem] -rotate-[135deg] md:block hidden '
     }
   }
   const getCircleFourPosition = () => {
@@ -194,7 +194,7 @@ const Layout = () => {
     } else if (path.endsWith('all')) {
       return '-bottom-[40rem] -right-[20vw] w-[70rem] h-[80rem] -rotate-[90deg] '
     } else if (path.startsWith('/artworks/')) {
-      return '-bottom-[30rem] -left-[25rem] w-[60rem] h-[60rem] -rotate-[135deg] '
+      return '-bottom-[30rem] -left-[25rem] w-[60rem] h-[60rem] -rotate-[135deg]  '
     } else {
       return '-bottom-[20rem] -left-[20rem] rotate-90 xl:w-[42rem] lg:w-[30rem] xl:h-[42rem] lg:h-[30rem]'
     }

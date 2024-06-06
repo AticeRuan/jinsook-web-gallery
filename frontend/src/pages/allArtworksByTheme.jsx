@@ -31,7 +31,7 @@ const AllArtworksByTheme = () => {
         />
       </div>
       <div className="rounded-xl bg-white h-fit  p-10 ">
-        <div className="flex flex-col items-center justify-center gap-10">
+        <div className="flex flex-col items-center justify-center gap-10 mt-10 p-16 w-auto md:p-10">
           {themes.map((theme) => (
             <div key={theme} className="text-center border-gray-200 py-5 ">
               <Heading text={theme} color="#CDE7E3" />

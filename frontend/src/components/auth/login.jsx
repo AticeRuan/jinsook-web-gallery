@@ -1,14 +1,18 @@
 import { useState } from 'react'
 import { useLogin } from '../../hooks/useLogin'
 import Heading from '../ui/heading'
+import { useNavigate } from 'react-router-dom'
 const Login = () => {
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const { login, error, isLoading } = useLogin()
+  const navigate = useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault()
     await login(userName, password)
+    navigate(0, { replace: true })
   }
+
   return (
     <div className="flex flex-col gap-5 w-full relative z-10 ">
       {' '}
@@ -52,7 +56,11 @@ const Login = () => {
         >
           Log in
         </button>
-        {error && <div className="error">{error}</div>}
+        {error && (
+          <div className="text-jinsook-dark-pink text-[0.8rem] font-heading font-[600]">
+            {error}
+          </div>
+        )}
       </form>
     </div>
   )

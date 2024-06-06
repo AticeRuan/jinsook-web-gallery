@@ -50,18 +50,18 @@ const SingleArtwork = () => {
 
   if (loading)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center z-10 relative justify-center">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] flex items-center z-10 relative justify-center">
         <Loader />
       </div>
     )
   if (error)
     return (
-      <div className="w-screen xl:w-[1200px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center justify-center z-10 relative">
+      <div className="w-screen xl:w-[1200px] min-h-[calc(100vh-120px)]  flex flex-col items-center justify-center z-10 relative">
         Error: {error.message}
       </div>
     )
   return (
-    <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[px] md:pt-[150px] flex flex-col items-center z-10 relative">
+    <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center z-10 relative">
       {/* heading */}
       <div className="mt-10 text-left w-full">
         <PageTitle heading={getCategoryName(category)} />
@@ -118,7 +118,7 @@ const SingleArtwork = () => {
             text={`From the "${artwork.theme}" Theme`}
             color={getBackgroundColor()}
           />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5  w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5  w-full justify-items-center">
             {Array.isArray(artworkFromSameTheme) &&
               artworkFromSameTheme.map((artwork) => (
                 <ProductItem item={artwork} key={artwork._id} />
