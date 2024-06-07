@@ -71,6 +71,8 @@ const ViewMessage = ({ onClose }) => {
     } else if (diffInDays === 1) {
       masks.hammerTime = 'HH:MM "Yesterday"'
       return dateformat(messageDate, 'hammerTime')
+    } else if (diffInDays >= 365) {
+      return dateformat(messageDate, 'H:MM,  d,mm,yyyy')
     } else {
       return dateformat(messageDate, 'H:MM, ddd, d,mmm')
     }
