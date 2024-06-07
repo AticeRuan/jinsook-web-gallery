@@ -130,7 +130,9 @@ const ArtworkForm = ({ item, onClose }) => {
           )}
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
-              <label className="block font-bold  font-heading ">Title</label>
+              <label className="block font-bold  font-heading ">
+                Title<span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 name="title"
@@ -141,7 +143,9 @@ const ArtworkForm = ({ item, onClose }) => {
               />
             </div>
             <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
-              <label className="block font-bold  font-heading ">Category</label>{' '}
+              <label className="block font-bold  font-heading ">
+                Category<span className="text-red-500">*</span>
+              </label>{' '}
               <select
                 name="category"
                 value={formData.category}

@@ -18,6 +18,22 @@ const ContactForm = () => {
       [name]: value,
     })
   }
+  // let emptyFields = []
+  // //input validation
+  // if (!title) {
+  //   emptyFields.push('title')
+  // }
+  // if (!category) {
+  //   emptyFields.push('category')
+  // }
+  // if (!price) {
+  //   emptyFields.push('price')
+  // }
+  // if (emptyFields.length > 0) {
+  //   return res
+  //     .status(400)
+  //     .json({ err: 'Please fill in all the fields.', emptyFields })
+  // }
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -62,12 +78,13 @@ const ContactForm = () => {
             htmlFor="name"
             className="block text-gray-700  font-bold mb-2 font-heading "
           >
-            Name
+            Name<span className="text-red-500">*</span>
           </label>
           <input
             type="text"
             id="name"
             name="name"
+            required
             value={formData.name}
             onChange={handleChange}
             className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -79,12 +96,13 @@ const ContactForm = () => {
             htmlFor="email"
             className="block text-gray-700 font-bold mb-2 font-heading"
           >
-            Email
+            Email<span className="text-red-500">*</span>
           </label>
           <input
             type="email"
             id="email"
             name="email"
+            required
             value={formData.email}
             onChange={handleChange}
             className=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
@@ -96,11 +114,12 @@ const ContactForm = () => {
             htmlFor="msg"
             className="block text-gray-700  font-bold mb-2 font-heading"
           >
-            Message
+            Message<span className="text-red-500">*</span>
           </label>
           <textarea
             id="msg"
             name="msg"
+            required
             value={formData.msg}
             onChange={handleChange}
             className=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
