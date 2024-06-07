@@ -31,7 +31,7 @@ const SingleCategory = () => {
 
   if (loading)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)]  flex  items-centerjustify-center relative z-10">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)]  flex  items-center justify-center relative z-10">
         <Loader />
       </div>
     )
