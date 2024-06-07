@@ -2,12 +2,12 @@ import { useState } from 'react'
 import useCreate from '../../hooks/useCreate'
 import MessagePopup from '../ui/messagePopup'
 
-const ContactForm = () => {
+const ContactForm = ({ subject }) => {
   const { createData } = useCreate()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    msg: '',
+    msg: subject ? subject : '',
     unread: true,
   })
 

@@ -1,7 +1,10 @@
 import ContactForm from '../components/contact/contactForm'
 import PageTitle from '../components/ui/pageTitle'
+import { useLocation } from 'react-router-dom'
 
 const Contact = () => {
+  let { state } = useLocation()
+
   return (
     <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center gap-28 z-10 relative">
       {/* heading */}
@@ -22,7 +25,7 @@ const Contact = () => {
         </div>
         {/* form */}
         <div className="lg:w-1/2 w-full">
-          <ContactForm />
+          <ContactForm subject={state && state.subject} />
         </div>
       </div>
     </div>
