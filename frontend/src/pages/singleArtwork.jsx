@@ -89,12 +89,13 @@ const SingleArtwork = () => {
             <div className="w-full h-fit md:h-full md:w-3/5 lg:w-1/2 rounded-lg overflow-hidden md:hidden">
               <Carousel
                 autoPlay={true}
-                interval={2000}
+                interval={3000}
                 emulateTouch
                 showStatus={false}
                 centerMode
                 centerSlidePercentage={100}
                 showThumbs={false}
+                transitionTime={1000}
               >
                 {Array.isArray(imageArray) &&
                   imageArray.map((imgUrl, index) => (
@@ -105,13 +106,14 @@ const SingleArtwork = () => {
             <div className="w-full h-1/2 md:h-full md:w-3/5 lg:w-1/2 rounded-lg overflow-hidden hidden md:block">
               <Carousel
                 autoPlay={true}
-                interval={2000}
+                interval={3000}
                 showIndicators={false}
                 emulateTouch
                 showStatus={false}
                 centerMode
                 centerSlidePercentage={100}
                 infiniteLoop={true}
+                transitionTime={1000}
               >
                 {Array.isArray(imageArray) &&
                   imageArray.map((imgUrl, index) => (

@@ -129,8 +129,8 @@ const ArtworkForm = ({ item, onClose }) => {
   const error = isUpdate ? updateError : createError
 
   return (
-    <div className="fixed top-0 left-0 flex  w-screen h-screen items-start md:items-center justify-center backdrop-contrast-[0.25] pt-10 md:mt-0 overflow-y-auto ">
-      <div className="flex flex-col gap-10 bg-jinsook-blue p-10 rounded-xl items-center w-[90%] 2xl:w-[50%] ">
+    <div className="fixed top-0 left-0 flex  w-screen h-screen items-start md:items-center justify-center backdrop-contrast-[0.25] py-3  md:pt-10 mt-0 overflow-y-auto overflow-x-hidden ">
+      <div className="flex flex-col gap-10 bg-jinsook-blue p-10 rounded-xl items-center w-[90%] 2xl:w-[50%] overflow-y-scroll h-full overflow-x-hidden overscroll-contain">
         <Heading
           text={isUpdate ? 'Update Artwork' : 'Create Artwork'}
           color="#009379"
