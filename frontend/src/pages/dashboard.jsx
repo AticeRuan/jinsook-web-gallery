@@ -36,7 +36,7 @@ const Dashboard = () => {
     (artwork) => artwork.category === 'handcrafts',
   )
   const handcraftsThemes = [
-    ...new Set(handcrafts?.map((artwork) => artwork.theme)),
+    ...new Set(handcrafts?.map((artwork) => artwork.title)),
   ]
   const featuredItems = artworks?.filter((artwork) => artwork.featured === true)
   const headers = artworks?.filter((artwork) => artwork.header === true)
@@ -98,7 +98,7 @@ const Dashboard = () => {
           className="lg:w-[200px] w-[150px] fixed top-3 left-3 z-10"
         />
       </Link>
-      <div className=" flex items-center justify-end flex-col w-[90%] xl:w-[80%] 2xl:w-[1200px] h-[90%]">
+      <div className=" flex items-center justify-end lg:justify-center flex-col w-[90%] xl:w-[80%] 2xl:w-[1200px] h-[90%]">
         {' '}
         <DashboardMain
           user={user}

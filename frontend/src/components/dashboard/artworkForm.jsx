@@ -10,7 +10,16 @@ const ArtworkForm = ({ item, onClose }) => {
   const sortedArtworks = artworks?.sort(
     (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt),
   )
-  const Themes = [...new Set(sortedArtworks?.map((item) => item.theme))]
+  const themes = [...new Set(sortedArtworks?.map((item) => item.theme))]
+  const handcraftItems = sortedArtworks?.filter(
+    (item) => item.category === 'handcrafts',
+  )
+  const handcraftTitles = [
+    ...new Set(handcraftItems?.map((item) => item.title)),
+  ]
+  const HandcraftTypes = [...new Set(handcraftItems?.map((item) => item.theme))]
+  const filteredHandcraftTypes = HandcraftTypes.filter((item) => item !== '')
+  const filteredThemes = themes.filter((item) => item !== '')
 
   const isUpdate = !!item
   const [formData, setFormData] = useState({
@@ -34,6 +43,8 @@ const ArtworkForm = ({ item, onClose }) => {
     }))
   }
 
+  const isHandcrafts = formData.category === 'handcrafts'
+
   const { createData, loading: createLoading, error: createError } = useCreate()
   const { updateData, loading: updateLoading, error: updateError } = useUpdate()
   const {
@@ -51,6 +62,13 @@ const ArtworkForm = ({ item, onClose }) => {
     const newFormData = {
       ...formData,
       theme: theme,
+    }
+    setFormData(newFormData)
+  }
+  const handleTitleChange = (title) => {
+    const newFormData = {
+      ...formData,
+      title: title,
     }
     setFormData(newFormData)
   }
@@ -126,41 +144,106 @@ const ArtworkForm = ({ item, onClose }) => {
               className="w-[300px] object-contain rounded-xl"
             />
           ) : (
-            <div className="bg-white w-[200px] h-[300px] rounded-lg" />
+            <div className="bg-jinsook-light-pink w-[300px] lg:w-[200px] h-[300px] rounded-lg" />
           )}
+
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-            <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
-              <label className="block font-bold  font-heading ">
-                Title<span className="text-red-500">*</span>
-              </label>
+            <div className="flex flex-col gap-2">
               <input
-                type="text"
-                name="title"
-                value={formData.title}
-                onChange={handleChange}
-                required
-                className="rounded-sm appearance-none  w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                type="file"
+                onChange={handleFileChange}
+                required={!isUpdate}
+                className="rounded-sm appearance-none border  w-full  text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
               />
+              {uploadProgress > 0 && (
+                <progress value={uploadProgress} max="100" className=" w-full">
+                  {uploadProgress}%
+                </progress>
+              )}
             </div>
-            <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
-              <label className="block font-bold  font-heading ">
+            <div className="flex gap-1  px-2 rounded-lg  font-body flex-col items-start text-[0.9rem]">
+              <label className="block font-bold  font-heading text-[1rem] ">
                 Category<span className="text-red-500">*</span>
               </label>{' '}
-              <select
-                name="category"
-                value={formData.category}
-                onChange={handleChange}
-                required
-                className="rounded-sm appearance-none  w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white text-body"
-              >
-                <option value="" className="text-gray-300 text-body">
-                  select a category
-                </option>
-                <option value="paintings">Paintings</option>
-                <option value="illustrations">illustrations</option>
-                <option value="childrens-books">Chidrens books</option>
-                <option value="handcrafts">Handcraft</option>
-              </select>
+              <div className="flex flex-col sm:flex-row gap-1">
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="category"
+                    value="paintings"
+                    checked={formData.category === 'paintings'}
+                    onChange={handleChange}
+                    required
+                    className="form-radio"
+                  />
+                  <span className="ml-2">Paintings</span>
+                </label>
+                <label className="inline-flex items-center ">
+                  <input
+                    type="radio"
+                    name="category"
+                    value="illustrations"
+                    checked={formData.category === 'illustrations'}
+                    onChange={handleChange}
+                    required
+                    className="form-radio"
+                  />
+                  <span className="ml-2">Illustrations</span>
+                </label>
+                <label className="inline-flex items-center ">
+                  <input
+                    type="radio"
+                    name="category"
+                    value="childrens-books"
+                    checked={formData.category === 'childrens-books'}
+                    onChange={handleChange}
+                    required
+                    className="form-radio"
+                  />
+                  <span className="ml-2">Children&apos;s Books</span>
+                </label>
+                <label className="inline-flex items-center ">
+                  <input
+                    type="radio"
+                    name="category"
+                    value="handcrafts"
+                    checked={formData.category === 'handcrafts'}
+                    onChange={handleChange}
+                    required
+                    className="form-radio"
+                  />
+                  <span className="ml-2">Handcrafts</span>
+                </label>
+              </div>
+            </div>{' '}
+            <div className="flex flex-col gap-3">
+              <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
+                <label className="block font-bold  font-heading ">
+                  Title<span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  required
+                  className="rounded-sm appearance-none  w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                />
+              </div>
+              {isHandcrafts && (
+                <div className="flex flex-wrap gap-2 ">
+                  {handcraftTitles.slice(0, 6).map((title) => (
+                    <span
+                      key={title}
+                      className="p-1 bg-jinsook-light-pink text-[0.6rem] hover:scale-110 cursor-pointer transition-all duration-300 ease-in-out rounded-sm "
+                      onClick={() => handleTitleChange(title)}
+                      name="title"
+                    >
+                      {title}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
             <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
               <label className="block font-bold  font-heading ">Price</label>{' '}
@@ -186,30 +269,67 @@ const ArtworkForm = ({ item, onClose }) => {
                 rows={5}
               />
             </div>
-            <div className="flex flex-col gap-3">
-              <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
-                <label className="block font-bold  font-heading ">Theme</label>{' '}
-                <input
-                  type="text"
-                  name="theme"
-                  value={formData.theme}
-                  onChange={handleChange}
-                  className="rounded-sm appearance-none   w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-                />
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {Themes.slice(0, 6).map((theme) => (
-                  <span
-                    key={theme}
-                    className="p-1 bg-jinsook-light-pink text-[0.6rem] hover:scale-110 cursor-pointer transition-all duration-300 ease-in-out rounded-sm "
-                    onClick={() => handleThemeChange(theme)}
-                    name="theme"
-                  >
-                    {theme}
-                  </span>
-                ))}
-              </div>
-            </div>
+            {isHandcrafts ? (
+              <>
+                <div className="flex flex-col gap-3">
+                  <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
+                    <label className="block font-bold  font-heading whitespace-nowrap ">
+                      Product Type<span className="text-red-500">*</span>
+                    </label>{' '}
+                    <input
+                      type="text"
+                      name="theme"
+                      required
+                      value={formData.theme}
+                      onChange={handleChange}
+                      className="rounded-sm appearance-none   w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                    />
+                  </div>
+                  <div className="flex flex-wrap gap-2 ">
+                    {filteredHandcraftTypes.slice(0, 6).map((type, index) => (
+                      <span
+                        key={index}
+                        className="p-1 bg-jinsook-light-pink text-[0.6rem] hover:scale-110 cursor-pointer transition-all duration-300 ease-in-out rounded-sm "
+                        onClick={() => handleThemeChange(type)}
+                        name="theme"
+                      >
+                        {type}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                {' '}
+                <div className="flex flex-col gap-3">
+                  <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
+                    <label className="block font-bold  font-heading ">
+                      Theme
+                    </label>{' '}
+                    <input
+                      type="text"
+                      name="theme"
+                      value={formData.theme}
+                      onChange={handleChange}
+                      className="rounded-sm appearance-none   w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+                    />
+                  </div>
+                  <div className="flex flex-wrap gap-2 ">
+                    {filteredThemes.slice(0, 6).map((theme) => (
+                      <span
+                        key={theme}
+                        className="p-1 bg-jinsook-light-pink text-[0.6rem] hover:scale-110 cursor-pointer transition-all duration-300 ease-in-out rounded-sm "
+                        onClick={() => handleThemeChange(theme)}
+                        name="theme"
+                      >
+                        {theme}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
             <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
               <label className="block font-bold  font-heading ">
                 Dimentions
@@ -254,21 +374,6 @@ const ArtworkForm = ({ item, onClose }) => {
                 Use for category header
               </label>
             </div>
-            <input
-              type="file"
-              onChange={handleFileChange}
-              required={!isUpdate}
-              className="rounded-sm appearance-none border  w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
-            />
-            {uploadProgress > 0 && (
-              <progress
-                value={uploadProgress}
-                max="100"
-                className="mx-2 my-5 w-full"
-              >
-                {uploadProgress}%
-              </progress>
-            )}
             <div className="flex gap-6 w-full justify-center">
               <button
                 onClick={onClose}
@@ -289,18 +394,18 @@ const ArtworkForm = ({ item, onClose }) => {
                   ? 'Update'
                   : 'Create'}
               </button>
-            </div>
+            </div>{' '}
+            {error && (
+              <div className="text-[.8rem] text-jinsook-yellow text-body">
+                Error: {error.message}
+              </div>
+            )}
+            {uploadError && (
+              <div className="text-[.8rem] text-jinsook-yellow text-body">
+                Error uploading image: {uploadError}
+              </div>
+            )}
           </form>
-          {error && (
-            <div className="text-[.8rem] text-jinsook-yellow text-body">
-              Error: {error.message}
-            </div>
-          )}
-          {uploadError && (
-            <div className="text-[.8rem] text-jinsook-yellow text-body">
-              Error uploading image: {uploadError}
-            </div>
-          )}
         </div>
       </div>
     </div>

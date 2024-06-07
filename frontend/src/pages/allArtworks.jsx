@@ -2,8 +2,31 @@ import PageTitle from '../components/ui/pageTitle'
 import useRead from '../hooks/useRead'
 import ProductItem from '../components/ui/productItem'
 import Loader from '../components/ui/loader'
+
 const AllArtworks = () => {
   const { data: artworks, loading, error } = useRead(`artworks/`)
+  const handcrafts = artworks?.filter(
+    (artwork) => artwork.category === 'handcrafts',
+  )
+  const handcraftTitles = [
+    ...new Set(handcrafts?.map((artwork) => artwork.title)),
+  ]
+
+  const firstHandcraftItems = handcraftTitles?.reduce((acc, title) => {
+    const firstItem = artworks.find(
+      (art) => art.title === title && art.category === 'handcrafts',
+    )
+    if (firstItem) {
+      acc[title] = firstItem
+    }
+    return acc
+  }, {})
+
+  const firstHandcraftItemsArray = Object.values(firstHandcraftItems)
+
+  const artworkNotHandcrafts = artworks?.filter(
+    (artwork) => artwork.category !== 'handcrafts',
+  )
 
   if (loading)
     return (
@@ -29,9 +52,13 @@ const AllArtworks = () => {
       </div>
       <div className="rounded-xl bg-white h-fit  p-10 ">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-10 mt-10 p-16 w-auto md:p-10">
-          {artworks.map((artwork) => (
+          {artworkNotHandcrafts.map((artwork) => (
             <ProductItem item={artwork} key={artwork._id} />
           ))}
+          {Array.isArray(firstHandcraftItemsArray) &&
+            firstHandcraftItemsArray.map((artwork) => (
+              <ProductItem item={artwork} key={artwork._id} />
+            ))}
         </div>
       </div>
     </div>

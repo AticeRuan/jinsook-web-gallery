@@ -3,14 +3,14 @@ import Heading from '../components/ui/heading'
 import Loader from '../components/ui/loader'
 import PageTitle from '../components/ui/pageTitle'
 import useRead from '../hooks/useRead'
+import placeholder from '../assets/portrait.jpg'
 const Artworks = () => {
   const { data, loading, error } = useRead('artworks')
-  const headerArtworks =
-    data && data.filter((artwork) => artwork.header === true)
+  const headerArtworks = data?.filter((artwork) => artwork.header === true)
 
-  const paintingHeader =
-    headerArtworks &&
-    headerArtworks.filter((artwork) => artwork.category === 'paintings')
+  const paintingHeader = headerArtworks?.filter(
+    (artwork) => artwork.category === 'paintings',
+  )
 
   const illustrationsHeader =
     headerArtworks &&
@@ -20,9 +20,9 @@ const Artworks = () => {
     headerArtworks &&
     headerArtworks.filter((artwork) => artwork.category === 'childrens-books')
 
-  const handcraftsHeader =
-    headerArtworks &&
-    headerArtworks.filter((artwork) => artwork.category === 'handcrafts')
+  const handcraftsHeader = headerArtworks?.filter(
+    (artwork) => artwork.category === 'handcrafts',
+  )
 
   if (loading) {
     return (
@@ -55,23 +55,39 @@ const Artworks = () => {
         <CategoryCard
           category="paintings"
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
-          imgUrl={paintingHeader[0].imageUrl}
+          imgUrl={
+            paintingHeader && paintingHeader.length > 0
+              ? paintingHeader[0].imageUrl
+              : placeholder
+          }
         />
         <CategoryCard
           category="illustrations"
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
-          imgUrl={illustrationsHeader[0].imageUrl}
+          imgUrl={
+            illustrationsHeader && illustrationsHeader.length > 0
+              ? illustrationsHeader[0].imageUrl
+              : placeholder
+          }
           isReverse={true}
         />
         <CategoryCard
           category="childrens-books"
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
-          imgUrl={childrensBooksHeader[0].imageUrl}
+          imgUrl={
+            childrensBooksHeader && childrensBooksHeader.length > 0
+              ? childrensBooksHeader[0].imageUrl
+              : placeholder
+          }
         />
         <CategoryCard
           category="handcrafts"
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
-          imgUrl={handcraftsHeader[0].imageUrl}
+          imgUrl={
+            handcraftsHeader && handcraftsHeader.length > 0
+              ? handcraftsHeader[0].imageUrl
+              : placeholder
+          }
           isReverse={true}
         />
       </div>
@@ -82,25 +98,41 @@ const Artworks = () => {
         <CategoryCard
           category="paintings"
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
-          imgUrl={paintingHeader[0].imageUrl}
+          imgUrl={
+            paintingHeader && paintingHeader.length > 0
+              ? paintingHeader[0].imageUrl
+              : placeholder
+          }
           isSmallScreen={true}
         />
         <CategoryCard
           category="illustrations"
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
-          imgUrl={illustrationsHeader[0].imageUrl}
+          imgUrl={
+            illustrationsHeader && illustrationsHeader.length > 0
+              ? illustrationsHeader[0].imageUrl
+              : placeholder
+          }
           isSmallScreen={true}
         />
         <CategoryCard
           category="childrens-books"
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
-          imgUrl={childrensBooksHeader[0].imageUrl}
+          imgUrl={
+            childrensBooksHeader && childrensBooksHeader.length > 0
+              ? childrensBooksHeader[0].imageUrl
+              : placeholder
+          }
           isSmallScreen={true}
         />
         <CategoryCard
           category="handcrafts"
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
-          imgUrl={handcraftsHeader[0].imageUrl}
+          imgUrl={
+            handcraftsHeader && handcraftsHeader.length > 0
+              ? handcraftsHeader[0].imageUrl
+              : placeholder
+          }
           isSmallScreen={true}
         />
       </div>

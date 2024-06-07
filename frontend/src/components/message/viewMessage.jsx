@@ -18,10 +18,6 @@ const ViewMessage = ({ onClose }) => {
   const [showConfirm, setShowConfirm] = useState(false)
 
   useEffect(() => {
-    console.log(selectedItemId)
-  }, [selectedItemId])
-
-  useEffect(() => {
     if (fetchedMessages && fetchedMessages.length > 0) {
       setSelectedItemId(fetchedMessages[0]._id)
     }

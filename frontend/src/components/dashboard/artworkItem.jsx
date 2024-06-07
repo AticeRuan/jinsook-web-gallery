@@ -6,7 +6,7 @@ const ArtworkItem = ({ item, onUpdateClick, onDeleteClick }) => {
   const isHeader = item.header
   return (
     <div className="w-[130px] sm:w-[120px] md:w-[150px] group relative cursor-pointer items-center flex justify-center flex-col">
-      <div className=" flex items-center border-2 rounded-lg overflow-clip border-jinsook-blue relative">
+      <div className=" flex items-start border-2 rounded-lg overflow-clip border-jinsook-blue relative justify-start">
         <img
           src={item.imageUrl}
           alt={item.title}

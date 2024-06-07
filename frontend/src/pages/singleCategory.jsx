@@ -14,6 +14,19 @@ const SingleCategory = () => {
   const { data: artworks, loading, error } = useRead(`artworks/${category}`)
 
   const themes = [...new Set(artworks?.map((artwork) => artwork.theme))]
+  const handcrafts = artworks?.filter(
+    (artwork) => artwork.category === 'handcrafts',
+  )
+  const handcraftsTitles = [
+    ...new Set(handcrafts?.map((artwork) => artwork.title)),
+  ]
+  const handcraftsThemes = [
+    ...new Set(handcrafts?.map((artwork) => artwork.theme)),
+  ]
+  const filteredHandcraftsThemes = handcraftsThemes.filter(
+    (theme) => theme !== '',
+  )
+  const isHandcrafts = category === 'handcrafts'
 
   const getBackgroundColor = () => {
     if (category == 'paintings') {
@@ -53,18 +66,39 @@ const SingleCategory = () => {
       </div>
       <div className="rounded-xl bg-white h-fit  p-10 ">
         <div className="flex flex-col items-center justify-center gap-10 mt-10 p-16 w-auto md:p-10">
-          {themes.map((theme) => (
-            <div key={theme} className="text-center border-gray-200 py-5 ">
-              <Heading text={theme} color={getBackgroundColor()} />
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-10 mt-10">
-                {artworks
-                  .filter((artwork) => artwork.theme === theme)
-                  .map((artwork) => (
-                    <ProductItem item={artwork} key={artwork._id} />
-                  ))}
-              </div>
-            </div>
-          ))}
+          {isHandcrafts
+            ? filteredHandcraftsThemes.map((theme, index) => (
+                <div key={index} className="text-center border-gray-200 py-5">
+                  <Heading text={theme} color={getBackgroundColor()} />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
+                    {handcraftsTitles.map((title) => {
+                      const artworks = handcrafts.filter(
+                        (artwork) =>
+                          artwork.title === title && artwork.theme === theme,
+                      )
+
+                      const firstItem = artworks.length > 0 ? artworks[0] : null
+                      return (
+                        firstItem && (
+                          <ProductItem item={firstItem} key={firstItem._id} />
+                        )
+                      )
+                    })}
+                  </div>
+                </div>
+              ))
+            : themes.map((theme) => (
+                <div key={theme} className="text-center border-gray-200 py-5">
+                  <Heading text={theme} color={getBackgroundColor()} />
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
+                    {artworks
+                      .filter((artwork) => artwork.theme === theme)
+                      .map((artwork) => (
+                        <ProductItem item={artwork} key={artwork._id} />
+                      ))}
+                  </div>
+                </div>
+              ))}
         </div>
       </div>
     </div>
