@@ -5,7 +5,7 @@ import Loader from '../ui/loader'
 import { useMessagesContext } from '../../hooks/useMessageContext'
 import useDelete from '../../hooks/useDelete'
 import DeleteConfirmation from '../dashboard/deleteConfirmation'
-import dateformat from 'dateformat'
+import dateformat, { masks } from 'dateformat'
 import Delete from '../svg/delete'
 import { Link } from 'react-router-dom'
 
@@ -16,6 +16,10 @@ const ViewMessage = ({ onClose }) => {
   const { messages, dispatch } = useMessagesContext()
   const [selectedItemId, setSelectedItemId] = useState(null)
   const [showConfirm, setShowConfirm] = useState(false)
+
+  useEffect(() => {
+    console.log(selectedItemId)
+  }, [selectedItemId])
 
   useEffect(() => {
     if (fetchedMessages && fetchedMessages.length > 0) {
@@ -49,9 +53,29 @@ const ViewMessage = ({ onClose }) => {
         setShowConfirm(false)
       })
   }
+  //   const setDateFormat = (date) => {
+  //     return dateformat(date, 'H:MM, ddd, d,mmm')
+  //   }
   const setDateFormat = (date) => {
-    return dateformat(date, 'H:MM, ddd, d,mmm')
+    const currentDate = new Date()
+    const messageDate = new Date(date)
+    const diffInDays = Math.floor(
+      (currentDate - messageDate) / (1000 * 60 * 60 * 24),
+    )
+
+    if (diffInDays <= 7 && diffInDays > 1) {
+      return dateformat(messageDate, 'H:MM, dddd')
+    } else if (diffInDays === 0) {
+      masks.hammerTime = 'HH:MM "Today"'
+      return dateformat(messageDate, 'hammerTime')
+    } else if (diffInDays === 1) {
+      masks.hammerTime = 'HH:MM "Yesterday"'
+      return dateformat(messageDate, 'hammerTime')
+    } else {
+      return dateformat(messageDate, 'H:MM, ddd, d,mmm')
+    }
   }
+
   const setBackGroundColor = (item) => {
     if (item.unread) {
       return 'rgba(253, 234, 223,0.5)'
@@ -89,17 +113,15 @@ const ViewMessage = ({ onClose }) => {
                     style={{
                       backgroundColor: setBackGroundColor(message),
                     }}
-                    className="p-2  border-b-2 border-jinsook-blue "
+                    className="p-2  border-b-2 border-jinsook-blue cursor-pointer "
+                    onClick={() => {
+                      setSelectedItemId(message._id)
+                      handleClick(message)
+                    }}
                   >
                     <div className="flex justify-between items-end ">
                       {' '}
-                      <p
-                        onClick={() => {
-                          setSelectedItemId(message._id)
-                          handleClick(message)
-                        }}
-                        className="font-body capitalize font-bold  text-[0.7rem] sm:text-[1rem] cursor-pointer truncate"
-                      >
+                      <p className="font-body capitalize font-bold  text-[0.7rem] sm:text-[1rem]  truncate">
                         {message.name}
                       </p>
                       <button
@@ -114,11 +136,11 @@ const ViewMessage = ({ onClose }) => {
                     </div>
 
                     <div className="flex justify-between items-end">
-                      <p className="font-heading text-ellipsis text-gray-700 truncate text-[0.8rem] sm:text-[1rem] hidden sm:block">
+                      <p className="font-heading text-ellipsis text-gray-700 truncate text-[0.8rem]  hidden sm:block max-w-[50%] md:max-w-[60%]">
                         {message.msg}
                       </p>
-                      <p className="font-body text-[0.6rem] sm:text-xs   text-gray-500">
-                        {setDateFormat(message.createAt)}
+                      <p className="font-body text-[0.6rem] sm:text-xs   text-gray-500 w-fit">
+                        {setDateFormat(message.createdAt)}
                       </p>
                     </div>
                   </div>
@@ -132,7 +154,7 @@ const ViewMessage = ({ onClose }) => {
             loading={deleteLoading}
             text="Delete this message?"
           />
-          <div className="overflow-hidden  h-full  bg-white rounded-r-2xl w-[70%] sm:w-auto">
+          <div className="overflow-hidden  h-full  bg-white rounded-r-2xl w-[70%] sm:w-[50%] ">
             {' '}
             {selectedItem && (
               <div className="flex flex-col w-full h-full p-1 overflow-y-scroll">
@@ -141,7 +163,7 @@ const ViewMessage = ({ onClose }) => {
                     {selectedItem.name}
                   </p>{' '}
                   <p className=" text-[0.6rem] text-wrap whitespace-pre-wrap">
-                    {setDateFormat(selectedItem.createAt)}
+                    {setDateFormat(selectedItem.createdAt)}
                   </p>
                 </div>
                 <div className=" cursor-pointer border-b-2 border-jinsook-blue py-1">
