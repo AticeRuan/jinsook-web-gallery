@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useArtworksContext } from './useArtworksContext'
 import { useAuthContext } from './useAuthContext'
+import { useMessagesContext } from './useMessageContext'
 const useUpdate = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const { dispatch: artworksDispatch } = useArtworksContext()
   const { user, dispatch: authDispatch } = useAuthContext()
+  const { dispatch: messagesDispatch } = useMessagesContext()
 
   const apiUrl = import.meta.env.VITE_API_URL
 
@@ -20,7 +22,7 @@ const useUpdate = () => {
     }
 
     try {
-      const response = await fetch(`${apiUrl}${endpoint}`, {
+      const response = await fetch(`${apiUrl}/api/${endpoint}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -37,6 +39,8 @@ const useUpdate = () => {
 
       if (endpoint.includes('change-password')) {
         authDispatch({ type: 'CHANGE_PASSWORD', payload: updatedData })
+      } else if (endpoint === 'messages') {
+        messagesDispatch({ type: 'UPDATE_MESSAGE', payload: updatedData })
       } else {
         artworksDispatch({ type: 'UPDATE_ARTWORK', payload: updatedData })
       }

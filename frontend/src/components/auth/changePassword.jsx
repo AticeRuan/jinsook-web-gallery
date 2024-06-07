@@ -16,7 +16,7 @@ const ChangePasswordForm = ({ onClose }) => {
   })
 
   const { updateData, loading, error } = useUpdate()
-  const [success, setSuccess] = useState(true)
+  const [success, setSuccess] = useState(false)
 
   const handleChange = (e) => {
     setFormData({

@@ -11,11 +11,7 @@ const SingleCategory = () => {
     if (category === 'childrens-books') return "Children's Books"
     else return category
   }
-  const {
-    data: artworks,
-    loading,
-    error,
-  } = useRead(`/api/artworks/${category}`)
+  const { data: artworks, loading, error } = useRead(`artworks/${category}`)
 
   const themes = [...new Set(artworks?.map((artwork) => artwork.theme))]
 

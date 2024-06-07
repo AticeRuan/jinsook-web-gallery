@@ -5,7 +5,7 @@ const ArtworkItem = ({ item, onUpdateClick, onDeleteClick }) => {
   const isFeatured = item.featured
   const isHeader = item.header
   return (
-    <div className="w-[130px] sm:w-[120px] md:w-[150px] group relative cursor-pointer items-center flex justify-center">
+    <div className="w-[130px] sm:w-[120px] md:w-[150px] group relative cursor-pointer items-center flex justify-center flex-col">
       <div className=" flex items-center border-2 rounded-lg overflow-clip border-jinsook-blue relative">
         <img
           src={item.imageUrl}
@@ -20,7 +20,7 @@ const ArtworkItem = ({ item, onUpdateClick, onDeleteClick }) => {
           )}
           {isHeader && (
             <span className="a bg-jinsook-yellow lg:text-xs capitalize font-[600] tracking-tighter p-1 group-hover:grayscale group-hover:blur-[1px] transition-all duration-500 ease-in-out text-[0.7rem]">
-              category header
+              {item.category} header
             </span>
           )}
         </div>{' '}

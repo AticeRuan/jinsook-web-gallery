@@ -92,7 +92,7 @@ const ArtworkForm = ({ item, onClose }) => {
     e.preventDefault()
 
     if (isUpdate) {
-      const endpoint = `/api/artworks/${item.category}/${item._id}`
+      const endpoint = `artworks/${item.category}/${item._id}`
       updateData(endpoint, formData)
     } else {
       const formDataWithHeader = {
@@ -102,7 +102,7 @@ const ArtworkForm = ({ item, onClose }) => {
         description: formData.description,
         dimensions: formData.dimensions,
       }
-      createData(formDataWithHeader)
+      createData('artworks', formDataWithHeader)
     }
     onClose()
   }

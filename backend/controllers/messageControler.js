@@ -24,7 +24,7 @@ const getOneMessage = async (req, res) => {
   }
 }
 
-//Create a new artwork
+//Create a udpate
 const createMessage = async (req, res) => {
   const { name, email, msg, unread } = req.body
   let emptyFields = []
@@ -61,6 +61,30 @@ const createMessage = async (req, res) => {
   }
 }
 
+//update a message
+const updateMessage = async (req, res) => {
+  const { id } = req.params
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ err: 'Message not found' })
+  }
+
+  try {
+    const message = await Message.findOneAndUpdate(
+      { _id: id },
+      { ...req.body },
+      { new: true },
+    )
+
+    if (!message) {
+      return res.status(404).json({ err: 'Message not found' })
+    }
+
+    res.status(200).json(message)
+  } catch (error) {
+    res.status(500).json({ message: error.message })
+  }
+}
+
 //delete a message
 const deleteMessage = async (req, res) => {
   const { id } = req.params
@@ -70,7 +94,7 @@ const deleteMessage = async (req, res) => {
 
   const message = await Message.findOneAndDelete({ _id: id })
 
-  if (!artwork) return res.status(404).json({ err: 'Message not found' })
+  if (!message) return res.status(404).json({ err: 'Message not found' })
 
   res.status(200).json(message)
 }
@@ -79,5 +103,6 @@ module.exports = {
   getMessages,
   getOneMessage,
   createMessage,
+  updateMessage,
   deleteMessage,
 }

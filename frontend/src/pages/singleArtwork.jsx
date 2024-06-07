@@ -39,7 +39,7 @@ const SingleArtwork = () => {
     data: artwork,
     loading,
     error,
-  } = useRead(`/api/artworks/${category}/${id}`)
+  } = useRead(`artworks/${category}/${id}`)
 
   const { data: allArtwork } = useRead('/api/artworks/')
 

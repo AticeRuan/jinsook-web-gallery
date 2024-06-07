@@ -2,6 +2,7 @@ import { Link, useLocation, useParams } from 'react-router-dom'
 import logo from '../assets/logo_black&transparent.png'
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
+
 const links = [
   { name: 'Home', url: '/' },
   {

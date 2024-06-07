@@ -68,7 +68,7 @@ const DashboardMain = ({
 
   const handleDelete = () => {
     if (selectedItem) {
-      const endpoint = `/api/artworks/${selectedItem.category}/${selectedItem._id}`
+      const endpoint = `artworks/${selectedItem.category}/${selectedItem._id}`
       deleteData(endpoint)
       setShowConfirm(false)
       setSelectedItem(null)
@@ -76,7 +76,7 @@ const DashboardMain = ({
   }
 
   return (
-    <section className="relative  h-fit lg:h-[60vh] w-full  z-10 bg-white rounded-2xl lg:m-10 sm:p-10 p-5flex flex-col gap-5 overflow-y-auto ">
+    <section className="relative  h-[90%] lg:h-[60vh] w-full  z-10 bg-white rounded-2xl lg:m-10 p-5 flex flex-col gap-5 overflow-y-auto ">
       <div className="flex gap-3 md:gap-10 md:items-center flex-col lg:flex-row items-start place-content-center">
         <p className="text-[1.5rem] font-body text-jinsook-green tracking-widest font-bold ">
           Welcome back {user.username}!
@@ -97,7 +97,8 @@ const DashboardMain = ({
           </button>
         </div>
       </div>
-      <div className="flex lg:flex-col lg:gap-10 mt-8 lg:mt-10  overflow-y-auto  ">
+
+      <div className="flex lg:flex-col lg:gap-10 mt-8 lg:mt-10    ">
         <div className="flex items-center justify-start flex-col lg:flex-row gap-16 lg:gap-0">
           <button
             className="hover:text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-blue bg-jinsook-green text-white transition duration-500 ease-in-out"
@@ -190,7 +191,7 @@ const DashboardMain = ({
             Header
           </button>
         </div>
-        <div className=" border-l-2 lg:border-none border-jinsook-green  w-full overflow-y-auto overflow-x-hidden flex flex-col gap-10 -ml-6 lg:ml-0 ">
+        <div className=" border-l-2 lg:border-none border-jinsook-green  w-full overflow-x-hidden flex flex-col gap-10 -ml-6 lg:ml-0 overflow-y-scroll overscroll-contain h-fit">
           {currentThemes &&
             currentThemes.length !== 0 &&
             currentThemes.map((theme) => (
@@ -198,7 +199,7 @@ const DashboardMain = ({
                 <h1 className="text-[1.2rem] font-bold font-heading pl-4">
                   {theme}
                 </h1>
-                <div className="flex sm:grid sm:grid-cols-4 md:flex flex-wrap gap-1 sm:justify-items-center md:justify-start justify-between mx-[20%] sm:mx-0">
+                <div className="flex sm:grid sm:grid-cols-4 md:flex flex-wrap gap-1 sm:justify-items-center md:justify-start justify-between mx-1">
                   {currectData &&
                     currectData
                       .filter((artwork) => artwork.theme === theme)
@@ -214,7 +215,7 @@ const DashboardMain = ({
                 </div>
               </div>
             ))}
-          <div className="grid grid-cols-2 lg:flex flex-wrap gap-1 place-content-start">
+          <div className="flex sm:grid sm:grid-cols-4 md:flex flex-wrap gap-1 sm:justify-items-center md:justify-start justify-between mx-1">
             {isEmpty &&
               currectData &&
               currectData.map((artwork) => (
@@ -243,6 +244,7 @@ const DashboardMain = ({
           onConfirm={handleDelete}
           onCancel={() => setShowConfirm(false)}
           loading={deleteLoading}
+          text="  Are you sure you want to delete this artwork?"
         />
         {showPasswordUpdate && (
           <ChangePasswordForm onClose={handleChangepasswordClose} />

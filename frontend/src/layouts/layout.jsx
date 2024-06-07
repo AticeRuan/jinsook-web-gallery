@@ -1,12 +1,15 @@
 import { Outlet, useLocation, useParams } from 'react-router-dom'
 import NavBar from '../components/navBar'
 import Footer from '../components/footer'
+import AdminTag from '../components/ui/adminTag'
+import { useAuthContext } from '../hooks/useAuthContext'
 
 const Layout = () => {
   const location = useLocation()
   const { id } = useParams()
 
   const currentPath = location.pathname
+  const { user } = useAuthContext()
 
   const { category } = useParams()
   const getBackgroundColor = () => {
@@ -157,7 +160,7 @@ const Layout = () => {
     <div
       className={`w-screen h-fit ${getBackgroundColor()} flex justify-center overflow-x-hidden relative`}
     >
-      {' '}
+      {user && <AdminTag />}{' '}
       <span
         className={`rounded-full z-[1] fixed ${getCircleColor()} transition-all duration-500 ease-in-out ${getCircleOnePosition()}`}
       />

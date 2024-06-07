@@ -27,7 +27,7 @@ const AuthContextProvider = ({ children }) => {
       }
     }
     checkAuth()
-    const intervalId = setInterval(checkAuth, 600000) // Check every 60 seconds
+    const intervalId = setInterval(checkAuth, 60000) // Check every 60 seconds
 
     return () => clearInterval(intervalId)
   }, [])

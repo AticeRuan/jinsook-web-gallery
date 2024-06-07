@@ -4,7 +4,7 @@ import Loader from '../components/ui/loader'
 import PageTitle from '../components/ui/pageTitle'
 import useRead from '../hooks/useRead'
 const Artworks = () => {
-  const { data, loading, error } = useRead('/api/artworks')
+  const { data, loading, error } = useRead('artworks')
   const headerArtworks =
     data && data.filter((artwork) => artwork.header === true)
 

@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useArtworksContext } from './useArtworksContext'
 import { useAuthContext } from './useAuthContext'
+import { useMessagesContext } from './useMessageContext'
 
 const useDelete = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const { dispatch } = useArtworksContext()
+  const { dispatch: messagesDispatch } = useMessagesContext()
   const { user } = useAuthContext()
   const apiUrl = import.meta.env.VITE_API_URL
 
@@ -20,7 +22,7 @@ const useDelete = () => {
     }
 
     try {
-      const response = await fetch(`${apiUrl}${endpoint}`, {
+      const response = await fetch(`${apiUrl}/api/${endpoint}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${user.token}`,
@@ -34,7 +36,11 @@ const useDelete = () => {
       const deletedData = await response.json()
 
       // Update the context to remove the deleted item
-      dispatch({ type: 'DELETE_ARTWORK', payload: deletedData })
+      if (endpoint === 'messages') {
+        messagesDispatch({ type: 'DELETE_MESSAGE', payload: deletedData })
+      } else {
+        dispatch({ type: 'DELETE_ARTWORK', payload: deletedData })
+      }
 
       setLoading(false)
     } catch (error) {

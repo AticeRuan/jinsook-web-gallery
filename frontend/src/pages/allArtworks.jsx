@@ -3,7 +3,7 @@ import useRead from '../hooks/useRead'
 import ProductItem from '../components/ui/productItem'
 import Loader from '../components/ui/loader'
 const AllArtworks = () => {
-  const { data: artworks, loading, error } = useRead(`/api/artworks/`)
+  const { data: artworks, loading, error } = useRead(`artworks/`)
 
   if (loading)
     return (

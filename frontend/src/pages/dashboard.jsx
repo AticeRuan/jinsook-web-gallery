@@ -6,11 +6,12 @@ import useRead from '../hooks/useRead'
 import logo from '../assets/logo_white&transparent.png'
 import logoBlack from '../assets/logo_black&transparent.png'
 import { Link } from 'react-router-dom'
+import AdminTag from '../components/ui/adminTag'
 
 const Dashboard = () => {
   const { user, isExpired } = useAuthContext()
 
-  useRead('/api/artworks')
+  useRead('artworks')
   const { artworks } = useArtworksContext()
 
   const paintings = artworks?.filter((artwork) => {
@@ -97,7 +98,7 @@ const Dashboard = () => {
           className="lg:w-[200px] w-[150px] fixed top-3 left-3 z-10"
         />
       </Link>
-      <div className=" flex items-center justify-center flex-col w-[90%] xl:w-[80%] 2xl:w-[1200px]">
+      <div className=" flex items-center justify-end flex-col w-[90%] xl:w-[80%] 2xl:w-[1200px] h-[90%]">
         {' '}
         <DashboardMain
           user={user}
@@ -114,6 +115,7 @@ const Dashboard = () => {
           handcraftsThemes={handcraftsThemes}
         />
       </div>
+      <AdminTag />
     </div>
   )
 }

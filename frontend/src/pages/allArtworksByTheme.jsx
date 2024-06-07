@@ -4,7 +4,7 @@ import Heading from '../components/ui/heading'
 import ProductItem from '../components/ui/productItem'
 import Loader from '../components/ui/loader'
 const AllArtworksByTheme = () => {
-  const { data: artworks, loading, error } = useRead(`/api/artworks/`)
+  const { data: artworks, loading, error } = useRead(`artworks`)
 
   const themes = [...new Set(artworks?.map((artwork) => artwork.theme))]
 

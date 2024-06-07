@@ -1,4 +1,3 @@
-// src/context/ArtworksContext.js
 import { createContext, useReducer } from 'react'
 import { messageReducer } from '../reducer/messageReducer'
 

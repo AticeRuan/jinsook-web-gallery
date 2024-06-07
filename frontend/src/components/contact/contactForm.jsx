@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import useCreate from '../../hooks/useCreate'
+import MessagePopup from '../ui/messagePopup'
 
 const ContactForm = () => {
+  const { createData } = useCreate()
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -17,14 +19,40 @@ const ContactForm = () => {
     })
   }
 
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    console.log('Form submitted:', formData)
+    if (isSubmitting) return
+    createData('messages', formData)
+      .then(() => {
+        setFormData({
+          name: '',
+          email: '',
+          msg: '',
+          unread: true,
+        })
+        setIsSent(true)
+      })
+      .finally(() => {
+        setIsSubmitting(false)
+        setIsSent(true)
+      })
   }
+  const handlePopupClose = () => {
+    setIsSent(false)
+  }
+  const [isSent, setIsSent] = useState(false)
 
   return (
     <div className="w-full  ">
+      {isSent && (
+        <MessagePopup
+          show={isSent}
+          text="Message Sent"
+          onClose={handlePopupClose}
+        />
+      )}
       <form
         onSubmit={handleSubmit}
         className="bg-white  rounded px-8 pt-6 pb-8 mb-4 gap-4 flex flex-col"
@@ -65,14 +93,14 @@ const ContactForm = () => {
         </div>
         <div className="mb-6">
           <label
-            htmlFor="message"
+            htmlFor="msg"
             className="block text-gray-700  font-bold mb-2 font-heading"
           >
             Message
           </label>
           <textarea
-            id="message"
-            name="message"
+            id="msg"
+            name="msg"
             value={formData.msg}
             onChange={handleChange}
             className=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

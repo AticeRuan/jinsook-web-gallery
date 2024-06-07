@@ -9,7 +9,7 @@ import useRead from '../hooks/useRead'
 import Loader from '../components/ui/loader'
 import { useArtworksContext } from '../hooks/useArtworksContext'
 const Home = () => {
-  const { loading, error } = useRead('/api/artworks')
+  const { loading, error } = useRead('artworks')
   const { artworks } = useArtworksContext()
   if (loading)
     return (

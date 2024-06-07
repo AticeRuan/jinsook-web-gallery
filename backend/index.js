@@ -30,7 +30,7 @@ app.use('/api/users', userRoutes)
 app.use('/api/messages', messageRoutes)
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Hello from Jinsook Gallery on Vercel!' })
+  res.json({ message: 'Hello from Jinsook Gallery!' })
 })
 
 //connect to mongodb

@@ -1,11 +1,9 @@
-const DeleteConfirmation = ({ show, onConfirm, onCancel, loading }) => {
+const DeleteConfirmation = ({ show, onConfirm, onCancel, loading, text }) => {
   return (
     show && (
       <div className="fixed top-0 left-0 flex w-screen h-screen items-center justify-center backdrop-contrast-[0.25] ">
         <div className="rounded-lg bg-jinsook-blue md:p-20 sm:p-10 p-5 m-5 flex flex-col gap-10 items-center justify-center font-body font-[500]">
-          <p className="text-[1.2rem]">
-            Are you sure you want to delete this artwork?
-          </p>
+          <p className="text-[1.2rem]">{text}</p>
           <div className=" flex gap-10">
             {' '}
             <button
