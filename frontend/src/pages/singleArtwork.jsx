@@ -60,6 +60,9 @@ const SingleArtwork = () => {
   const artworkFromSameTheme =
     !loading && allArtwork?.filter((items) => items.theme === artwork.theme)
 
+  const filteredartworkFromSameTheme =
+    !loading && artworkFromSameTheme?.filter((item) => item._id !== artwork._id)
+
   if (loading)
     return (
       <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] flex items-center z-10 relative justify-center">
@@ -116,7 +119,7 @@ const SingleArtwork = () => {
                   ))}
               </Carousel>
             </div>
-            <div className="flex flex-col items-start justify-between gap-4 max-w-[50%]">
+            <div className="flex flex-col items-start justify-between gap-4 md:max-w-[50%]">
               <h1 className="font-heading font-bold text-[1.2rem] sm:text-[1.5rem] whitespace-nowrap">
                 {artwork.title}
               </h1>
@@ -129,12 +132,6 @@ const SingleArtwork = () => {
               <p className="font-body font-[500] sm:text-[0.9rem] text-[0.8rem]">
                 {artwork.description}
               </p>{' '}
-              <p className="font-heading font-[500] tracking-widest text-sm sm:text-[1rem]">
-                <span className="font-heading font-[500] tracking-widest">
-                  Theme:
-                </span>
-                {artwork.theme}
-              </p>
               <p className="font-heading font-[500] tracking-widest text-sm sm:text-[1rem]">
                 <span className="font-heading font-[500] tracking-widest">
                   Medium:
@@ -152,7 +149,7 @@ const SingleArtwork = () => {
                 state={{
                   subject: `Hi Jinsook, I am messaging you regarding "${artwork.title}". `,
                 }}
-                className="rounded-full bg-jinsook-green hover:bg-white hover:border-2 border-jinsook-green transition duration-500 ease-in-out text-white hover:text-jinsook-green uppercase h-[40px] w-[100px] py-2 font-[600] text-[.8rem] px-4 flex items-center justify-center"
+                className="rounded-full bg-jinsook-green hover:bg-white hover:border-2 border-jinsook-green transition duration-500 ease-in-out text-white hover:text-jinsook-green uppercase h-[40px] w-[100px] py-2 font-[600] text-[.8rem] px-4 flex items-center justify-center mt-3"
               >
                 Enquiry
               </Link>
@@ -215,8 +212,8 @@ const SingleArtwork = () => {
               color={getBackgroundColor()}
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5  w-full justify-items-center">
-              {Array.isArray(artworkFromSameTheme) &&
-                artworkFromSameTheme.map((artwork) => (
+              {Array.isArray(filteredartworkFromSameTheme) &&
+                filteredartworkFromSameTheme.map((artwork) => (
                   <ProductItem item={artwork} key={artwork._id} />
                 ))}
             </div>
