@@ -14,7 +14,7 @@ const CategoryCard = ({
   }
   if (isSmallScreen)
     return (
-      <div className="rounded-2xl  lg:w-[990px] md:w-[500px] w-[400px] flex bg-white  h-[800px] md:h-[900px] lg:h-[400px] overflow-hidden flex-col-reverse pb-10">
+      <div className="rounded-2xl  lg:w-[990px] md:w-[500px] w-[90%] flex bg-white  h-[800px] md:h-[900px] lg:h-[400px] overflow-hidden flex-col-reverse pb-10">
         {/* descrition block */}
         <div className="w-full lg:w-1/2 lg:h-full h-1/2  flex flex-col px-10 py-5 gap-5 items-start justify-center  ">
           <p className="text-[1rem] font-heading font-[500] text-justify">

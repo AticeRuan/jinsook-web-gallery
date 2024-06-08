@@ -45,9 +45,12 @@ const Footer = () => {
             <Email color={getForegroundColor()} />
           </div>
         </div>
-        <p className="font-heading text-xs tracking-[0.1rem] sm:tracking-[0.2rem] font-[500]">
-          © {year} Jinsook Taylor All Right Reserved | Powered by Chill Otters
-        </p>
+
+        <div className="font-heading text-xs tracking-[0.1rem] sm:tracking-[0.2rem] font-[500] flex flex-col md:flex-row items-center justify-center">
+          <p>© {year} Jinsook Taylor All Right Reserved</p>{' '}
+          <span className="hidden md:block">| </span>
+          <p>Powered by Chill Otters</p>
+        </div>
       </div>
     </footer>
   )
