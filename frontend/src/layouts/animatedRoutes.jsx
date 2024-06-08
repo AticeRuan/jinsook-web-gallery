@@ -11,6 +11,7 @@ import Artworks from '../pages/artworks'
 import Layout from './layout'
 import AllArtworks from '../pages/allArtworks'
 import AllArtworksByTheme from '../pages/allArtworksByTheme'
+import NotFound from '../pages/notFound'
 
 const AnimatedRoutes = () => {
   const location = useLocation()
@@ -27,6 +28,7 @@ const AnimatedRoutes = () => {
           <Route path="/artworks/all" element={<AllArtworks />} />
           <Route path="/artworks/themes" element={<AllArtworksByTheme />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </AnimatePresence>
