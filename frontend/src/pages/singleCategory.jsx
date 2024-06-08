@@ -4,9 +4,10 @@ import useRead from '../hooks/useRead'
 import Heading from '../components/ui/heading'
 import ProductItem from '../components/ui/productItem'
 import Loader from '../components/ui/loader'
+import usePreviousPath from '../hooks/usePreviousPath'
 const SingleCategory = () => {
   const { category } = useParams()
-
+  const previousPath = usePreviousPath()
   const categoryname = (category) => {
     if (category === 'childrens-books') return "Children's Books"
     else return category
@@ -80,7 +81,11 @@ const SingleCategory = () => {
                       const firstItem = artworks.length > 0 ? artworks[0] : null
                       return (
                         firstItem && (
-                          <ProductItem item={firstItem} key={firstItem._id} />
+                          <ProductItem
+                            item={firstItem}
+                            key={firstItem._id}
+                            previousPath={previousPath}
+                          />
                         )
                       )
                     })}
@@ -94,7 +99,11 @@ const SingleCategory = () => {
                     {artworks
                       .filter((artwork) => artwork.theme === theme)
                       .map((artwork) => (
-                        <ProductItem item={artwork} key={artwork._id} />
+                        <ProductItem
+                          item={artwork}
+                          key={artwork._id}
+                          previousPath={previousPath}
+                        />
                       ))}
                   </div>
                 </div>

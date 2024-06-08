@@ -8,9 +8,11 @@ import ProductItem from '../components/ui/productItem'
 import useRead from '../hooks/useRead'
 import Loader from '../components/ui/loader'
 import { useArtworksContext } from '../hooks/useArtworksContext'
+import usePreviousPath from '../hooks/usePreviousPath'
 const Home = () => {
   const { loading, error } = useRead('artworks')
   const { artworks } = useArtworksContext()
+  const previousPath = usePreviousPath()
   if (loading)
     return (
       <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] flex items-center z-10 relative justify-center">
@@ -60,7 +62,12 @@ const Home = () => {
         <Heading text="Featured Artworks" />
         <div className="bg-white rounded-lg grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-10 p-16 sm:p-20 w-auto md:p-10 gap-8 md:gap-20 place-content-center">
           {featuredArtworks.map((artwork) => (
-            <ProductItem item={artwork} key={artwork._id} forFeatured={true} />
+            <ProductItem
+              item={artwork}
+              key={artwork._id}
+              forFeatured={true}
+              previousPath={previousPath}
+            />
           ))}
         </div>
       </div>

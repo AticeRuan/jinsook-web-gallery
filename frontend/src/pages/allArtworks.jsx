@@ -2,12 +2,14 @@ import PageTitle from '../components/ui/pageTitle'
 import useRead from '../hooks/useRead'
 import ProductItem from '../components/ui/productItem'
 import Loader from '../components/ui/loader'
-
+import usePreviousPath from '../hooks/usePreviousPath'
 const AllArtworks = () => {
   const { data: artworks, loading, error } = useRead(`artworks/`)
+  const previousPath = usePreviousPath()
   const handcrafts = artworks?.filter(
     (artwork) => artwork.category === 'handcrafts',
   )
+
   const handcraftTitles = [
     ...new Set(handcrafts?.map((artwork) => artwork.title)),
   ]
@@ -50,16 +52,18 @@ const AllArtworks = () => {
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
         />
       </div>
-      <div className="rounded-xl bg-white h-fit   grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-10 mt-10 p-16 w-auto md:p-10">
-        <div className="">
-          {artworkNotHandcrafts.map((artwork) => (
+      <div className="rounded-xl bg-white h-fit grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-10 mt-10 p-16 w-auto md:p-10">
+        {artworkNotHandcrafts.map((artwork) => (
+          <ProductItem
+            item={artwork}
+            key={artwork._id}
+            previousPath={previousPath}
+          />
+        ))}
+        {Array.isArray(firstHandcraftItemsArray) &&
+          firstHandcraftItemsArray.map((artwork) => (
             <ProductItem item={artwork} key={artwork._id} />
           ))}
-          {Array.isArray(firstHandcraftItemsArray) &&
-            firstHandcraftItemsArray.map((artwork) => (
-              <ProductItem item={artwork} key={artwork._id} />
-            ))}
-        </div>
       </div>
     </div>
   )

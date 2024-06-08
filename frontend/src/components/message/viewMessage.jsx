@@ -55,22 +55,25 @@ const ViewMessage = ({ onClose }) => {
   const setDateFormat = (date) => {
     const currentDate = new Date()
     const messageDate = new Date(date)
+
+    currentDate.setHours(0, 0, 0, 0)
+    messageDate.setHours(0, 0, 0, 0)
     const diffInDays = Math.floor(
       (currentDate - messageDate) / (1000 * 60 * 60 * 24),
     )
 
     if (diffInDays <= 7 && diffInDays > 1) {
-      return dateformat(messageDate, 'H:MM, dddd')
+      return dateformat(date, 'H:MM, dddd')
     } else if (diffInDays === 0) {
       masks.hammerTime = 'HH:MM "Today"'
-      return dateformat(messageDate, 'hammerTime')
+      return dateformat(date, 'hammerTime')
     } else if (diffInDays === 1) {
       masks.hammerTime = 'HH:MM "Yesterday"'
-      return dateformat(messageDate, 'hammerTime')
+      return dateformat(date, 'hammerTime')
     } else if (diffInDays >= 365) {
-      return dateformat(messageDate, 'H:MM,  d,mm,yyyy')
+      return dateformat(date, 'H:MM,  d,mm,yyyy')
     } else {
-      return dateformat(messageDate, 'H:MM, ddd, d,mmm')
+      return dateformat(date, 'H:MM, ddd, d,mmm')
     }
   }
 

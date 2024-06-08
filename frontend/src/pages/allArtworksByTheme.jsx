@@ -3,8 +3,10 @@ import useRead from '../hooks/useRead'
 import Heading from '../components/ui/heading'
 import ProductItem from '../components/ui/productItem'
 import Loader from '../components/ui/loader'
+import usePreviousPath from '../hooks/usePreviousPath'
 const AllArtworksByTheme = () => {
   const { data: artworks, loading, error } = useRead(`artworks`)
+  const previousPath = usePreviousPath()
   const artworkNotHandcrafts = artworks?.filter(
     (artwork) => artwork.category !== 'handcrafts',
   )
@@ -52,7 +54,11 @@ const AllArtworksByTheme = () => {
               {artworkNotHandcrafts
                 .filter((artwork) => artwork.theme === theme)
                 .map((artwork) => (
-                  <ProductItem item={artwork} key={artwork._id} />
+                  <ProductItem
+                    item={artwork}
+                    key={artwork._id}
+                    previousPath={previousPath}
+                  />
                 ))}
             </div>
           </div>

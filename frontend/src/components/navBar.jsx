@@ -6,6 +6,7 @@ import { useArtworksContext } from '../hooks/useArtworksContext'
 import Search from './svg/search'
 import useRead from '../hooks/useRead'
 import LoadingBlue from './svg/loadingBlue'
+import usePreviousPath from '../hooks/usePreviousPath'
 
 const links = [
   { name: 'Home', url: '/' },
@@ -66,6 +67,8 @@ const NavBar = () => {
 
   const location = useLocation()
   const { category } = useParams()
+
+  const previousPath = usePreviousPath()
 
   const getBackgroundColor = () => {
     const path = location.pathname
@@ -416,6 +419,7 @@ const NavBar = () => {
                       key={artwork._id}
                       className=" flex flex-col items-center gap-1 "
                       to={`/artworks/${artwork.category}/${artwork._id}`}
+                      state={{ previousPath: previousPath }}
                     >
                       <div className="w-[100px] h-[100px] overflow-hidden  bg-jinsook-blue flex items-center justify-center ">
                         <img
@@ -469,6 +473,7 @@ const NavBar = () => {
               <Link
                 to={link.url}
                 className="transition-colors duration-200 ease-in-out text-lg lg:text-[1.5rem] "
+                state={{ previousPath: previousPath }}
               >
                 <div className="flex gap-2 group items-center ">
                   {link.name}
@@ -496,6 +501,7 @@ const NavBar = () => {
                       to={sublink.url}
                       key={subIndex}
                       className="font-[500] text-[1rem] lg:text-[1.2rem] font-body text-black hover:font-bold"
+                      state={{ previousPath: previousPath }}
                     >
                       {sublink.name}
                     </Link>
@@ -547,6 +553,7 @@ const NavBar = () => {
                         }
                       }}
                       className="whitespace-nowrap"
+                      start={{ previousPath: previousPath }}
                     >
                       {link.name}
                     </Link>
@@ -562,6 +569,7 @@ const NavBar = () => {
                           key={subIndex}
                           className="font-[500] text-[1.2rem]"
                           onClick={() => setOpen((prev) => !prev)}
+                          state={{ previousPath: previousPath }}
                         >
                           {sublink.name}
                         </Link>

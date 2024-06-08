@@ -6,10 +6,12 @@ import ProductItem from '../components/ui/productItem'
 import Loader from '../components/ui/loader'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { Carousel } from 'react-responsive-carousel'
+import usePreviousPath from '../hooks/usePreviousPath'
 
 const SingleArtwork = () => {
   const { category, id } = useParams()
   const isHandcrafts = category === 'handcrafts'
+  const previousPath = usePreviousPath()
 
   const getBackgroundColor = () => {
     if (category == 'paintings') {
@@ -150,6 +152,7 @@ const SingleArtwork = () => {
                 to="/contact"
                 state={{
                   subject: `Hi Jinsook, I am messaging you regarding "${artwork.title}". `,
+                  previousPath: previousPath,
                 }}
                 className="rounded-full bg-jinsook-green hover:bg-white hover:border-2 border-jinsook-green transition duration-500 ease-in-out text-white hover:text-jinsook-green uppercase h-[40px] w-[100px] py-2 font-[600] text-[.8rem] px-4 flex items-center justify-center mt-3 hover:shadow-xl"
               >
@@ -197,6 +200,7 @@ const SingleArtwork = () => {
                 to="/contact"
                 state={{
                   subject: `Hi Jinsook, I am messaging you regarding "${artwork.title}". `,
+                  previousPath: previousPath,
                 }}
                 className="rounded-full bg-jinsook-green hover:bg-white hover:border-2 border-jinsook-green transition duration-500 ease-in-out text-white hover:text-jinsook-green uppercase h-[40px] w-[100px] py-2 font-[600] text-[.8rem] px-4 flex items-center justify-center"
               >
@@ -216,7 +220,11 @@ const SingleArtwork = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5  w-full justify-items-center">
               {Array.isArray(filteredartworkFromSameTheme) &&
                 filteredartworkFromSameTheme.map((artwork) => (
-                  <ProductItem item={artwork} key={artwork._id} />
+                  <ProductItem
+                    item={artwork}
+                    key={artwork._id}
+                    previousPath={previousPath}
+                  />
                 ))}
             </div>
           </div>

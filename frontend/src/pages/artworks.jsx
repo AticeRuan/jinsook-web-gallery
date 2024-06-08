@@ -4,10 +4,11 @@ import Loader from '../components/ui/loader'
 import PageTitle from '../components/ui/pageTitle'
 import useRead from '../hooks/useRead'
 import placeholder from '../assets/portrait.jpg'
+import usePreviousPath from '../hooks/usePreviousPath'
 const Artworks = () => {
   const { data, loading, error } = useRead('artworks')
   const headerArtworks = data?.filter((artwork) => artwork.header === true)
-
+  const previousPath = usePreviousPath()
   const paintingHeader = headerArtworks?.filter(
     (artwork) => artwork.category === 'paintings',
   )
@@ -60,6 +61,7 @@ const Artworks = () => {
               ? paintingHeader[0].imageUrl
               : placeholder
           }
+          previousPath={previousPath}
         />
         <CategoryCard
           category="illustrations"
@@ -70,6 +72,7 @@ const Artworks = () => {
               : placeholder
           }
           isReverse={true}
+          previousPath={previousPath}
         />
         <CategoryCard
           category="childrens-books"
@@ -79,6 +82,7 @@ const Artworks = () => {
               ? childrensBooksHeader[0].imageUrl
               : placeholder
           }
+          previousPath={previousPath}
         />
         <CategoryCard
           category="handcrafts"
@@ -89,6 +93,7 @@ const Artworks = () => {
               : placeholder
           }
           isReverse={true}
+          previousPath={previousPath}
         />
       </div>
       {/* small screens */}
@@ -104,6 +109,7 @@ const Artworks = () => {
               : placeholder
           }
           isSmallScreen={true}
+          previousPath={previousPath}
         />
         <CategoryCard
           category="illustrations"
@@ -114,6 +120,7 @@ const Artworks = () => {
               : placeholder
           }
           isSmallScreen={true}
+          previousPath={previousPath}
         />
         <CategoryCard
           category="childrens-books"
@@ -124,6 +131,7 @@ const Artworks = () => {
               : placeholder
           }
           isSmallScreen={true}
+          previousPath={previousPath}
         />
         <CategoryCard
           category="handcrafts"
@@ -134,6 +142,7 @@ const Artworks = () => {
               : placeholder
           }
           isSmallScreen={true}
+          previousPath={previousPath}
         />
       </div>
     </div>

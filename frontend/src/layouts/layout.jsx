@@ -3,12 +3,23 @@ import NavBar from '../components/navBar'
 import Footer from '../components/footer'
 import AdminTag from '../components/ui/adminTag'
 import { useAuthContext } from '../hooks/useAuthContext'
+// import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
 
 const Layout = () => {
   const location = useLocation()
   const { id } = useParams()
-
+  // const previousPath = location.state?.previousPath
   const currentPath = location.pathname
+
+  // const [previousPathToUse, setPreviousPathToUse] = useState('')
+  // const [currentPathToUse, setCurrentPathToUse] = useState('')
+
+  // useEffect(() => {
+  //   setPreviousPathToUse(previousPath)
+  //   setCurrentPathToUse(currentPath)
+  // }, [previousPath, currentPath])
+
   const { user } = useAuthContext()
 
   const { category } = useParams()
@@ -72,6 +83,78 @@ const Layout = () => {
       return 'bg-jinsook-light-pink'
     }
   }
+
+  // const getCircleOnePosition = (path) => {
+  //   let style = {}
+  //   if (currentPath && previousPath) {
+  //     if (path === '/') {
+  //       style = {
+  //         top: '-20rem',
+  //         right: 0,
+  //         transform: 'rotate(45deg)',
+  //         width: '25rem',
+  //         height: '25rem',
+  //       }
+  //     } else if (path === '/artworks') {
+  //       style = {
+  //         top: '-7rem',
+  //         left: '-10rem',
+  //         transform: 'rotate(75deg)',
+  //         width: '25rem',
+  //         height: '25rem',
+  //       }
+  //     } else if (path === '/about') {
+  //       style = {
+  //         bottom: '-30rem',
+  //         right: '-35rem',
+  //         width: '30rem',
+  //         height: '45rem',
+  //       }
+  //     } else if (path === '/contact') {
+  //       style = {
+  //         bottom: '-10rem',
+  //         left: 0,
+  //         transform: 'rotate(90deg)',
+  //         width: '25rem',
+  //         height: '25rem',
+  //       }
+  //     } else if (path === '/artworks/themes') {
+  //       style = {
+  //         top: '5rem',
+  //         left: '-10rem',
+  //         transform: 'rotate(90deg)',
+  //         width: '42rem',
+  //         height: '36rem',
+  //       }
+  //     } else if (path.includes(id)) {
+  //       style = {
+  //         top: '15rem',
+  //         right: '-15rem',
+  //         width: '50rem',
+  //         height: '60rem',
+  //         transform: 'rotate(45deg)',
+  //       }
+  //     } else if (path.includes('all')) {
+  //       style = {
+  //         top: '-40rem',
+  //         left: '25rem',
+  //         width: '70rem',
+  //         height: '60rem',
+  //         transform: 'rotate(-135deg)',
+  //       }
+  //     } else if (path.includes('/artworks/')) {
+  //       style = {
+  //         top: '-40rem',
+  //         right: '-20rem',
+  //         width: '70rem',
+  //         height: '60rem',
+  //         transform: 'rotate(-135deg)',
+  //       }
+  //     }
+  //   }
+
+  //   return { style }
+  // }
 
   const getCircleOnePosition = () => {
     const path = location.pathname
@@ -161,7 +244,7 @@ const Layout = () => {
       className={`w-screen h-fit ${getBackgroundColor()} flex justify-center overflow-x-hidden relative`}
     >
       {user && <AdminTag />}{' '}
-      <span
+      <motion.span
         className={`rounded-full z-[1] fixed ${getCircleColor()} transition-all duration-500 ease-in-out ${getCircleOnePosition()}`}
       />
       <span
