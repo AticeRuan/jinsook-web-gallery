@@ -64,8 +64,8 @@ const SingleCategory = () => {
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
         />
       </div>
-      <div className="rounded-xl bg-white h-fit  p-10 ">
-        <div className="flex flex-col items-center justify-center gap-10 mt-10 p-16 w-auto md:p-10">
+      <div className="rounded-xl bg-white h-fit  p-10 flex flex-col items-center justify-center gap-10 mt-10  w-auto md:p-10">
+        <div className="">
           {isHandcrafts
             ? filteredHandcraftsThemes.map((theme, index) => (
                 <div key={index} className="text-center border-gray-200 py-5">
