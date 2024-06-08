@@ -41,6 +41,7 @@ const AdminTag = () => {
   }
   const location = useLocation()
   const isDashboard = location.pathname === '/dashboard'
+  const countOfAllMessages = messages?.length
 
   return (
     <>
@@ -58,6 +59,7 @@ const AdminTag = () => {
             <MessageIcon
               count={newMessages ? newMessages.length : 0}
               isNewMessage={isNewMessage}
+              countWhole={countOfAllMessages}
             />
           </button>
           {!isDashboard && (
