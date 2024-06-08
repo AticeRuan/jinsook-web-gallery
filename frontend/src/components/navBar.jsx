@@ -254,7 +254,7 @@ const NavBar = () => {
         {/* menu list */}
         {open && (
           <motion.div
-            className={`fixed w-screen h-screen ${getBackgroundColor()}   flex flex-col items-center justify-start gap-8 top-0 left-0 pt-[50%] `}
+            className={`fixed w-screen min-h-screen ${getBackgroundColor()}   flex flex-col items-center justify-start gap-8 top-0 left-0 pt-[50%] `}
             variants={listVariants}
             initial="closed"
             animate="open"
