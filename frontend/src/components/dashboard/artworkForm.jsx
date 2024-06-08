@@ -332,7 +332,7 @@ const ArtworkForm = ({ item, onClose }) => {
             )}
             <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
               <label className="block font-bold  font-heading ">
-                Dimentions
+                Dimensions
               </label>{' '}
               <input
                 type="text"
@@ -379,7 +379,7 @@ const ArtworkForm = ({ item, onClose }) => {
                 onClick={onClose}
                 className="hover:bg-jinsook-yellow bg-white hover:text-white text-jinsook-green font-body font-[600] py-2 px-4 rounded-full focus:outline-none focus:shadow-outline hover:border-2 hover:border-jinsook-yellow border-jinsook-green transition duration-500 ease-in-out h-[40px] w-[120px] uppercase flex items-center justify-center"
               >
-                cancle
+                cancel
               </button>
               <button
                 type="submit"
