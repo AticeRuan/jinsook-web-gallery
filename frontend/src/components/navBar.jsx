@@ -285,7 +285,8 @@ const NavBar = () => {
     ) {
       setShowSearchContent(false)
       // setKeyword('');
-      // setSearchResults(null);
+      setSearchResults(null)
+      setHasSearched(false)
       setHasSearched(false)
     }
   }
@@ -299,7 +300,6 @@ const NavBar = () => {
   useEffect(() => {
     setTimeout(() => {
       if (showSearchContent === false) {
-        setSearchResults(null)
         setKeyword('')
       }
     }, 180000)
@@ -380,7 +380,7 @@ const NavBar = () => {
                         <img
                           src={artwork.imageUrl}
                           alt={artwork.title}
-                          className=" object-cover w-[200px] "
+                          className=" object-cover w-[200px] hover:scale-125 transform transition-all duration-1000 ease-in-out"
                         />
                       </div>
                       <p className="text-[0.8rem] font-[400] ">
@@ -602,56 +602,58 @@ const NavBar = () => {
                 />
               </div>
               <div className=" flex" style={searchContentStyle}>
-                <div className="m-3 flex flex-wrap w-full gap-4">
-                  {loading || !keyword ? (
-                    <div className="flex justify-center w-full">
-                      <div className="w-[20px] animate-spin flex justify-center  ">
-                        <LoadingBlue />
-                      </div>
-                    </div>
-                  ) : searchResults && searchResults.length > 0 ? (
-                    searchResults.map((artwork) => (
-                      <Link
-                        key={artwork._id}
-                        className=" flex flex-col items-center gap-1 "
-                        to={`/artworks/${artwork.category}/${artwork._id}`}
-                      >
-                        <div className="w-[100px] h-[100px] overflow-hidden  bg-jinsook-blue flex items-center justify-center ">
-                          <img
-                            src={artwork.imageUrl}
-                            alt={artwork.title}
-                            className=" object-cover w-[200px] "
-                          />
+                <div className=" w-full flex items-center justify-center">
+                  <div className="m-3 flex flex-wrap w-[220px] sm:w-fit gap-4 ">
+                    {loading || !keyword ? (
+                      <div className="flex justify-center w-full">
+                        <div className="w-[20px] animate-spin flex justify-center  ">
+                          <LoadingBlue />
                         </div>
-                        <p className="text-[0.8rem] font-[400] ">
-                          {artwork.title}
-                        </p>
-                      </Link>
-                    ))
-                  ) : hasSearched ? (
-                    <div className="flex flex-col items-center font-body font-[400] text-sm gap-1">
-                      {' '}
-                      <p className="text-justify w-full mb-1 font-[600]">
-                        No matching artworks found.
-                      </p>
-                      <p className="">
-                        Let me know your requirements, I&apos;ll be happy to
-                        create something for you.
-                      </p>
-                      <Link
-                        to="/contact"
-                        className="text-[0.7rem] font-[500] bg-jinsook-green hover:font-bold text-white rounded-full p-1 uppercase mt-2 hover:bg-white hover:text-jinsook-green hover:shadow-xl transition-all duration-300 ease-in-out border-2 border-jinsook-green"
-                      >
-                        Enquiry
-                      </Link>
-                    </div>
-                  ) : (
-                    <div className="flex justify-center w-full">
-                      <div className="w-[20px] animate-spin flex justify-center  ">
-                        <LoadingBlue />
                       </div>
-                    </div>
-                  )}
+                    ) : searchResults && searchResults.length > 0 ? (
+                      searchResults.map((artwork) => (
+                        <Link
+                          key={artwork._id}
+                          className=" flex flex-col items-center gap-1  "
+                          to={`/artworks/${artwork.category}/${artwork._id}`}
+                        >
+                          <div className="w-[100px] h-[100px] overflow-hidden  bg-jinsook-blue flex items-center justify-center ">
+                            <img
+                              src={artwork.imageUrl}
+                              alt={artwork.title}
+                              className=" object-cover w-[200px] hover:scale-125 transform transition-all duration-1000 ease-in-out"
+                            />
+                          </div>
+                          <p className="text-[0.8rem] font-[400] ">
+                            {artwork.title}
+                          </p>
+                        </Link>
+                      ))
+                    ) : hasSearched ? (
+                      <div className="flex flex-col items-center font-body font-[400] text-sm gap-1">
+                        {' '}
+                        <p className="text-justify w-full mb-1 font-[600]">
+                          No matching artworks found.
+                        </p>
+                        <p className="">
+                          Let me know your requirements, I&apos;ll be happy to
+                          create something for you.
+                        </p>
+                        <Link
+                          to="/contact"
+                          className="text-[0.7rem] font-[500] bg-jinsook-green hover:font-bold text-white rounded-full p-1 uppercase mt-2 hover:bg-white hover:text-jinsook-green hover:shadow-xl transition-all duration-300 ease-in-out border-2 border-jinsook-green"
+                        >
+                          Enquiry
+                        </Link>
+                      </div>
+                    ) : (
+                      <div className="flex justify-center w-full">
+                        <div className="w-[20px] animate-spin flex justify-center  ">
+                          <LoadingBlue />
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </label>{' '}
