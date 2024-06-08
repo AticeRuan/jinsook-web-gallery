@@ -217,7 +217,44 @@ const NavBar = () => {
 
   const handleSearch = () => {
     const results = searchArtworks(keyword)
-    setSearchResults(results)
+
+    const handcrafts = results?.filter(
+      (artwork) => artwork.category === 'handcrafts',
+    )
+    const handcraftTitles = [
+      ...new Set(handcrafts?.map((artwork) => artwork.title)),
+    ]
+
+    const firstHandcraftItems = handcraftTitles?.reduce((items, title) => {
+      const firstItem = artworks.find(
+        (art) => art.title === title && art.category === 'handcrafts',
+      )
+      if (firstItem) {
+        items[title] = firstItem
+      }
+      return items
+    }, {})
+
+    const finalResults = results
+      .map((art) => {
+        if (art.category === 'handcrafts' && firstHandcraftItems[art.title]) {
+          return firstHandcraftItems[art.title]
+        }
+        return art
+      })
+      .filter((art, index, self) => {
+        // Remove duplicate handcraft items while keeping the original structure
+        if (art.category === 'handcrafts') {
+          return (
+            self.findIndex(
+              (a) => a.title === art.title && a.category === 'handcrafts',
+            ) === index
+          )
+        }
+        return true
+      })
+
+    setSearchResults(finalResults)
     setHasSearched(true)
   }
 
@@ -253,6 +290,7 @@ const NavBar = () => {
     backdropFilter: combinedBackdropFilter(),
     height: showSearchContent ? '100vh' : 'fit-content',
     justifyContent: showSearchContent ? 'flex-start' : 'center',
+    WebkitBackdropFilter: combinedBackdropFilter(),
   }
 
   const searchBoxStyle = {
@@ -331,7 +369,7 @@ const NavBar = () => {
         >
           {' '}
           <label
-            className="flex rounded-2xl flex-col p-2 justify-start"
+            className="flex rounded-2xl flex-col p-2 justify-start max-h-[50vh] overflow-hidden w-[440px] "
             style={labelStyle}
             ref={largeScreenContainerRef}
           >
@@ -361,8 +399,11 @@ const NavBar = () => {
                 onKeyDown={handleKeyPress}
               />
             </div>
-            <div className=" flex" style={searchContentStyle}>
-              <div className="m-3 flex flex-wrap w-full gap-4">
+            <div
+              className=" flex h-full overflow-auto w-full items-center"
+              style={searchContentStyle}
+            >
+              <div className="m-3 flex flex-wrap w-full gap-4  h-full">
                 {loading || !keyword ? (
                   <div className="flex justify-center w-full">
                     <div className="w-[20px] animate-spin flex justify-center  ">
@@ -569,7 +610,7 @@ const NavBar = () => {
           >
             {' '}
             <label
-              className="flex rounded-2xl flex-col p-2 justify-start max-w-[80vw]"
+              className="flex rounded-2xl flex-col p-2 justify-start max-w-[80vw] max-h-[50vh] "
               style={labelStyle}
               ref={smallScreenContainerRef}
             >
@@ -601,7 +642,10 @@ const NavBar = () => {
                   onKeyDown={handleKeyPress}
                 />
               </div>
-              <div className=" flex" style={searchContentStyle}>
+              <div
+                className=" flex overflow-auto items-start"
+                style={searchContentStyle}
+              >
                 <div className=" w-full flex items-center justify-center">
                   <div className="m-3 flex flex-wrap w-[220px] sm:w-fit gap-4 ">
                     {loading || !keyword ? (
