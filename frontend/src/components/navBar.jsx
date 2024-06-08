@@ -300,18 +300,34 @@ const NavBar = () => {
     transition: 'all 500ms ease',
     height: showSearchContent ? '35px' : '0',
     width: showSearchContent ? '300px' : '0',
-    // backdropFilter: scrolled ? 'blur(10px)' : 'none',
-    // borderColor: scrolled ? 'transparent' : '#f5dacb',
+  }
+
+  const smallScreenSearchBoxStyle = {
+    transition: 'all 500ms ease',
+    height: showSearchContent ? '35px' : '0',
+    width: showSearchContent ? '300px' : '0',
+    left: scrolled ? '-5%' : '',
+    transform: showSearchContent ? 'translate(0,60px)' : 'translate(0,0)',
+    zIndex: showSearchContent ? '60' : '50',
   }
   const searchContentStyle = {
     transition: 'all 500ms ease',
     height: showSearchContent ? 'fit-content' : '0',
     opacity: showSearchContent ? 1 : 0,
   }
+
+  const setMarginLeft = () => {
+    if (scrolled && showSearchContent) {
+      return '38px'
+    } else {
+      return '0'
+    }
+  }
   const labelStyle = {
     transition: 'all 500ms ease',
     backgroundColor: showSearchContent ? 'white' : 'transparent',
     border: showSearchContent ? '1px solid #f5dacb' : 'none',
+    marginLeft: setMarginLeft(),
   }
 
   const largeScreenContainerRef = useRef(null)
@@ -607,18 +623,11 @@ const NavBar = () => {
         {!open && (
           <div
             className=" flex items-start w-[30px] flex-col  origin-top-left justify-start top-[2.5rem] left-[5%] md:hidden fixed "
-            style={
-              showSearchContent
-                ? {
-                    transform: 'translate(0,60px)',
-                    zIndex: '60',
-                  }
-                : {}
-            }
+            style={smallScreenSearchBoxStyle}
           >
             {' '}
             <label
-              className="flex rounded-2xl flex-col p-2 justify-start max-w-[80vw] max-h-[50vh] "
+              className="flex rounded-2xl flex-col p-2 justify-start max-w-[80vw] max-h-[50vh]   "
               style={labelStyle}
               ref={smallScreenContainerRef}
             >
@@ -629,12 +638,18 @@ const NavBar = () => {
                 }
               >
                 <div
-                  className="w-[30px] mr-2"
+                  className="w-[34px] mr-2 rounded-r-full p-1"
                   onClick={
                     !showSearchContent
                       ? () => setShowSearchContent(true)
                       : handleSearchButtonClick
                   }
+                  style={{
+                    backgroundColor: scrolled
+                      ? 'rgba(255,255,255,0.85)'
+                      : 'transparent',
+                    boxShadow: scrolled ? '0 0 30px 0 rgba(0,0,0,0.1)' : '',
+                  }}
                 >
                   <Search />
                 </div>
