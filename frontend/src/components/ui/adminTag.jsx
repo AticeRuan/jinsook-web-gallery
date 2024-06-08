@@ -47,7 +47,7 @@ const AdminTag = () => {
     <>
       {user && (
         <div
-          className={`flex gap-2 items-center flex-col justify-center rounded fixed   ${styleForDashboard()}  pt-1 pr-1 bg-jinsook-yellow group h-[40px] w-[40px]   duration-300 ease-in-out origin-left z-[100]`}
+          className={`flex gap-2 items-center flex-col justify-center rounded fixed   ${styleForDashboard()}  pt-1 pr-1 bg-jinsook-yellow group h-[40px] w-[40px]   duration-300 ease-in-out origin-left z-[100] hover:shadow-xl shadow-md`}
         >
           {!isDashboard && (
             <p className="text-sm capitalize hidden group-hover:block  duration-0 delay-300 ">

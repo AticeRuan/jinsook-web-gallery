@@ -20,7 +20,7 @@ const ProductItem = ({ item, forFeatured = false }) => {
       </Link>
       {forFeatured && (
         <Link to={`/artworks/${item.category}`}>
-          <p className="text-[0.8rem] font-body uppercase tracking-tighter">
+          <p className="text-[0.8rem] font-body uppercase tracking-tighter ">
             {categoryname(item.category)}
           </p>
         </Link>

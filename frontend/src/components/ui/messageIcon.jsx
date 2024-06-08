@@ -14,7 +14,9 @@ const MessageIcon = ({
   }
   return (
     <>
-      <div className={`w-[20px]  relative ${setColour()} cursor-pointer`}>
+      <div
+        className={`w-[20px]  relative ${setColour()} cursor-pointer hover:shadow-xl`}
+      >
         <Message color={isNewMessage ? '#947ac2' : '#9c99a1'} />
         {isLoading ? (
           <span className="text-white bg-jinsook-green absolute w-[15px] h-[15px] text-[.7rem] font-bold flex items-center justify-center rounded-full -top-2 -right-2">

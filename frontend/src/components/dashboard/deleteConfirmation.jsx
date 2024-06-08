@@ -8,14 +8,14 @@ const DeleteConfirmation = ({ show, onConfirm, onCancel, loading, text }) => {
             {' '}
             <button
               onClick={onCancel}
-              className="text-jinsook-green hover:text-white border-jinsook-green hover:border-jinsook-yellow hover:bg-jinsook-yellow rounded-full border-2 font-heading px-2 w-[50px] text-sm"
+              className="text-jinsook-green hover:text-white border-jinsook-green hover:border-jinsook-yellow hover:bg-jinsook-yellow rounded-full border-2 font-heading px-2 w-[50px] text-sm hover:shadow-xl"
             >
               No
             </button>
             <button
               onClick={onConfirm}
               disabled={loading}
-              className="text-white   bg-jinsook-green border-jinsook-green hover:border-red-700 hover:bg-red-700 rounded-full border-2 font-heading px-2 w-[50px] text-sm"
+              className="text-white   bg-jinsook-green border-jinsook-green hover:border-red-700 hover:bg-red-700 rounded-full border-2 font-heading px-2 w-fit text-sm hover:shadow-xl"
             >
               {loading ? 'Deleting...' : 'Yes'}
             </button>

@@ -29,7 +29,7 @@ const ArtworkItem = ({ item, onUpdateClick, onDeleteClick, isLoading }) => {
             </span>
           )}
         </div>{' '}
-        <div className="group-hover:flex gap-3 w-full absolute top-[40%] bg-[rgba(255,255,255,0.7)] hidden transition-all duration-500 ease-in-out items-center justify-center ">
+        <div className="group-hover:flex gap-3 w-full absolute top-[40%] bg-[rgba(255,255,255,0.7)] hidden transition-all duration-500 ease-in-out items-center justify-center  ">
           <button onClick={() => onUpdateClick(item)} className="h-[30px]">
             <Edit />
           </button>{' '}

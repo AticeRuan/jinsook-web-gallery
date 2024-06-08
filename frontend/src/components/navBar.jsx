@@ -1,7 +1,11 @@
 import { Link, useLocation, useParams } from 'react-router-dom'
 import logo from '../assets/logo_black&transparent.png'
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useArtworksContext } from '../hooks/useArtworksContext'
+import Search from './svg/search'
+import useRead from '../hooks/useRead'
+import LoadingBlue from './svg/loadingBlue'
 
 const links = [
   { name: 'Home', url: '/' },
@@ -162,7 +166,9 @@ const NavBar = () => {
   }
 
   const handleMouseEnter = (index) => {
-    setHoveredLink(index)
+    if (!showSearchContent) {
+      setHoveredLink(index)
+    }
   }
 
   const handleMouseLeave = () => {
@@ -183,14 +189,125 @@ const NavBar = () => {
     }
   }, [])
 
+  // search function logic start
+  const { artworks } = useArtworksContext()
+  const { loading } = useRead('artworks')
+  const [keyword, setKeyword] = useState('')
+  const [showSearchContent, setShowSearchContent] = useState(false)
+  const [searchResults, setSearchResults] = useState([])
+  const [hasSearched, setHasSearched] = useState(false)
+
+  const searchArtworks = (keyword) => {
+    if (keyword === '') {
+      return null
+    }
+
+    const lowerCaseKeyword = keyword.toLowerCase()
+
+    return artworks.filter((artwork) =>
+      ['theme', 'category', 'title', 'description'].some((field) =>
+        String(artwork[field]).toLowerCase().includes(lowerCaseKeyword),
+      ),
+    )
+  }
+
+  // useEffect(() => {
+  //   console.log('hasSearched', hasSearched)
+  // }, [hasSearched])
+
+  const handleSearch = () => {
+    const results = searchArtworks(keyword)
+    setSearchResults(results)
+    setHasSearched(true)
+  }
+
+  const handleChange = (e) => {
+    setKeyword(e.target.value)
+  }
+
+  const handleSearchButtonClick = () => {
+    handleSearch()
+    console.log('search button clicked')
+  }
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch()
+    }
+  }
+  const combinedBackdropFilter = () => {
+    if (scrolled && showSearchContent) {
+      return 'brightness(0.8) blur(8px)'
+    } else if (scrolled) {
+      return 'brightness(0.8) blur(8px)' // Apply filter only on scroll
+    } else if (showSearchContent) {
+      return 'brightness(0.8) blur(8px)' // Apply filter only for search content
+    } else {
+      return 'none'
+    }
+  }
+
   const containerStyle = {
     transition: 'all 1s ease',
     backgroundColor: scrolled ? 'rbga(255,255,255,1)' : 'none',
-    backdropFilter: scrolled ? 'blur(10px)' : 'none',
+    backdropFilter: combinedBackdropFilter(),
+    height: showSearchContent ? '100vh' : 'fit-content',
+    justifyContent: showSearchContent ? 'flex-start' : 'center',
   }
+
+  const searchBoxStyle = {
+    transition: 'all 500ms ease',
+    height: showSearchContent ? '35px' : '0',
+    width: showSearchContent ? '300px' : '0',
+    // backdropFilter: scrolled ? 'blur(10px)' : 'none',
+    // borderColor: scrolled ? 'transparent' : '#f5dacb',
+  }
+  const searchContentStyle = {
+    transition: 'all 500ms ease',
+    height: showSearchContent ? 'fit-content' : '0',
+    opacity: showSearchContent ? 1 : 0,
+  }
+  const labelStyle = {
+    transition: 'all 500ms ease',
+    backgroundColor: showSearchContent ? 'white' : 'transparent',
+    border: showSearchContent ? '1px solid #f5dacb' : 'none',
+  }
+
+  const largeScreenContainerRef = useRef(null)
+  const smallScreenContainerRef = useRef(null)
+
+  const handleClickOutside = (event) => {
+    if (
+      smallScreenContainerRef.current &&
+      !smallScreenContainerRef.current.contains(event.target) &&
+      largeScreenContainerRef.current &&
+      !largeScreenContainerRef.current.contains(event.target)
+    ) {
+      setShowSearchContent(false)
+      // setKeyword('');
+      // setSearchResults(null);
+      setHasSearched(false)
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener('click', handleClickOutside)
+
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [])
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (showSearchContent === false) {
+        setSearchResults(null)
+        setKeyword('')
+      }
+    }, 180000)
+  }, [showSearchContent])
+
   return (
     <nav
-      className="font-heading font-bold text-[1.5rem] fixed top-0 w-screen md:h-[150px] flex items-center justify-center z-50 pr-10 xl:pr-0"
+      className="font-heading font-bold text-[1.5rem] fixed top-0 w-screen md:h-[150px] flex items-center justify-center z-50 pr-10 xl:pr-0 flex-col md:pt-6"
       style={containerStyle}
     >
       {/* large screen menu */}
@@ -199,6 +316,106 @@ const NavBar = () => {
         <Link className="w-[100px] ml-10" to="/">
           <img src={logo} width={178} height={161} />
         </Link>
+        {/* search bar */}
+        <div
+          className=" md:flex items-start w-[30px] flex-col  origin-top-left justify-start top-[70px] left-[30%] hidden "
+          style={
+            showSearchContent
+              ? {
+                  transform: 'translate(0,60px)',
+                  zIndex: '60',
+                  position: 'fixed',
+                }
+              : {}
+          }
+        >
+          {' '}
+          <label
+            className="flex rounded-2xl flex-col p-2 justify-start"
+            style={labelStyle}
+            ref={largeScreenContainerRef}
+          >
+            <div
+              className="flex cursor-pointer gap-2 px-2"
+              style={showSearchContent ? { flexDirection: 'row-reverse' } : {}}
+            >
+              <div
+                className="w-[30px] mr-2"
+                onClick={
+                  !showSearchContent
+                    ? () => setShowSearchContent(true)
+                    : handleSearchButtonClick
+                }
+              >
+                <Search />
+              </div>
+              <input
+                name="keyword"
+                value={keyword}
+                onChange={handleChange}
+                className=" bg-white w-[35px] h-[30px] focus:w-[300px]    focus:border-gray-300 border-none outline-none focus:outline-none text-[1rem] font-[400] font-body  px-3 rounded-xl"
+                style={searchBoxStyle}
+                placeholder={
+                  showSearchContent ? 'What are you looking for?' : ''
+                }
+                onKeyDown={handleKeyPress}
+              />
+            </div>
+            <div className=" flex" style={searchContentStyle}>
+              <div className="m-3 flex flex-wrap w-full gap-4">
+                {loading || !keyword ? (
+                  <div className="flex justify-center w-full">
+                    <div className="w-[20px] animate-spin flex justify-center  ">
+                      <LoadingBlue />
+                    </div>
+                  </div>
+                ) : searchResults && searchResults.length > 0 ? (
+                  searchResults.map((artwork) => (
+                    <Link
+                      key={artwork._id}
+                      className=" flex flex-col items-center gap-1 "
+                      to={`/artworks/${artwork.category}/${artwork._id}`}
+                    >
+                      <div className="w-[100px] h-[100px] overflow-hidden  bg-jinsook-blue flex items-center justify-center ">
+                        <img
+                          src={artwork.imageUrl}
+                          alt={artwork.title}
+                          className=" object-cover w-[200px] "
+                        />
+                      </div>
+                      <p className="text-[0.8rem] font-[400] ">
+                        {artwork.title}
+                      </p>
+                    </Link>
+                  ))
+                ) : hasSearched ? (
+                  <div className="flex flex-col items-center font-body font-[400] text-sm gap-1">
+                    {' '}
+                    <p className="text-justify w-full mb-1 font-[600]">
+                      No matching artworks found.
+                    </p>
+                    <p className="">
+                      Let me know your requirements, I&apos;ll be happy to
+                      create something for you.
+                    </p>
+                    <Link
+                      to="/contact"
+                      className="text-[0.7rem] font-[500] bg-jinsook-green hover:font-bold text-white rounded-full p-1 uppercase mt-2 hover:bg-white hover:text-jinsook-green hover:shadow-xl transition-all duration-300 ease-in-out border-2 border-jinsook-green"
+                    >
+                      Enquiry
+                    </Link>
+                  </div>
+                ) : (
+                  <div className="flex justify-center w-full">
+                    <div className="w-[20px] animate-spin flex justify-center  ">
+                      <LoadingBlue />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </label>{' '}
+        </div>{' '}
         {/* large screen links */}
         <div className="flex items-center gap-10 lg:gap-16">
           {links.map((link, index) => (
@@ -210,13 +427,13 @@ const NavBar = () => {
             >
               <Link
                 to={link.url}
-                className="transition-colors duration-200 ease-in-out text-lg lg:text-[1.5rem]"
+                className="transition-colors duration-200 ease-in-out text-lg lg:text-[1.5rem] "
               >
-                <div className="flex gap-2 group items-center">
+                <div className="flex gap-2 group items-center ">
                   {link.name}
                   {link.sublinks && (
                     <p
-                      className="font-body scale-x-150 transition-transform duration-50 ease-in-out"
+                      className="font-body scale-x-150 transition-transform duration-50 ease-in-out "
                       style={{
                         transform:
                           hoveredLink === index
@@ -248,8 +465,8 @@ const NavBar = () => {
           ))}
         </div>
       </div>
-      {/* Responsive menu */}
 
+      {/* Responsive menu */}
       <div className="lg:hidden flex items-center justify-between">
         {/* menu list */}
         {open && (
@@ -337,6 +554,109 @@ const NavBar = () => {
             animate={open ? 'open' : 'closed'}
           ></motion.div>
         </button>
+        {/* search bar */}
+        {!open && (
+          <div
+            className=" flex items-start w-[30px] flex-col  origin-top-left justify-start top-[2.5rem] left-[5%] md:hidden fixed "
+            style={
+              showSearchContent
+                ? {
+                    transform: 'translate(0,60px)',
+                    zIndex: '60',
+                  }
+                : {}
+            }
+          >
+            {' '}
+            <label
+              className="flex rounded-2xl flex-col p-2 justify-start max-w-[80vw]"
+              style={labelStyle}
+              ref={smallScreenContainerRef}
+            >
+              <div
+                className="flex cursor-pointer gap-2 px-2"
+                style={
+                  showSearchContent ? { flexDirection: 'row-reverse' } : {}
+                }
+              >
+                <div
+                  className="w-[30px] mr-2"
+                  onClick={
+                    !showSearchContent
+                      ? () => setShowSearchContent(true)
+                      : handleSearchButtonClick
+                  }
+                >
+                  <Search />
+                </div>
+                <input
+                  name="keyword"
+                  value={keyword}
+                  onChange={handleChange}
+                  className=" bg-white w-[35px] h-[30px] focus:w-[200px]    focus:border-gray-300 border-none outline-none focus:outline-none text-[0.8rem] font-[400] font-body  px-3 rounded-xl"
+                  style={searchBoxStyle}
+                  placeholder={
+                    showSearchContent ? 'What are you looking for?' : ''
+                  }
+                  onKeyDown={handleKeyPress}
+                />
+              </div>
+              <div className=" flex" style={searchContentStyle}>
+                <div className="m-3 flex flex-wrap w-full gap-4">
+                  {loading || !keyword ? (
+                    <div className="flex justify-center w-full">
+                      <div className="w-[20px] animate-spin flex justify-center  ">
+                        <LoadingBlue />
+                      </div>
+                    </div>
+                  ) : searchResults && searchResults.length > 0 ? (
+                    searchResults.map((artwork) => (
+                      <Link
+                        key={artwork._id}
+                        className=" flex flex-col items-center gap-1 "
+                        to={`/artworks/${artwork.category}/${artwork._id}`}
+                      >
+                        <div className="w-[100px] h-[100px] overflow-hidden  bg-jinsook-blue flex items-center justify-center ">
+                          <img
+                            src={artwork.imageUrl}
+                            alt={artwork.title}
+                            className=" object-cover w-[200px] "
+                          />
+                        </div>
+                        <p className="text-[0.8rem] font-[400] ">
+                          {artwork.title}
+                        </p>
+                      </Link>
+                    ))
+                  ) : hasSearched ? (
+                    <div className="flex flex-col items-center font-body font-[400] text-sm gap-1">
+                      {' '}
+                      <p className="text-justify w-full mb-1 font-[600]">
+                        No matching artworks found.
+                      </p>
+                      <p className="">
+                        Let me know your requirements, I&apos;ll be happy to
+                        create something for you.
+                      </p>
+                      <Link
+                        to="/contact"
+                        className="text-[0.7rem] font-[500] bg-jinsook-green hover:font-bold text-white rounded-full p-1 uppercase mt-2 hover:bg-white hover:text-jinsook-green hover:shadow-xl transition-all duration-300 ease-in-out border-2 border-jinsook-green"
+                      >
+                        Enquiry
+                      </Link>
+                    </div>
+                  ) : (
+                    <div className="flex justify-center w-full">
+                      <div className="w-[20px] animate-spin flex justify-center  ">
+                        <LoadingBlue />
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </label>{' '}
+          </div>
+        )}
       </div>
     </nav>
   )

@@ -151,7 +151,7 @@ const SingleArtwork = () => {
                 state={{
                   subject: `Hi Jinsook, I am messaging you regarding "${artwork.title}". `,
                 }}
-                className="rounded-full bg-jinsook-green hover:bg-white hover:border-2 border-jinsook-green transition duration-500 ease-in-out text-white hover:text-jinsook-green uppercase h-[40px] w-[100px] py-2 font-[600] text-[.8rem] px-4 flex items-center justify-center mt-3"
+                className="rounded-full bg-jinsook-green hover:bg-white hover:border-2 border-jinsook-green transition duration-500 ease-in-out text-white hover:text-jinsook-green uppercase h-[40px] w-[100px] py-2 font-[600] text-[.8rem] px-4 flex items-center justify-center mt-3 hover:shadow-xl"
               >
                 Enquiry
               </Link>

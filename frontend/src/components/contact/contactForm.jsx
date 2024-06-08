@@ -130,7 +130,7 @@ const ContactForm = ({ subject }) => {
         <div className="flex items-center justify-between">
           <button
             type="submit"
-            className="bg-jinsook-green hover:bg-white text-white hover:text-jinsook-green font-body font-[700] py-2 px-4 rounded-full focus:outline-none focus:shadow-outline hover:border-2 border-jinsook-green transition duration-500 ease-in-out h-[50px] w-[120px] uppercase text-center"
+            className="bg-jinsook-green hover:bg-white text-white hover:text-jinsook-green font-body font-[700] py-2 px-4 rounded-full focus:outline-none focus:shadow-outline hover:border-2 border-jinsook-green transition duration-500 ease-in-out h-[50px] w-[120px] uppercase text-center hover:shadow-xl"
           >
             Submit
           </button>

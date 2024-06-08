@@ -1,7 +1,7 @@
 import Email from './svg/email'
 import Facebook from './svg/facebook'
 import Instagram from './svg/instagram'
-import { useLocation, useParams } from 'react-router-dom'
+import { Link, useLocation, useParams } from 'react-router-dom'
 const Footer = () => {
   const year = new Date().getFullYear()
   const location = useLocation()
@@ -35,18 +35,18 @@ const Footer = () => {
     <footer className="h-[120px] w-screen xl:w-[1000px] flex items-center justify-center py-3 relative z-10">
       <div className="flex items-center flex-col  gap-2">
         <div className="flex items-center justify-center gap-3">
-          <div className="w-[20px] md:w-[30px]">
+          <Link className="w-[20px] md:w-[30px] hover:shadow-xl" to="#">
             <Instagram color={getForegroundColor()} />
-          </div>
-          <div className="w-[20px] md:w-[30px]">
+          </Link>
+          <Link className="w-[20px] md:w-[30px] hover:shadow-xl  " to="#">
             <Facebook color={getForegroundColor()} />
-          </div>
-          <div className="w-[20px] md:w-[30px]">
+          </Link>
+          <div className="w-[20px] md:w-[30px] hover:shadow-xl" to="#">
             <Email color={getForegroundColor()} />
           </div>
         </div>
         <p className="font-heading text-xs tracking-[0.1rem] sm:tracking-[0.2rem] font-[500]">
-          © {year} Jinsook Taylor All Right Reserved
+          © {year} Jinsook Taylor All Right Reserved | Powered by Chill Otters
         </p>
       </div>
     </footer>
