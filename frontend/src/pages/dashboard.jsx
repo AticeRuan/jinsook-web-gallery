@@ -11,7 +11,7 @@ import AdminTag from '../components/ui/adminTag'
 const Dashboard = () => {
   const { user, isExpired } = useAuthContext()
 
-  useRead('artworks')
+  const { loading } = useRead('artworks')
   const { artworks } = useArtworksContext()
 
   const paintings = artworks?.filter((artwork) => {
@@ -113,6 +113,7 @@ const Dashboard = () => {
           illustrationsThemes={illustrationsThemes}
           booksThemes={booksThemes}
           handcraftsThemes={handcraftsThemes}
+          isLoading={loading}
         />
       </div>
       <AdminTag />

@@ -18,6 +18,7 @@ const DashboardMain = ({
   illustrationsThemes,
   booksThemes,
   handcraftsThemes,
+  isLoading,
 }) => {
   const [showUpdateModal, setShowUpdateModal] = useState(false)
   const [showCreateModal, setShowCreateModal] = useState(false)
@@ -28,7 +29,6 @@ const DashboardMain = ({
   const [currentThemes, setCurrentThemes] = useState(paintingsThemes)
   const [activeCategory, setActiveCategory] = useState('paintings')
 
-  //   const [deleteItemId, setDeleteItemId] = useState(null)
   const { deleteData, loading: deleteLoading } = useDelete()
   const isEmpty = currentThemes && currentThemes.length === 0
   const handleCreateClick = () => {
@@ -36,10 +36,34 @@ const DashboardMain = ({
   }
 
   useEffect(() => {
-    if (paintings) {
-      setCurrentData(paintings)
+    const categoryMapping = {
+      paintings: { data: paintings, themes: paintingsThemes },
+      illustrations: { data: illustrations, themes: illustrationsThemes },
+      books: { data: books, themes: booksThemes },
+      handcrafts: { data: handcrafts, themes: handcraftsThemes },
+      featured: { data: featured, themes: [] },
+      headers: { data: headers, themes: [] },
     }
-  }, [paintings])
+    if (categoryMapping[activeCategory]) {
+      setCurrentData(categoryMapping[activeCategory].data)
+      setCurrentThemes(categoryMapping[activeCategory].themes)
+    } else {
+      setCurrentData(paintings)
+      setCurrentThemes(paintingsThemes)
+    }
+  }, [
+    paintings,
+    illustrations,
+    books,
+    handcrafts,
+    featured,
+    headers,
+    paintingsThemes,
+    illustrationsThemes,
+    booksThemes,
+    handcraftsThemes,
+    activeCategory,
+  ])
 
   const handleCloseCreateModal = () => {
     setShowCreateModal(false)
@@ -249,6 +273,7 @@ const DashboardMain = ({
                   user={user}
                   onUpdateClick={handleUpdateClick}
                   onDeleteClick={handleDeleteClick}
+                  isLoading={isLoading}
                 />
               ))}
           </div>
@@ -260,7 +285,11 @@ const DashboardMain = ({
         )}
         {showUpdateModal && selectedItem && (
           <div className="">
-            <ArtworkForm item={selectedItem} onClose={handleCloseUpdateModal} />
+            <ArtworkForm
+              item={selectedItem}
+              onClose={handleCloseUpdateModal}
+              isLoading={isLoading}
+            />
           </div>
         )}
         <DeleteConfirmation

@@ -1,13 +1,13 @@
 import useRead from '../../hooks/useRead'
 import useUpdate from '../../hooks/useUpdate'
 import { useState, useEffect } from 'react'
-import Loader from '../ui/loader'
 import { useMessagesContext } from '../../hooks/useMessageContext'
 import useDelete from '../../hooks/useDelete'
 import DeleteConfirmation from '../dashboard/deleteConfirmation'
 import dateformat, { masks } from 'dateformat'
 import Delete from '../svg/delete'
 import { Link } from 'react-router-dom'
+import Loading from '../svg/loading'
 
 const ViewMessage = ({ onClose }) => {
   const { loading, data: fetchedMessages } = useRead('messages')
@@ -98,7 +98,9 @@ const ViewMessage = ({ onClose }) => {
         <div className="w-full flex gap-3 overflow-auto h-full">
           {loading && (
             <div className="flex  w-[50%] h-full  bg-white  items-center justify-center ">
-              <Loader />
+              <div className="w-[50px]">
+                <Loading />
+              </div>
             </div>
           )}
 

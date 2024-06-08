@@ -13,7 +13,7 @@ const AdminTag = () => {
   const [islogout, setIsLogout] = useState(false)
   const { logout } = useLogout()
 
-  useRead('messages')
+  const { loading } = useRead('messages')
   const { messages } = useMessagesContext()
   const newMessages = messages?.filter((message) => message.unread === true)
   const isNewMessage = newMessages?.length > 0
@@ -60,6 +60,7 @@ const AdminTag = () => {
               count={newMessages ? newMessages.length : 0}
               isNewMessage={isNewMessage}
               countWhole={countOfAllMessages}
+              isLoading={loading}
             />
           </button>
           {!isDashboard && (
