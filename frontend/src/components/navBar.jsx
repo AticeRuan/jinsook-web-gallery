@@ -254,7 +254,7 @@ const NavBar = () => {
         {/* menu list */}
         {open && (
           <motion.div
-            className={`fixed w-screen min-h-screen ${getBackgroundColor()}   flex flex-col items-center justify-start gap-8 top-0 left-0 pt-[50%] `}
+            className={`fixed w-screen h-full ${getBackgroundColor()}   flex flex-col items-center justify-start gap-8 top-0 left-0 py-[50%] overflow-y-scroll overflow-x-hidden `}
             variants={listVariants}
             initial="closed"
             animate="open"
@@ -262,13 +262,13 @@ const NavBar = () => {
             {links.map((link) => (
               <motion.div key={link.url} variants={listItemVariants}>
                 <div
-                  className="font-body text-4xl"
+                  className="font-body text-3xl"
                   style={{ color: getForegroundColor() }}
                 >
                   <div className="flex gap-3 group">
                     {link.sublinks && (
                       <button
-                        className="font-body rotate-180 scale-x-[180%] text-[1.5rem] transition-transform duration-50 ease-in-out"
+                        className="font-body rotate-180 scale-x-[180%] text-[1.5rem] transition-transform duration-50 ease-in-out "
                         onClick={() => setSublinksOpen((prev) => !prev)}
                         style={{
                           transform: sublinksOpen
@@ -288,13 +288,14 @@ const NavBar = () => {
                           setSublinksOpen((prev) => !prev)
                         }
                       }}
+                      className="whitespace-nowrap"
                     >
                       {link.name}
                     </Link>
                   </div>
                   {link.sublinks && sublinksOpen && (
                     <motion.div
-                      className="flex flex-col items-start p-5 gap-2"
+                      className="flex flex-col items-start p-5 gap-2 "
                       variants={listItemVariants}
                     >
                       {link.sublinks.map((sublink, subIndex) => (
