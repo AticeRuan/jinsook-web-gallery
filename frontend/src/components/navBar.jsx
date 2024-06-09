@@ -306,7 +306,7 @@ const NavBar = () => {
     transition: 'all 500ms ease',
     height: showSearchContent ? '35px' : '0',
     width: showSearchContent ? '300px' : '0',
-    left: scrolled ? '-5%' : '',
+    left: scrolled ? '-13px' : '',
     transform: showSearchContent ? 'translate(0,60px)' : 'translate(0,0)',
     zIndex: showSearchContent ? '60' : '50',
   }
@@ -318,7 +318,7 @@ const NavBar = () => {
 
   const setMarginLeft = () => {
     if (scrolled && showSearchContent) {
-      return '38px'
+      return '39px'
     } else {
       return '0'
     }
@@ -638,7 +638,7 @@ const NavBar = () => {
                 }
               >
                 <div
-                  className="w-[34px] mr-2 rounded-r-full p-1"
+                  className=" mr-2 rounded-r-full p-1"
                   onClick={
                     !showSearchContent
                       ? () => setShowSearchContent(true)
@@ -653,6 +653,8 @@ const NavBar = () => {
                         ? '0 0 30px 0 rgba(0,0,0,0.1)'
                         : '',
                     transition: scrolled ? 'all 500ms 300ms ease' : '',
+                    width: showSearchContent ? '32px' : '30px',
+                    padding: showSearchContent ? '0' : '4px',
                   }}
                 >
                   <Search />
