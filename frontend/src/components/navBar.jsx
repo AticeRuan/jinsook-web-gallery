@@ -649,6 +649,7 @@ const NavBar = () => {
                       ? 'rgba(255,255,255,0.85)'
                       : 'transparent',
                     boxShadow: scrolled ? '0 0 30px 0 rgba(0,0,0,0.1)' : '',
+                    transition: scrolled ? 'all 500ms 300ms ease' : '',
                   }}
                 >
                   <Search />
