@@ -5,12 +5,22 @@ import AdminTag from '../components/ui/adminTag'
 import { useAuthContext } from '../hooks/useAuthContext'
 // import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
+import { useArtworksContext } from '../hooks/useArtworksContext'
 
 const Layout = () => {
   const location = useLocation()
   const { id } = useParams()
   // const previousPath = location.state?.previousPath
   const currentPath = location.pathname
+  const { artworks } = useArtworksContext()
+
+  const getArtworkName = () => {
+    if (id && Array.isArray(artworks)) {
+      const artwork = artworks.find((artwork) => artwork._id === id)
+      return artwork ? artwork.title : 'Artwork not found'
+    }
+  }
 
   // const [previousPathToUse, setPreviousPathToUse] = useState('')
   // const [currentPathToUse, setCurrentPathToUse] = useState('')
@@ -81,6 +91,65 @@ const Layout = () => {
       return 'bg-jinsook-yellow'
     } else {
       return 'bg-jinsook-light-pink'
+    }
+  }
+
+  const setBreadcrumb = () => {
+    if (currentPath === '/') {
+      return 'home'
+    } else if (currentPath === '/about') {
+      return (
+        <div className="flex gap-1">
+          <Link to="/">home /</Link>
+          <p>about</p>
+        </div>
+      )
+    } else if (currentPath === '/contact') {
+      return (
+        <div className="flex gap-1">
+          <Link to="/">home /</Link>
+          <p>contact</p>
+        </div>
+      )
+    } else if (currentPath === '/artworks') {
+      return (
+        <div className="flex gap-1">
+          <Link to="/">home /</Link>
+          <p>all categories</p>
+        </div>
+      )
+    } else if (currentPath.endsWith(id)) {
+      return (
+        <div className="flex gap-1">
+          <Link to="/">home /</Link>
+          <Link to="/artworks">artworks /</Link>
+          <Link to={`/artworks/${category}`}>{category} /</Link>
+          {getArtworkName(id)}
+        </div>
+      )
+    } else if (currentPath.includes(category)) {
+      return (
+        <div className="flex gap-1">
+          {' '}
+          <Link to="/">home /</Link>
+          <Link to="/artworks">artworks /</Link>
+          <p>{category}</p>
+        </div>
+      )
+    } else if (currentPath.includes('all')) {
+      return (
+        <div className="flex gap-1">
+          <Link to="/">home /</Link>
+          <p>all artworks</p>
+        </div>
+      )
+    } else if (currentPath.includes('themes')) {
+      return (
+        <div className="flex gap-1">
+          <Link to="/">home /</Link>
+          <p>all themes</p>
+        </div>
+      )
     }
   }
 
@@ -258,6 +327,10 @@ const Layout = () => {
       />
       <NavBar />
       <div className="xl:w-[1000px] w-full flex flex-col items-center">
+        {' '}
+        <div className="xl:w-[1000px] w-full mt-[90px] md:mt-[160px]  relative z-[60] px-20 xl:px-2 flex items-center -mb-[80px] md:-mb-[180px] tracking-wider font-body uppercase font-[500] text-xs">
+          {setBreadcrumb()}
+        </div>
         <Outlet />
         <Footer />
       </div>

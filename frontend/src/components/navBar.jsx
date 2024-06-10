@@ -364,7 +364,7 @@ const NavBar = () => {
 
   return (
     <nav
-      className="font-heading font-bold text-[1.5rem] fixed top-0 w-screen md:h-[150px] flex items-center justify-center z-50 pr-10 xl:pr-0 flex-col md:pt-6"
+      className="font-heading font-bold text-[1.5rem] fixed top-0 w-screen md:h-[150px] flex items-center justify-center z-[100] pr-10 xl:pr-0 flex-col md:pt-6 "
       style={containerStyle}
     >
       {/* large screen menu */}
