@@ -345,9 +345,14 @@ const Layout = () => {
       <div className="xl:w-[1000px] w-full flex flex-col items-center">
         {' '}
         {/* breadcrumbs */}
-        <div className="xl:w-[1000px] w-full mt-[90px] md:mt-[160px]  relative z-[60] pl-3 sm:px-20 xl:px-2 flex items-center -mb-[80px] md:-mb-[180px] tracking-wider font-body uppercase font-[500] text-[0.6rem] sm:text-xs whitespace-nowrap flex-wrap">
+        <motion.div
+          className="xl:w-[1000px] w-full mt-[90px] md:mt-[160px]  relative z-[60] pl-3 sm:px-20 xl:px-2 flex items-center -mb-[80px] md:-mb-[180px] tracking-wider font-body uppercase font-[500] text-[0.6rem] sm:text-xs whitespace-nowrap flex-wrap"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -20 }}
+        >
           {setBreadcrumb()}
-        </div>
+        </motion.div>
         <Outlet />
         <Footer />
       </div>
