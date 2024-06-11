@@ -7,6 +7,7 @@ import logo from '../assets/logo_white&transparent.png'
 import logoBlack from '../assets/logo_black&transparent.png'
 import { Link } from 'react-router-dom'
 import AdminTag from '../components/ui/adminTag'
+import { motion } from 'framer-motion'
 
 const Dashboard = () => {
   const { user, isExpired } = useAuthContext()
@@ -75,7 +76,13 @@ const Dashboard = () => {
     )
   }
   return (
-    <div className="overflow-hidden w-screen h-screen  bg-jinsook-blue flex items-center justify-center relative">
+    <motion.div
+      className="overflow-hidden w-screen h-screen  bg-jinsook-blue flex items-center justify-center relative"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       {' '}
       <div className="fixed z-[1] top-[10vh] left-[1vw] lg:left-[5vw] xl:left-[20vw] ">
         <span
@@ -117,7 +124,7 @@ const Dashboard = () => {
         />
       </div>
       <AdminTag />
-    </div>
+    </motion.div>
   )
 }
 

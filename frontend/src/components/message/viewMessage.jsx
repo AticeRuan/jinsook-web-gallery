@@ -89,7 +89,7 @@ const ViewMessage = ({ onClose }) => {
 
   return (
     <section className="fixed top-0 left-0 flex  w-screen h-screen backdrop-contrast-[0.25] items-center flex-col justify-center z-10 ">
-      <div className="overflow-hidden w-[80%] lg:w-[50%] xl:w-[45%] 2xl:w-[35%] h-[50%] flex bg-jinsook-blue rounded-3xl flex-col pt-4 pb-6 px-6 gap-2 ">
+      <div className="overflow-hidden w-[95%] h-[80%] lg:w-[50%] xl:w-[45%] 2xl:w-[35%] lg:h-[50%] flex bg-jinsook-blue rounded-3xl flex-col pt-4 pb-6 px-6 gap-2 ">
         <div
           className="flex w-full cursor-pointer justify-end"
           onClick={onClose}

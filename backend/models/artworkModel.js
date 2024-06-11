@@ -10,7 +10,7 @@ const ArtworkSchema = new Schema(
       enum: ['paintings', 'illustrations', 'childrens-books', 'handcrafts'],
       required: true,
     },
-    price: { type: String },
+    price: { type: Number },
     description: { type: String },
     medium: { type: String },
     dimensions: { type: String },

@@ -9,56 +9,92 @@ import useRead from '../hooks/useRead'
 import Loader from '../components/ui/loader'
 import { useArtworksContext } from '../hooks/useArtworksContext'
 import usePreviousPath from '../hooks/usePreviousPath'
+import { motion } from 'framer-motion'
+// import { useInView } from 'framer-motion'
+// import { useRef } from 'react'
+
 const Home = () => {
   const { loading, error } = useRead('artworks')
   const { artworks } = useArtworksContext()
   const previousPath = usePreviousPath()
+  // framer motion logic start here
+  // const introRef = useRef()
+  // const introInView = useInView(introRef)
+
   if (loading)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] flex items-center z-10 relative justify-center">
+      <motion.div
+        className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] flex items-center z-10 relative justify-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1 }}
+      >
         <Loader />
-      </div>
+      </motion.div>
     )
   if (error)
     return (
       <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] flex items-center z-10 relative justify-center">
-        Error: {error.message}
+        Something went wrong...
       </div>
     )
   const featuredArtworks =
     artworks && artworks.filter((artwork) => artwork.featured === true)
 
   return (
-    <section className="max-w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative">
-      <div className="mt-20  flex items-center justify-start flex-col ">
+    <motion.section
+      className="max-w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
+    >
+      <motion.div
+        className="mt-20  flex items-center justify-start flex-col "
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.8 }}
+      >
         <PageTitle
           heading="Jinsook Taylor"
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus."
         />
-      </div>
+      </motion.div>
       {/* owner's title section */}
-      <div className="mt-20 flex flex-col justify-start">
-        <Heading text="Artistry & Storytelling" />
-        <div className="bg-white rounded-lg flex items-center justify-center md:gap-20 gap-10 flex-col md:flex-row mt-10 px-10 py-28 w-[80vw] md:w-auto">
-          <IntroComponent
-            imgUrl={intro01}
-            heading="Hand-drawn Artworks"
-            desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim"
-          />
-          <IntroComponent
-            imgUrl={intro02}
-            heading="Handcrafts"
-            desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim"
-          />
-          <IntroComponent
-            imgUrl={intro03}
-            heading="Children's Books"
-            desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim"
-          />
-        </div>
+      <div>
+        <motion.div
+          className="mt-20 flex flex-col justify-start"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1.3 }}
+        >
+          <Heading text="Artistry & Storytelling" />
+          <div className="bg-white rounded-lg flex items-center justify-center md:gap-20 gap-10 flex-col md:flex-row mt-10 px-10 py-28 w-[80vw] md:w-auto">
+            <IntroComponent
+              imgUrl={intro01}
+              heading="Hand-drawn Artworks"
+              desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim"
+            />
+            <IntroComponent
+              imgUrl={intro02}
+              heading="Handcrafts"
+              desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim"
+            />
+            <IntroComponent
+              imgUrl={intro03}
+              heading="Children's Books"
+              desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim"
+            />
+          </div>
+        </motion.div>
       </div>
       {/* feature products */}
-      <div>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 1.5 }}
+      >
         <Heading text="Featured Artworks" />
         <div className="bg-white rounded-lg grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-10 p-16 sm:p-20 w-auto md:p-10 gap-8 md:gap-20 place-content-center">
           {featuredArtworks.map((artwork) => (
@@ -70,8 +106,8 @@ const Home = () => {
             />
           ))}
         </div>
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   )
 }
 

@@ -7,6 +7,7 @@ import Loader from '../components/ui/loader'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { Carousel } from 'react-responsive-carousel'
 import usePreviousPath from '../hooks/usePreviousPath'
+import { motion } from 'framer-motion'
 
 const SingleArtwork = () => {
   const { category, id } = useParams()
@@ -78,13 +79,29 @@ const SingleArtwork = () => {
       </div>
     )
   return (
-    <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center z-10 relative">
+    <motion.section
+      className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center z-10 relative"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       {/* heading */}
-      <div className="mt-10 text-left w-full">
+      <motion.div
+        className="mt-10 text-left w-full"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.8 }}
+      >
         <PageTitle heading={getCategoryName(category)} />
-      </div>
+      </motion.div>
       {/* details */}
-      <div className="rounded-xl flex bg-white  flex-col p-20 w-[90vw] lg:w-[80vw] md:w-[85vw] xl:w-full gap-12 lg:gap-40">
+      <motion.div
+        className="rounded-xl flex bg-white  flex-col p-20 w-[90vw] lg:w-[80vw] md:w-[85vw] xl:w-full gap-12 lg:gap-40"
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 1.2 }}
+      >
         {/* items details */}
         {isHandcrafts ? (
           <div className="flex flex-col md:flex-row gap-2 lg:gap-10">
@@ -229,8 +246,8 @@ const SingleArtwork = () => {
             </div>
           </div>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.section>
   )
 }
 

@@ -101,7 +101,7 @@ const Layout = () => {
       return (
         <div className="flex gap-1">
           <Link to="/">home /</Link>
-          <p>about</p>
+          <p>about jinsook</p>
         </div>
       )
     } else if (currentPath === '/contact') {
@@ -315,20 +315,37 @@ const Layout = () => {
       {user && <AdminTag />}{' '}
       <motion.span
         className={`rounded-full z-[1] fixed ${getCircleColor()} transition-all duration-500 ease-in-out ${getCircleOnePosition()}`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1, ease: 'easeInOut' }}
       />
-      <span
+      <motion.span
         className={` rounded-full z-[1] fixed ${getCircleColor()}  ${getCircleTwoPosition()} `}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1, ease: 'easeInOut' }}
       />
-      <span
+      <motion.span
         className={` rounded-full z-[1] fixed ${getCircleColor()}  ${getCircleThreePosition()} `}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1, ease: 'easeInOut' }}
       />
-      <span
+      <motion.span
         className={` rounded-full   z-[2] fixed   ${getCircleColor()} ${getCircleFourPosition()}`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 1, ease: 'easeInOut' }}
       />
       <NavBar />
       <div className="xl:w-[1000px] w-full flex flex-col items-center">
         {' '}
-        <div className="xl:w-[1000px] w-full mt-[90px] md:mt-[160px]  relative z-[60] px-20 xl:px-2 flex items-center -mb-[80px] md:-mb-[180px] tracking-wider font-body uppercase font-[500] text-xs">
+        {/* breadcrumbs */}
+        <div className="xl:w-[1000px] w-full mt-[90px] md:mt-[160px]  relative z-[60] pl-3 sm:px-20 xl:px-2 flex items-center -mb-[80px] md:-mb-[180px] tracking-wider font-body uppercase font-[500] text-[0.6rem] sm:text-xs whitespace-nowrap flex-wrap">
           {setBreadcrumb()}
         </div>
         <Outlet />
