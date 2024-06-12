@@ -1,13 +1,13 @@
 import { useAuthContext } from '../../hooks/useAuthContext'
 import { useLogout } from '../../hooks/useLogout'
-import { useNavigate } from 'react-router-dom'
+
 import MessagePopup from '../ui/messagePopup'
 import { useState } from 'react'
 
 const Logout = () => {
   const { user } = useAuthContext()
   const { logout } = useLogout()
-  const navigate = useNavigate()
+
   const handleClick = () => {
     logout()
     setIsLogout(true)
@@ -24,13 +24,7 @@ const Logout = () => {
           Log out
         </button>
 
-        {islogout && (
-          <MessagePopup
-            text="You are logged out"
-            show={islogout}
-            onClose={navigate(0, { replace: true })}
-          />
-        )}
+        {islogout && <MessagePopup text="You are logged out" show={islogout} />}
       </>
     )
   )

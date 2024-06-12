@@ -93,7 +93,10 @@ const Layout = () => {
       return 'bg-jinsook-light-pink'
     }
   }
-
+  const categoryname = (category) => {
+    if (category === 'childrens-books') return "Children's Books"
+    else return category
+  }
   const setBreadcrumb = () => {
     if (currentPath === '/') {
       return 'home'
@@ -133,7 +136,7 @@ const Layout = () => {
           {' '}
           <Link to="/">home /</Link>
           <Link to="/artworks">artworks /</Link>
-          <p>{category}</p>
+          <p>{categoryname(category)}</p>
         </div>
       )
     } else if (currentPath.includes('all')) {
