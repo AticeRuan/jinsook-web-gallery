@@ -210,13 +210,13 @@ const AllArtworks = () => {
         />
       </motion.div>
       <motion.div
-        className="rounded-xl bg-white h-fit  p-10 w-[90%] flex flex-col md:flex-row md:items-start md:justify-center items-center sm:gap-10 mt-10  md:p-10"
+        className="rounded-xl bg-white h-fit  p-10 w-[90%] xl:w-full flex flex-col md:flex-row md:items-start md:justify-center items-center sm:gap-10 mt-10  md:p-10"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1.2 }}
       >
         {/* filter block */}
-        <motion.div className="w-[30%] 2xl:w-[25%] sm:flex md:border-r-2 border-jinsook-blue md:py-10 md:mt-3 gap-10 text-sm hidden flex-col md:items-start h-full items-center pr-3">
+        <motion.div className="w-[25%] sm:flex md:border-r-2 border-jinsook-blue md:py-10 md:mt-3 gap-10 text-sm hidden flex-col md:items-start h-full items-center pr-3">
           <div className="flex md:flex-col gap-10 ">
             {' '}
             {/* catogery */}
@@ -471,7 +471,7 @@ const AllArtworks = () => {
         {/* filter ends */}
         <div>
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-10  p-16 md:p-10"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-10  p-16 md:p-5 "
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 1.5 }}
