@@ -4,7 +4,7 @@ import ProductItem from '../components/ui/productItem'
 import Loader from '../components/ui/loader'
 import usePreviousPath from '../hooks/usePreviousPath'
 import { useArtworksContext } from '../hooks/useArtworksContext'
-import { motion, transform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import Filter from '../components/svg/filter'
 
