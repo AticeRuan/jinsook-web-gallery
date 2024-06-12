@@ -12,6 +12,7 @@ const AllArtworks = () => {
   const { loading, error } = useRead(`artworks/`)
   const previousPath = usePreviousPath()
   const { artworks } = useArtworksContext()
+  const [sortedArtworkArray, setSortedArtworkArray] = useState([])
   // Combined Filter State
   const [filters, setFilters] = useState({
     categories: [],
@@ -20,45 +21,53 @@ const AllArtworks = () => {
     mediums: [],
   })
 
-  //sort data logic starts
-  const handcrafts = artworks?.filter(
-    (artwork) => artwork.category === 'handcrafts',
-  )
-
-  const handcraftTitles = [
-    ...new Set(handcrafts?.map((artwork) => artwork.title)),
-  ]
-
-  const firstHandcraftItems = handcraftTitles?.reduce((acc, title) => {
-    const firstItem = artworks.find(
-      (art) => art.title === title && art.category === 'handcrafts',
+  useEffect(() => {
+    const handcrafts = artworks?.filter(
+      (artwork) => artwork.category === 'handcrafts',
     )
-    if (firstItem) {
-      acc[title] = firstItem
-    }
-    return acc
-  }, {})
 
-  const artworkNotHandcrafts = artworks?.filter(
-    (artwork) => artwork.category !== 'handcrafts',
-  )
+    const handcraftTitles = [
+      ...new Set(handcrafts?.map((artwork) => artwork.title)),
+    ]
 
-  function combineObjects(obj1, obj2) {
-    const combined = { ...obj1 }
-    for (const [key, value] of Object.entries(obj2)) {
-      if (combined[key]) {
-        combined[key] = [].concat(combined[key], value)
-      } else {
-        combined[key] = value
+    const firstHandcraftItems = handcraftTitles?.reduce((acc, title) => {
+      const firstItem = artworks.find(
+        (art) => art.title === title && art.category === 'handcrafts',
+      )
+      if (firstItem) {
+        acc[title] = firstItem
       }
+      return acc
+    }, {})
+
+    const artworkNotHandcrafts = artworks?.filter(
+      (artwork) => artwork.category !== 'handcrafts',
+    )
+
+    function combineObjects(obj1, obj2) {
+      const combined = { ...obj1 }
+      for (const [key, value] of Object.entries(obj2)) {
+        if (combined[key]) {
+          combined[key] = [].concat(combined[key], value)
+        } else {
+          combined[key] = value
+        }
+      }
+      return combined
     }
-    return combined
-  }
-  const artworkToUse = combineObjects(artworkNotHandcrafts, firstHandcraftItems)
-  const artworkToUseArray = Object.values(artworkToUse)
-  const sortedArtworkArray = artworkToUseArray.sort(
-    (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-  )
+    const artworkToUse = combineObjects(
+      artworkNotHandcrafts,
+      firstHandcraftItems,
+    )
+    const artworkToUseArray = Object.values(artworkToUse)
+    setSortedArtworkArray(
+      artworkToUseArray.sort(
+        (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+      ),
+    )
+  }, [artworks])
+  //sort data logic starts
+
   //sort data logic ends
 
   //  filter logic starts
@@ -216,7 +225,7 @@ const AllArtworks = () => {
         transition={{ duration: 0.5, delay: 1.2 }}
       >
         {/* filter block */}
-        <motion.div className="w-[25%] sm:flex md:border-r-2 border-jinsook-blue md:py-10 md:mt-3 gap-10 text-sm hidden flex-col md:items-start h-full items-center pr-3">
+        <motion.div className="w-[25%] md:flex md:border-r-2 border-jinsook-blue md:py-10 md:mt-3 gap-10 text-sm hidden flex-col md:items-start h-full items-center pr-3">
           <div className="flex md:flex-col gap-10 ">
             {' '}
             {/* catogery */}
@@ -306,13 +315,14 @@ const AllArtworks = () => {
         </motion.div>
         {/* filter ends */}
         {/* filter block mobile filter */}
-        <div className="flex flex-col sm:hidden items-center w-full gap-2">
+        <div className="flex flex-col md:hidden items-center w-full gap-2">
           <div className="flex items-center gap-2 w-full justify-center">
             <p className="font-body text-sm uppercase ">filter</p>
             <button
               className="w-[15px]"
               onClick={() => {
                 setFilterOpen(!filterOpen)
+                handleReset()
                 if (filterOpen) {
                   setCategoryOpen(false)
                   setThemeOpen(false)
@@ -470,30 +480,30 @@ const AllArtworks = () => {
         </div>
         {/* filter ends */}
         <div>
-          <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-10  p-16 md:p-5 "
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 1.5 }}
-          >
-            {filteredData.length > 0 ? (
-              filteredData.map((artwork) => (
+          {filteredData.length > 0 ? (
+            <motion.div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-10  p-16 sm:p-5 "
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.5 }}
+            >
+              {filteredData.map((artwork) => (
                 <ProductItem
                   item={artwork}
                   key={artwork._id}
                   previousPath={previousPath}
                 />
-              ))
-            ) : (
-              <div className="w-full h-full flex items-center justify-center text-2xl font-body">
-                Opps, No Artwork Found
-              </div>
-            )}
-            {/* {Array.isArray(firstHandcraftItemsArray) &&
+              ))}
+            </motion.div>
+          ) : (
+            <div className="w-full h-full flex items-center justify-center text-2xl font-body">
+              Opps, No Artwork Found
+            </div>
+          )}
+          {/* {Array.isArray(firstHandcraftItemsArray) &&
             firstHandcraftItemsArray.map((artwork) => (
               <ProductItem item={artwork} key={artwork._id} />
             ))} */}
-          </motion.div>
         </div>
       </motion.div>
     </motion.div>
