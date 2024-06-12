@@ -35,7 +35,7 @@ const ProductItem = ({ item, forFeatured = false, previousPath = null }) => {
         </Link>
       )}
       <p className="text-[0.8rem] font-body uppercase tracking-wider">
-        {item.price}
+        {`$${item.price}`}
       </p>
     </div>
   )
