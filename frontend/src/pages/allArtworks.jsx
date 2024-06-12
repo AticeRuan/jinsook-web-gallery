@@ -216,8 +216,8 @@ const AllArtworks = () => {
         transition={{ duration: 0.5, delay: 1.2 }}
       >
         {/* filter block */}
-        <motion.div className="md:w-[20%] sm:flex md:border-r-2 border-jinsook-blue md:py-10 md:mt-3 gap-10 text-sm hidden flex-col md:items-start h-full items-center">
-          <div className="flex md:flex-col md:gap-10 gap-2 ">
+        <motion.div className="w-[30%] sm:flex md:border-r-2 border-jinsook-blue md:py-10 md:mt-3 gap-10 text-sm hidden flex-col md:items-start h-full items-center pr-3">
+          <div className="flex md:flex-col gap-10 ">
             {' '}
             {/* catogery */}
             <div className="font-body flex flex-col gap-2 md:gap-3 text-xs md:text-sm">
