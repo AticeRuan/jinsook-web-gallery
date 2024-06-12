@@ -7,20 +7,19 @@ import IntroComponent from '../components/home/introComponent'
 import ProductItem from '../components/ui/productItem'
 import useRead from '../hooks/useRead'
 import Loader from '../components/ui/loader'
-import { useArtworksContext } from '../hooks/useArtworksContext'
+
 import usePreviousPath from '../hooks/usePreviousPath'
 import { motion } from 'framer-motion'
 import Refresh from '../components/ui/refresh'
-// import { useInView } from 'framer-motion'
-// import { useRef } from 'react'
 
 const Home = () => {
-  const { loading, error } = useRead('artworks')
-  const { artworks } = useArtworksContext()
+  const { data: artworks, loading, error } = useRead('artworks')
+
   const previousPath = usePreviousPath()
-  // framer motion logic start here
-  // const introRef = useRef()
-  // const introInView = useInView(introRef)
+
+  const featuredArtworks = Array.isArray(artworks)
+    ? artworks.filter((artwork) => artwork.featured === true)
+    : []
 
   if (loading)
     return (
@@ -41,8 +40,6 @@ const Home = () => {
         <Refresh />
       </div>
     )
-  const featuredArtworks =
-    artworks && artworks.filter((artwork) => artwork.featured === true)
 
   return (
     <motion.section

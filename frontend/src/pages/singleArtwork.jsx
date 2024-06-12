@@ -52,20 +52,28 @@ const SingleArtwork = () => {
 
   const { data: allArtwork } = useRead('artworks')
 
-  const handcrafts = allArtwork?.filter(
-    (artwork) => artwork.category === 'handcrafts',
-  )
+  // Ensure allArtwork is an array before proceeding
+  const handcrafts = Array.isArray(allArtwork)
+    ? allArtwork.filter((artwork) => artwork.category === 'handcrafts')
+    : []
 
-  const itemWithSameTitle = handcrafts?.filter(
-    (item) => item.title === artwork.title,
-  )
-  const imageArray = itemWithSameTitle?.map((item) => item.imageUrl)
+  const itemWithSameTitle = Array.isArray(handcrafts)
+    ? handcrafts.filter((item) => item.title === artwork.title)
+    : []
+
+  const imageArray = Array.isArray(itemWithSameTitle)
+    ? itemWithSameTitle.map((item) => item.imageUrl)
+    : []
 
   const artworkFromSameTheme =
-    !loading && allArtwork?.filter((items) => items.theme === artwork.theme)
+    Array.isArray(allArtwork) && !loading
+      ? allArtwork.filter((items) => items.theme === artwork.theme)
+      : []
 
   const filteredartworkFromSameTheme =
-    !loading && artworkFromSameTheme?.filter((item) => item._id !== artwork._id)
+    Array.isArray(artworkFromSameTheme) && !loading
+      ? artworkFromSameTheme.filter((item) => item._id !== artwork._id)
+      : []
 
   if (loading)
     return (
@@ -75,7 +83,7 @@ const SingleArtwork = () => {
     )
   if (error)
     return (
-      <div className="w-screen xl:w-[1200px] min-h-[calc(100vh-120px)]  flex flex-col items-center justify-center z-10 relative flex-col">
+      <div className="w-screen xl:w-[1200px] min-h-[calc(100vh-120px)]  flex flex-col items-center justify-center z-10 relative font-bold">
         Something went wrong...
         <Refresh />
       </div>
@@ -147,7 +155,7 @@ const SingleArtwork = () => {
                 {artwork.title}
               </h1>
               <p className="font-body font-[500] text-[1rem] sm:text-[1.2rem]">
-                {artwork.price}
+                {`$${artwork.price}`}
               </p>
               <p className="font-heading font-[500] tracking-widest text-sm sm:text-[1rem]">
                 Description:
@@ -189,7 +197,7 @@ const SingleArtwork = () => {
                 {artwork.title}
               </h1>
               <p className="font-body font-[500] text-[1.2rem]">
-                {artwork.price}
+                {`$${artwork.price}`}
               </p>
               <p className="font-heading font-[500] tracking-widest">
                 Description:
