@@ -35,7 +35,7 @@ const Home = () => {
     )
   if (error)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] flex items-center z-10 relative justify-center flex-col">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] flex items-center z-10 relative justify-center flex-col font-bold">
         Something went wrong...
         <Refresh />
       </div>

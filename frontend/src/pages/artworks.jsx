@@ -37,7 +37,7 @@ const Artworks = () => {
 
   if (error) {
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center justify-center z-10 relative flex-col">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center justify-center z-10 relative font-bold">
         Something went wrong...
         <Refresh />
       </div>
