@@ -10,7 +10,7 @@ import AdminTag from '../components/ui/adminTag'
 import { motion } from 'framer-motion'
 
 const Dashboard = () => {
-  const { user, isExpired } = useAuthContext()
+  const { user } = useAuthContext()
 
   const { loading } = useRead('artworks')
   const { artworks } = useArtworksContext()
@@ -42,7 +42,7 @@ const Dashboard = () => {
   const featuredItems = artworks?.filter((artwork) => artwork.featured === true)
   const headers = artworks?.filter((artwork) => artwork.header === true)
 
-  if (!user || isExpired) {
+  if (!user) {
     return (
       <>
         {' '}
