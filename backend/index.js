@@ -14,7 +14,7 @@ app.use(express.json())
 app.use(
   cors({
     origin: [
-      'https://jinsook-web-gallery-fontend.vercel.app',
+      'https://jinsook-web-gallery-frontend.vercel.app',
       'http://localhost:5173',
     ],
     optionsSuccessStatus: 200,
