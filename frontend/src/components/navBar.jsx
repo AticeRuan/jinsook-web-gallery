@@ -267,7 +267,6 @@ const NavBar = () => {
 
   const handleSearchButtonClick = () => {
     handleSearch()
-    console.log('search button clicked')
   }
 
   const handleKeyPress = (event) => {
@@ -518,6 +517,7 @@ const NavBar = () => {
                       key={subIndex}
                       className="font-[500] text-[1rem] lg:text-[1.2rem] font-body text-black hover:font-bold"
                       state={{ previousPath: previousPath }}
+                      onClick={() => setHoveredLink(null)}
                     >
                       {sublink.name}
                     </Link>
