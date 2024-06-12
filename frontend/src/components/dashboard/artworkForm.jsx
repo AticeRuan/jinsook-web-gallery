@@ -246,7 +246,9 @@ const ArtworkForm = ({ item, onClose }) => {
               )}
             </div>
             <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
-              <label className="block font-bold  font-heading ">Price</label>{' '}
+              <label className="block font-bold  font-heading ">
+                Price(NZD)
+              </label>{' '}
               <input
                 type="text"
                 name="price"

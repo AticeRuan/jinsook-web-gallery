@@ -25,6 +25,7 @@ const AuthContextProvider = ({ children }) => {
       if (isTokenExpired(token)) {
         dispatch({ type: 'LOGOUT' })
         localStorage.removeItem('user')
+        setIsExpired(true)
       } else {
         setIsExpired(false)
       }
@@ -35,10 +36,10 @@ const AuthContextProvider = ({ children }) => {
     }
 
     checkAuth()
-    const intervalId = setInterval(checkAuth, 60000) // Check every 60 seconds
+    const intervalId = setInterval(checkAuth, 1000) // Check every 60 seconds
 
     return () => clearInterval(intervalId)
-  }, [isExpired])
+  }, [])
 
   return (
     <AuthContext.Provider value={{ ...state, dispatch, isExpired }}>
