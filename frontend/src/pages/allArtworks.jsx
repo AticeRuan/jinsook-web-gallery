@@ -397,7 +397,7 @@ const AllArtworks = () => {
               {/* price */}
               <div className="font-body flex flex-col md:gap-3 text-xs ">
                 <div className="flex gap-2 items-center justify-start">
-                  <h2 className="text-sm font-[500]">Priec</h2>
+                  <h2 className="text-sm font-[500]">Price</h2>
                   <button
                     className="text-lg bold text-[#74cfbb]"
                     onClick={() => setPriceOpen(!priceOpen)}
