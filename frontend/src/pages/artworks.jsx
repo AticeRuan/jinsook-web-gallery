@@ -6,6 +6,7 @@ import useRead from '../hooks/useRead'
 import placeholder from '../assets/portrait.jpg'
 import usePreviousPath from '../hooks/usePreviousPath'
 import { motion } from 'framer-motion'
+import Refresh from '../components/ui/refresh'
 const Artworks = () => {
   const { data, loading, error } = useRead('artworks')
   const headerArtworks = data?.filter((artwork) => artwork.header === true)
@@ -36,8 +37,9 @@ const Artworks = () => {
 
   if (error) {
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center justify-center z-10 relative">
-        Error: {error.message}
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center justify-center z-10 relative flex-col">
+        Something went wrong...
+        <Refresh />
       </div>
     )
   }

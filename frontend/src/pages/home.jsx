@@ -10,6 +10,7 @@ import Loader from '../components/ui/loader'
 import { useArtworksContext } from '../hooks/useArtworksContext'
 import usePreviousPath from '../hooks/usePreviousPath'
 import { motion } from 'framer-motion'
+import Refresh from '../components/ui/refresh'
 // import { useInView } from 'framer-motion'
 // import { useRef } from 'react'
 
@@ -35,8 +36,9 @@ const Home = () => {
     )
   if (error)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] flex items-center z-10 relative justify-center">
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] flex items-center z-10 relative justify-center flex-col">
         Something went wrong...
+        <Refresh />
       </div>
     )
   const featuredArtworks =

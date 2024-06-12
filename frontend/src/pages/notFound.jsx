@@ -34,9 +34,9 @@ const NotFound = () => {
       >
         <Link
           to="/"
-          className="rounded-full w-[150px] bg-jinsook-green h-[50px] flex items-center justify-center text-white font-heading mt-10 hover:bg-white hover:text-jinsook-green hover:shadow-xl transition-all duration-300 ease-in-out font-bold"
+          className="rounded-full w-[150px] bg-jinsook-green h-[50px] flex items-center justify-center text-white font-heading mt-10 hover:bg-white hover:text-jinsook-green hover:shadow-xl transition-all duration-300 ease-in-out font-bold uppercase"
         >
-          Back to Home
+          Back to Home page
         </Link>
       </motion.div>
     </motion.section>

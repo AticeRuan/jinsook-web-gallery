@@ -5,6 +5,7 @@ import ProductItem from '../components/ui/productItem'
 import Loader from '../components/ui/loader'
 import usePreviousPath from '../hooks/usePreviousPath'
 import { motion } from 'framer-motion'
+import Refresh from '../components/ui/refresh'
 const AllArtworksByTheme = () => {
   const { data: artworks, loading, error } = useRead(`artworks`)
   const previousPath = usePreviousPath()
@@ -34,8 +35,9 @@ const AllArtworksByTheme = () => {
 
   if (error)
     return (
-      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative justify-center">
-        Error: {error.message}
+      <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative justify-center ">
+        Something went wrong...
+        <Refresh />
       </div>
     )
 

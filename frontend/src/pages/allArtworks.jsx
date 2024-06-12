@@ -7,6 +7,7 @@ import { useArtworksContext } from '../hooks/useArtworksContext'
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import Filter from '../components/svg/filter'
+import Refresh from '../components/ui/refresh'
 
 const AllArtworks = () => {
   const { loading, error } = useRead(`artworks/`)
@@ -195,13 +196,14 @@ const AllArtworks = () => {
   if (error)
     return (
       <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative justify-center">
-        Error: {error.message}
+        Something went wrong...
+        <Refresh />
       </div>
     )
 
   return (
     <motion.div
-      className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative"
+      className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative flex-col"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}

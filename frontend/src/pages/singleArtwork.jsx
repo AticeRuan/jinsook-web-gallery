@@ -8,6 +8,7 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import { Carousel } from 'react-responsive-carousel'
 import usePreviousPath from '../hooks/usePreviousPath'
 import { motion } from 'framer-motion'
+import Refresh from '../components/ui/refresh'
 
 const SingleArtwork = () => {
   const { category, id } = useParams()
@@ -74,8 +75,9 @@ const SingleArtwork = () => {
     )
   if (error)
     return (
-      <div className="w-screen xl:w-[1200px] min-h-[calc(100vh-120px)]  flex flex-col items-center justify-center z-10 relative">
-        Error: {error.message}
+      <div className="w-screen xl:w-[1200px] min-h-[calc(100vh-120px)]  flex flex-col items-center justify-center z-10 relative flex-col">
+        Something went wrong...
+        <Refresh />
       </div>
     )
   return (
