@@ -18,8 +18,8 @@ const links = [
       { name: 'All Categories', url: '/artworks' },
       { name: 'Paintings', url: '/artworks/paintings' },
       { name: 'Childrens Books', url: '/artworks/childrens-books' },
-      { name: 'Illustrations', url: '/artworks/illustrations' },
-      { name: 'Handcrafts', url: '/artworks/handcrafts' },
+      { name: 'Goods', url: '/artworks/goods' },
+      { name: 'Crafts', url: '/artworks/crafts' },
       { name: 'View By Themes', url: '/artworks/themes' },
     ],
   },
@@ -87,9 +87,9 @@ const NavBar = () => {
       return 'bg-jinsook-light-pink'
     } else if (path.startsWith('/artworks/') && category == 'childrens-books') {
       return 'bg-jinsook-green'
-    } else if (path.startsWith('/artworks/') && category == 'illustrations') {
+    } else if (path.startsWith('/artworks/') && category == 'goods') {
       return 'bg-jinsook-dark-pink'
-    } else if (path.startsWith('/artworks/') && category == 'handcrafts') {
+    } else if (path.startsWith('/artworks/') && category == 'crafts') {
       return 'bg-jinsook-pink'
     } else {
       return 'bg-jinsook-blue'
@@ -113,40 +113,15 @@ const NavBar = () => {
       return '#FDC435'
     } else if (path.startsWith('/artworks/') && category == 'childrens-books') {
       return '#CDE7E3'
-    } else if (path.startsWith('/artworks/') && category == 'illustrations') {
+    } else if (path.startsWith('/artworks/') && category == 'goods') {
       return '#CDE7E3'
-    } else if (path.startsWith('/artworks/') && category == 'handcrafts') {
+    } else if (path.startsWith('/artworks/') && category == 'crafts') {
       return '#CE88BA'
     } else {
       return '#CE88BA'
     }
   }
 
-  // const getForegroundColorForTailwind = () => {
-  //   const path = location.pathname
-
-  //   if (path === '/') {
-  //     return 'hover:text-white'
-  //   } else if (path === '/about') {
-  //     return 'hover:text-[#009379]'
-  //   } else if (path === '/contact') {
-  //     return 'hover:text-[#009379]'
-  //   } else if (path === '/artworks') {
-  //     return 'hover:text-[#CE88BA]'
-  //   } else if (path === '/dashboard') {
-  //     return 'hover:text-[#fff]'
-  //   } else if (path.startsWith('/artworks/') && category == 'paintings') {
-  //     return 'hover:text-[#FDC435]'
-  //   } else if (path.startsWith('/artworks/') && category == 'childrens-books') {
-  //     return 'hover:text-[#CDE7E3]'
-  //   } else if (path.startsWith('/artworks/') && category == 'illustrations') {
-  //     return 'hover:text-[#CDE7E3]'
-  //   } else if (path.startsWith('/artworks/') && category == 'handcrafts') {
-  //     return 'hover:text-[#CE88BA]'
-  //   } else {
-  //     return 'hover:text-[#CE88BA]'
-  //   }
-  // }
   const colour = getForegroundColor()
   const topVariants = {
     closed: {
@@ -221,16 +196,14 @@ const NavBar = () => {
   const handleSearch = () => {
     const results = searchArtworks(keyword)
 
-    const handcrafts = results?.filter(
-      (artwork) => artwork.category === 'handcrafts',
-    )
+    const crafts = results?.filter((artwork) => artwork.category === 'crafts')
     const handcraftTitles = [
-      ...new Set(handcrafts?.map((artwork) => artwork.title)),
+      ...new Set(crafts?.map((artwork) => artwork.title)),
     ]
 
     const firstHandcraftItems = handcraftTitles?.reduce((items, title) => {
       const firstItem = artworks.find(
-        (art) => art.title === title && art.category === 'handcrafts',
+        (art) => art.title === title && art.category === 'crafts',
       )
       if (firstItem) {
         items[title] = firstItem
@@ -240,17 +213,17 @@ const NavBar = () => {
 
     const finalResults = results
       .map((art) => {
-        if (art.category === 'handcrafts' && firstHandcraftItems[art.title]) {
+        if (art.category === 'crafts' && firstHandcraftItems[art.title]) {
           return firstHandcraftItems[art.title]
         }
         return art
       })
       .filter((art, index, self) => {
         // Remove duplicate handcraft items while keeping the original structure
-        if (art.category === 'handcrafts') {
+        if (art.category === 'crafts') {
           return (
             self.findIndex(
-              (a) => a.title === art.title && a.category === 'handcrafts',
+              (a) => a.title === art.title && a.category === 'crafts',
             ) === index
           )
         }

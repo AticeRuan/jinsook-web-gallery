@@ -23,9 +23,9 @@ const Footer = () => {
       return '#FDC435'
     } else if (path.startsWith('/artworks/') && category == 'childrens-books') {
       return '#CDE7E3'
-    } else if (path.startsWith('/artworks/') && category == 'illustrations') {
+    } else if (path.startsWith('/artworks/') && category == 'goods') {
       return '#009379'
-    } else if (path.startsWith('/artworks/') && category == 'handcrafts') {
+    } else if (path.startsWith('/artworks/') && category == 'crafts') {
       return '#CE88BA'
     } else {
       return '#CE88BA'

@@ -15,16 +15,16 @@ const Artworks = () => {
     (artwork) => artwork.category === 'paintings',
   )
 
-  const illustrationsHeader =
+  const goodsHeader =
     headerArtworks &&
-    headerArtworks.filter((artwork) => artwork.category === 'illustrations')
+    headerArtworks.filter((artwork) => artwork.category === 'goods')
 
   const childrensBooksHeader =
     headerArtworks &&
     headerArtworks.filter((artwork) => artwork.category === 'childrens-books')
 
-  const handcraftsHeader = headerArtworks?.filter(
-    (artwork) => artwork.category === 'handcrafts',
+  const craftsHeader = headerArtworks?.filter(
+    (artwork) => artwork.category === 'crafts',
   )
 
   if (loading) {
@@ -83,11 +83,11 @@ const Artworks = () => {
           previousPath={previousPath}
         />
         <CategoryCard
-          category="illustrations"
+          category="goods"
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
           imgUrl={
-            illustrationsHeader && illustrationsHeader.length > 0
-              ? illustrationsHeader[0].imageUrl
+            goodsHeader && goodsHeader.length > 0
+              ? goodsHeader[0].imageUrl
               : placeholder
           }
           isReverse={true}
@@ -104,11 +104,11 @@ const Artworks = () => {
           previousPath={previousPath}
         />
         <CategoryCard
-          category="handcrafts"
+          category="crafts"
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
           imgUrl={
-            handcraftsHeader && handcraftsHeader.length > 0
-              ? handcraftsHeader[0].imageUrl
+            craftsHeader && craftsHeader.length > 0
+              ? craftsHeader[0].imageUrl
               : placeholder
           }
           isReverse={true}
@@ -136,11 +136,11 @@ const Artworks = () => {
           previousPath={previousPath}
         />
         <CategoryCard
-          category="illustrations"
+          category="goods"
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
           imgUrl={
-            illustrationsHeader && illustrationsHeader.length > 0
-              ? illustrationsHeader[0].imageUrl
+            goodsHeader && goodsHeader.length > 0
+              ? goodsHeader[0].imageUrl
               : placeholder
           }
           isSmallScreen={true}
@@ -158,11 +158,11 @@ const Artworks = () => {
           previousPath={previousPath}
         />
         <CategoryCard
-          category="handcrafts"
+          category="crafts"
           desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
           imgUrl={
-            handcraftsHeader && handcraftsHeader.length > 0
-              ? handcraftsHeader[0].imageUrl
+            craftsHeader && craftsHeader.length > 0
+              ? craftsHeader[0].imageUrl
               : placeholder
           }
           isSmallScreen={true}

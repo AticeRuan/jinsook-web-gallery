@@ -2,9 +2,9 @@ const validateCategory = (req, res, next) => {
   const { category } = req.params
   const allowedCategories = [
     'paintings',
-    'illustrations',
+    'goods',
     'childrens-books',
-    'handcrafts',
+    'crafts',
     'feature',
   ]
 

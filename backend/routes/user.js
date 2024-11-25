@@ -13,7 +13,7 @@ const router = express.Router()
 router.post('/login', loginUser)
 
 //for use in testing only
-// router.post('/signup', signupUser)
+router.post('/signup', signupUser)
 
 router.patch('/change-password', requireAuth, changePassword)
 

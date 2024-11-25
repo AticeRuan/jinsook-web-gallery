@@ -12,7 +12,7 @@ import Refresh from '../components/ui/refresh'
 
 const SingleArtwork = () => {
   const { category, id } = useParams()
-  const isHandcrafts = category === 'handcrafts'
+  const iscrafts = category === 'crafts'
   const previousPath = usePreviousPath()
 
   const getBackgroundColor = () => {
@@ -20,9 +20,9 @@ const SingleArtwork = () => {
       return '#FDEADF'
     } else if (category == 'childrens-books') {
       return '#009379'
-    } else if (category == 'illustrations') {
+    } else if (category == 'goods') {
       return '#CE88BA'
-    } else if (category == 'handcrafts') {
+    } else if (category == 'crafts') {
       return '#CDE7E3'
     } else {
       return '#CDE7E3'
@@ -52,19 +52,6 @@ const SingleArtwork = () => {
 
   const { data: allArtwork } = useRead('artworks')
 
-  // Ensure allArtwork is an array before proceeding
-  const handcrafts = Array.isArray(allArtwork)
-    ? allArtwork.filter((artwork) => artwork.category === 'handcrafts')
-    : []
-
-  const itemWithSameTitle = Array.isArray(handcrafts)
-    ? handcrafts.filter((item) => item.title === artwork.title)
-    : []
-
-  const imageArray = Array.isArray(itemWithSameTitle)
-    ? itemWithSameTitle.map((item) => item.imageUrl)
-    : []
-
   const artworkFromSameTheme =
     Array.isArray(allArtwork) && !loading
       ? allArtwork.filter((items) => items.theme === artwork.theme)
@@ -88,6 +75,7 @@ const SingleArtwork = () => {
         <Refresh />
       </div>
     )
+
   return (
     <motion.section
       className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center z-10 relative"
@@ -107,153 +95,114 @@ const SingleArtwork = () => {
       </motion.div>
       {/* details */}
       <motion.div
-        className="rounded-xl flex bg-white  flex-col p-20 w-[90vw] lg:w-[80vw] md:w-[85vw] xl:w-full gap-12 lg:gap-40"
+        className="rounded-xl flex bg-white flex-col p-20 w-[90vw] lg:w-[80vw] md:w-[85vw] xl:w-full gap-12 lg:gap-40"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1.2 }}
       >
         {/* items details */}
-        {isHandcrafts ? (
-          <div className="flex flex-col md:flex-row gap-2 lg:gap-10">
-            <div className="w-full h-fit md:h-full md:w-3/5 lg:w-1/2 rounded-lg overflow-hidden md:hidden">
+        <div className="flex flex-col md:flex-row gap-12 lg:gap-10">
+          {/* Image Carousel for all product types */}
+          <div className="w-full h-1/2 md:h-full md:w-3/5 lg:w-1/2 rounded-lg overflow-hidden">
+            {Array.isArray(artwork.imageUrl) && artwork.imageUrl.length > 0 ? (
               <Carousel
                 autoPlay={true}
                 interval={3000}
-                emulateTouch
-                showStatus={false}
-                centerMode
-                centerSlidePercentage={100}
-                showThumbs={false}
-                transitionTime={1000}
-              >
-                {Array.isArray(imageArray) &&
-                  imageArray.map((imgUrl, index) => (
-                    <img src={imgUrl} key={index} />
-                  ))}
-              </Carousel>
-            </div>
-            <div className="w-full h-1/2 md:h-full md:w-3/5 lg:w-1/2 rounded-lg overflow-hidden hidden md:block">
-              <Carousel
-                autoPlay={true}
-                interval={3000}
-                showIndicators={false}
+                showIndicators={true}
                 emulateTouch
                 showStatus={false}
                 centerMode
                 centerSlidePercentage={100}
                 infiniteLoop={true}
+                showThumbs={artwork.imageUrl.length > 1}
                 transitionTime={1000}
               >
-                {Array.isArray(imageArray) &&
-                  imageArray.map((imgUrl, index) => (
-                    <img src={imgUrl} key={index} />
-                  ))}
+                {artwork.imageUrl.map((imgUrl, index) => (
+                  <div key={index} className="w-full h-full">
+                    <img
+                      src={imgUrl}
+                      alt={`${artwork.title} - View ${index + 1}`}
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
+                ))}
               </Carousel>
-            </div>
-            <div className="flex flex-col items-start justify-between gap-4 md:max-w-[50%]">
-              <h1 className="font-heading font-bold text-[1.2rem] sm:text-[1.5rem] whitespace-nowrap">
-                {artwork.title}
-              </h1>
-              <p className="font-body font-[500] text-[1rem] sm:text-[1.2rem]">
-                {`$${artwork.price}`}
-              </p>
-              <p className="font-heading font-[500] tracking-widest text-sm sm:text-[1rem]">
-                Description:
-              </p>
-              <p className="font-body font-[500] sm:text-[0.9rem] text-[0.8rem]">
-                {artwork.description}
-              </p>{' '}
-              <p className="font-heading font-[500] tracking-widest text-sm sm:text-[1rem]">
-                <span className="font-heading font-[500] tracking-widest">
-                  Medium:
-                </span>
-                {artwork.medium}
-              </p>
-              <p className="font-heading font-[500] tracking-widest text-sm sm:text-[1rem]">
-                <span className="font-heading font-[500] tracking-widest">
-                  Dimensions:
-                </span>
-                {artwork.dimensions}
-              </p>
-              <Link
-                to="/contact"
-                state={{
-                  subject: `Hi Jinsook, I am messaging you regarding "${artwork.title}". `,
-                  previousPath: previousPath,
-                }}
-                className="rounded-full bg-jinsook-green hover:bg-white hover:border-2 border-jinsook-green transition duration-500 ease-in-out text-white hover:text-jinsook-green uppercase h-[40px] w-[100px] py-2 font-[600] text-[.8rem] px-4 flex items-center justify-center mt-3 hover:shadow-xl"
-              >
-                Enquiry
-              </Link>
-            </div>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                <p>No image available</p>
+              </div>
+            )}
           </div>
-        ) : (
-          <div className="flex flex-col md:flex-row gap-12 lg:gap-10">
-            <div className="w-full h-1/2 md:h-full md:w-3/5 lg:w-1/2 rounded-lg overflow-hidden">
-              <img src={artwork.imageUrl} />
-            </div>
-            <div className="flex flex-col items-start justify-between gap-4 max-w-[50%]">
-              <h1 className="font-heading font-bold text-[1.5rem]">
-                {artwork.title}
-              </h1>
-              <p className="font-body font-[500] text-[1.2rem]">
-                {`$${artwork.price}`}
-              </p>
+
+          {/* Product Details */}
+          <div className="flex flex-col items-start justify-between gap-4 max-w-[50%]">
+            <h1 className="font-heading font-bold text-[1.5rem]">
+              {artwork.title}
+            </h1>
+            <p className="font-body font-[500] text-[1.2rem]">
+              {`$${artwork.price}`}
+            </p>
+            {
               <p className="font-heading font-[500] tracking-widest">
                 Description:
               </p>
-              <p className="font-body font-[500] text-[0.9rem]">
-                {artwork.description}
-              </p>{' '}
+            }
+            <p className="font-body font-[500] text-[0.9rem]">
+              {artwork.description}
+            </p>
+            {!iscrafts && (
               <p className="font-heading font-[500] tracking-widest">
                 <span className="font-heading font-[500] tracking-widest">
                   Theme:
                 </span>
                 {artwork.theme}
               </p>
-              <p className="font-heading font-[500] tracking-widest">
-                <span className="font-heading font-[500] tracking-widest">
-                  Medium:
-                </span>
-                {artwork.medium}
-              </p>
-              <p className="font-heading font-[500] tracking-widest">
-                <span className="font-heading font-[500] tracking-widest">
-                  Dimensions:
-                </span>
-                {artwork.dimensions}
-              </p>
-              <Link
-                to="/contact"
-                state={{
-                  subject: `Hi Jinsook, I am messaging you regarding "${artwork.title}". `,
-                  previousPath: previousPath,
-                }}
-                className="rounded-full bg-jinsook-green hover:bg-white hover:border-2 border-jinsook-green transition duration-500 ease-in-out text-white hover:text-jinsook-green uppercase h-[40px] w-[100px] py-2 font-[600] text-[.8rem] px-4 flex items-center justify-center"
-              >
-                Enquiry
-              </Link>
-            </div>
+            )}
+            <p className="font-heading font-[500] tracking-widest">
+              <span className="font-heading font-[500] tracking-widest">
+                Medium:
+              </span>
+              {artwork.medium}
+            </p>
+            <p className="font-heading font-[500] tracking-widest">
+              <span className="font-heading font-[500] tracking-widest">
+                Dimensions:
+              </span>
+              {artwork.dimensions}
+            </p>
+            <Link
+              to="/contact"
+              state={{
+                subject: `Hi Jinsook, I am messaging you regarding "${artwork.title}". `,
+                previousPath: previousPath,
+              }}
+              className="rounded-full bg-jinsook-green hover:bg-white hover:border-2 border-jinsook-green transition duration-500 ease-in-out text-white hover:text-jinsook-green uppercase h-[40px] w-[100px] py-2 font-[600] text-[.8rem] px-4 flex items-center justify-center"
+            >
+              Enquiry
+            </Link>
           </div>
-        )}
+        </div>
 
-        {/* related artworks */}
-        {!isHandcrafts && (
+        {/* Related artworks section */}
+        {filteredartworkFromSameTheme.length > 0 && (
           <div className="flex flex-col items-start gap-6 w-full">
             <Heading
-              text={`From the "${artwork.theme}" Theme`}
+              text={
+                iscrafts
+                  ? 'Similar products'
+                  : `From the "${artwork.theme}"Theme`
+              }
               color={getBackgroundColor()}
               forSingleItem={true}
             />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5  w-full justify-items-center">
-              {Array.isArray(filteredartworkFromSameTheme) &&
-                filteredartworkFromSameTheme.map((artwork) => (
-                  <ProductItem
-                    item={artwork}
-                    key={artwork._id}
-                    previousPath={previousPath}
-                  />
-                ))}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 w-full justify-items-center">
+              {filteredartworkFromSameTheme.map((artwork) => (
+                <ProductItem
+                  item={artwork}
+                  key={artwork._id}
+                  previousPath={previousPath}
+                />
+              ))}
             </div>
           </div>
         )}

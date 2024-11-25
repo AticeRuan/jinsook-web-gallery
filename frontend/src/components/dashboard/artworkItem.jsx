@@ -5,16 +5,30 @@ import Loader from '../ui/loader'
 const ArtworkItem = ({ item, onUpdateClick, onDeleteClick, isLoading }) => {
   const isFeatured = item.featured
   const isHeader = item.header
+
+  // Handle different imageUrl formats
+  const getImageUrl = () => {
+    if (!item.imageUrl) return ''
+    if (Array.isArray(item.imageUrl)) {
+      return item.imageUrl[0] || ''
+    }
+    return item.imageUrl
+  }
+
   return (
-    <div className="w-[130px] sm:w-[120px] md:w-[150px] group relative cursor-pointer items-center flex justify-center flex-col">
+    <div className="w-[130px] sm:w-[120px] md:w-[150px] group relative cursor-pointer items-center flex justify-center flex-col ">
       <div className=" flex items-start border-2 rounded-lg overflow-clip border-jinsook-blue relative justify-start">
         {isLoading ? (
           <Loader />
         ) : (
           <img
-            src={item.imageUrl}
+            src={getImageUrl()}
             alt={item.title}
             className="w-[120px] h-[120px] sm:w-[100px] sm:h-[100px] md:w-[140px] md:h-[140px] object-cover group-hover:grayscale group-hover:blur-[1px] transition-all duration-500 ease-in-out group-hover:opacity-60"
+            onError={(e) => {
+              e.target.onerror = null
+              e.target.src = '/placeholder-image.jpg' // Add a placeholder image path
+            }}
           />
         )}
         <div className="flex flex-col absolute top-[20%] gap-2">

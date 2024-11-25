@@ -17,28 +17,15 @@ const SingleCategory = () => {
   const { data: artworks, loading, error } = useRead(`artworks/${category}`)
 
   const themes = [...new Set(artworks?.map((artwork) => artwork.theme))]
-  const handcrafts = artworks?.filter(
-    (artwork) => artwork.category === 'handcrafts',
-  )
-  const handcraftsTitles = [
-    ...new Set(handcrafts?.map((artwork) => artwork.title)),
-  ]
-  const handcraftsThemes = [
-    ...new Set(handcrafts?.map((artwork) => artwork.theme)),
-  ]
-  const filteredHandcraftsThemes = handcraftsThemes.filter(
-    (theme) => theme !== '',
-  )
-  const isHandcrafts = category === 'handcrafts'
 
   const getBackgroundColor = () => {
     if (category == 'paintings') {
       return '#FDEADF'
     } else if (category == 'childrens-books') {
       return '#009379'
-    } else if (category == 'illustrations') {
+    } else if (category == 'goods') {
       return '#CE88BA'
-    } else if (category == 'handcrafts') {
+    } else if (category == 'crafts') {
       return '#CDE7E3'
     } else {
       return '#CDE7E3'
@@ -86,59 +73,28 @@ const SingleCategory = () => {
         transition={{ duration: 0.5, delay: 1.2 }}
       >
         <div className="">
-          {isHandcrafts
-            ? filteredHandcraftsThemes.map((theme, index) => (
-                <motion.div
-                  key={index}
-                  className="text-center border-gray-200 py-5"
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 1.5 }}
-                >
-                  <Heading text={theme} color={getBackgroundColor()} />
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
-                    {handcraftsTitles.map((title) => {
-                      const artworks = handcrafts.filter(
-                        (artwork) =>
-                          artwork.title === title && artwork.theme === theme,
-                      )
-
-                      const firstItem = artworks.length > 0 ? artworks[0] : null
-                      return (
-                        firstItem && (
-                          <ProductItem
-                            item={firstItem}
-                            key={firstItem._id}
-                            previousPath={previousPath}
-                          />
-                        )
-                      )
-                    })}
-                  </div>
-                </motion.div>
-              ))
-            : themes.map((theme) => (
-                <motion.div
-                  key={theme}
-                  className="text-center border-gray-200 py-5"
-                  initial={{ opacity: 0, y: 50 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 1.5 }}
-                >
-                  <Heading text={theme} color={getBackgroundColor()} />
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
-                    {artworks
-                      .filter((artwork) => artwork.theme === theme)
-                      .map((artwork) => (
-                        <ProductItem
-                          item={artwork}
-                          key={artwork._id}
-                          previousPath={previousPath}
-                        />
-                      ))}
-                  </div>
-                </motion.div>
-              ))}
+          {themes.map((theme) => (
+            <motion.div
+              key={theme}
+              className="text-center border-gray-200 py-5"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.5 }}
+            >
+              <Heading text={theme} color={getBackgroundColor()} />
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
+                {artworks
+                  .filter((artwork) => artwork.theme === theme)
+                  .map((artwork) => (
+                    <ProductItem
+                      item={artwork}
+                      key={artwork._id}
+                      previousPath={previousPath}
+                    />
+                  ))}
+              </div>
+            </motion.div>
+          ))}
         </div>
       </motion.div>
     </motion.div>

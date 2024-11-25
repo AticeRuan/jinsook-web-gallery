@@ -5,16 +5,18 @@ import Loader from '../components/ui/loader'
 import usePreviousPath from '../hooks/usePreviousPath'
 import { useArtworksContext } from '../hooks/useArtworksContext'
 import { motion } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import Filter from '../components/svg/filter'
 import Refresh from '../components/ui/refresh'
 
 const AllArtworks = () => {
-  const { loading, error } = useRead(`artworks/`)
+  const { loading, error } = useRead('artworks')
   const previousPath = usePreviousPath()
   const { artworks } = useArtworksContext()
   const [sortedArtworkArray, setSortedArtworkArray] = useState([])
-  // Combined Filter State
+  const [filteredData, setFilteredData] = useState([])
+
+  // Filter states
   const [filters, setFilters] = useState({
     categories: [],
     themes: [],
@@ -22,94 +24,80 @@ const AllArtworks = () => {
     mediums: [],
   })
 
-  useEffect(() => {
-    const handcrafts = artworks?.filter(
-      (artwork) => artwork.category === 'handcrafts',
-    )
-
-    const handcraftTitles = [
-      ...new Set(handcrafts?.map((artwork) => artwork.title)),
-    ]
-
-    const firstHandcraftItems = handcraftTitles?.reduce((acc, title) => {
-      const firstItem = artworks.find(
-        (art) => art.title === title && art.category === 'handcrafts',
-      )
-      if (firstItem) {
-        acc[title] = firstItem
-      }
-      return acc
-    }, {})
-
-    const artworkNotHandcrafts = artworks?.filter(
-      (artwork) => artwork.category !== 'handcrafts',
-    )
-
-    function combineObjects(obj1, obj2) {
-      const combined = { ...obj1 }
-      for (const [key, value] of Object.entries(obj2)) {
-        if (combined[key]) {
-          combined[key] = [].concat(combined[key], value)
-        } else {
-          combined[key] = value
-        }
-      }
-      return combined
-    }
-    const artworkToUse = combineObjects(
-      artworkNotHandcrafts,
-      firstHandcraftItems,
-    )
-    const artworkToUseArray = Object.values(artworkToUse)
-    setSortedArtworkArray(
-      artworkToUseArray.sort(
-        (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
-      ),
-    )
-  }, [artworks])
-  //sort data logic starts
-
-  //sort data logic ends
-
-  //  filter logic starts
-
-  const [filteredData, setFilteredData] = useState(sortedArtworkArray)
+  // UI states
   const [categoryOpen, setCategoryOpen] = useState(false)
   const [themeOpen, setThemeOpen] = useState(false)
   const [priceOpen, setPriceOpen] = useState(false)
   const [mediumOpen, setMediumOpen] = useState(false)
   const [filterOpen, setFilterOpen] = useState(false)
 
-  const artworkCategories = [
-    ...new Set(artworks?.map((artwork) => artwork.category.replace('-', ' '))),
-  ]
-
-  const artworkMediums = [
-    ...new Set(
-      artworks
-        ?.filter((artwork) => artwork.medium !== '')
-        .map((artwork) => artwork.medium),
-    ),
-  ]
-  const artworkThemes = [
-    ...new Set(
-      artworks
-        ?.filter((artwork) => artwork.theme !== '')
-        .map((artwork) => artwork.theme),
-    ),
-  ]
-  const artworkPrice = ['0-$50', '$50-$100', '$100-$300', '$300+']
-
-  // Filter Logic
+  // Initialize sortedArtworkArray when artworks data is available
   useEffect(() => {
+    if (artworks && Array.isArray(artworks)) {
+      const sorted = [...artworks].sort(
+        (a, b) => new Date(a.createdAt) - new Date(b.createdAt),
+      )
+      setSortedArtworkArray(sorted)
+      setFilteredData(sorted) // Initialize filtered data with all artworks
+    }
+  }, [artworks])
+
+  // Memoized filter options
+  const { artworkCategories, artworkThemes, artworkMediums } = useMemo(() => {
+    if (!artworks || !Array.isArray(artworks)) {
+      return {
+        artworkCategories: [],
+        artworkThemes: [],
+        artworkMediums: [],
+      }
+    }
+
+    return {
+      artworkCategories: [
+        ...new Set(
+          artworks.map((artwork) => artwork.category.replace('-', ' ')),
+        ),
+      ],
+      artworkThemes: [
+        ...new Set(
+          artworks
+            .filter((artwork) => artwork.theme)
+            .map((artwork) => artwork.theme),
+        ),
+      ],
+      artworkMediums: [
+        ...new Set(
+          artworks
+            .filter((artwork) => artwork.medium)
+            .map((artwork) => artwork.medium),
+        ),
+      ],
+    }
+  }, [artworks])
+
+  const artworkPrice = ['0-$50', '$50-$100', '$100-$300', '$300+']
+  const priceRanges = {
+    '0-$50': [0, 50],
+    '$50-$100': [50, 100],
+    '$100-$300': [100, 300],
+    '$300+': [300, Infinity],
+  }
+
+  // Apply filters effect
+  useEffect(() => {
+    if (!Array.isArray(sortedArtworkArray)) return
+
     const filtered = sortedArtworkArray.filter((artwork) => {
       const categoryMatch =
         filters.categories.length === 0 ||
         filters.categories.includes(artwork.category.replace(' ', '-'))
+
       const themeMatch =
         filters.themes.length === 0 || filters.themes.includes(artwork.theme)
+
       const mediumMatch =
         filters.mediums.length === 0 || filters.mediums.includes(artwork.medium)
+
       const priceMatch =
         filters.prices.length === 0 ||
         filters.prices.some(
@@ -118,64 +106,54 @@ const AllArtworks = () => {
 
       return categoryMatch && themeMatch && mediumMatch && priceMatch
     })
-    setFilteredData(filtered)
-  }, [filters, sortedArtworkArray])
 
+    setFilteredData(filtered)
+  }, [sortedArtworkArray, filters])
+
+  // Filter handlers
   const handleCategoryChange = (event) => {
     const { value, checked } = event.target
-    setFilters((prevFilters) => ({
-      ...prevFilters,
+    setFilters((prev) => ({
+      ...prev,
       categories: checked
-        ? [...prevFilters.categories, value.replace(' ', '-')]
-        : prevFilters.categories.filter(
+        ? [...prev.categories, value.replace(' ', '-')]
+        : prev.categories.filter(
             (category) => category !== value.replace(' ', '-'),
           ),
     }))
   }
 
-  const filterStyle = {
-    height: filterOpen ? 'fit-content' : '0',
-    transition: 'height 2s ease-in-out',
-  }
-
   const handleThemeChange = (event) => {
     const { name, checked } = event.target
-    setFilters((prevFilters) => ({
-      ...prevFilters,
+    setFilters((prev) => ({
+      ...prev,
       themes: checked
-        ? [...prevFilters.themes, name]
-        : prevFilters.themes.filter((theme) => theme !== name),
+        ? [...prev.themes, name]
+        : prev.themes.filter((theme) => theme !== name),
     }))
   }
 
-  // Handler for medium filter changes
   const handleMediumChange = (event) => {
     const { value, checked } = event.target
-    setFilters((prevFilters) => ({
-      ...prevFilters,
+    setFilters((prev) => ({
+      ...prev,
       mediums: checked
-        ? [...prevFilters.mediums, value]
-        : prevFilters.mediums.filter((medium) => medium !== value),
+        ? [...prev.mediums, value]
+        : prev.mediums.filter((medium) => medium !== value),
     }))
   }
-  const priceRanges = {
-    '0-$50': [0, 50],
-    '$50-$100': [50, 100],
-    '$100-$300': [100, 300],
-    '$300+': [300, Infinity],
-  }
+
   const handlePriceChange = (event) => {
     const { value, checked } = event.target
     const range = priceRanges[value]
-    setFilters((prevFilters) => ({
-      ...prevFilters,
+    setFilters((prev) => ({
+      ...prev,
       prices: checked
-        ? [...prevFilters.prices, range]
-        : prevFilters.prices.filter(
-            (r) => !(r[0] === range[0] && r[1] === range[1]),
-          ),
+        ? [...prev.prices, range]
+        : prev.prices.filter((r) => !(r[0] === range[0] && r[1] === range[1])),
     }))
   }
+
   const handleReset = () => {
     setFilters({
       categories: [],
@@ -183,7 +161,11 @@ const AllArtworks = () => {
       prices: [],
       mediums: [],
     })
-    setFilteredData(sortedArtworkArray)
+  }
+
+  const filterStyle = {
+    height: filterOpen ? 'fit-content' : '0',
+    transition: 'height 2s ease-in-out',
   }
 
   if (loading)
@@ -203,7 +185,7 @@ const AllArtworks = () => {
 
   return (
     <motion.div
-      className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center gap-20 z-10 relative flex-col"
+      className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex  items-center gap-20 z-10 relative flex-col"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -502,10 +484,6 @@ const AllArtworks = () => {
               Opps, No Artwork Found
             </div>
           )}
-          {/* {Array.isArray(firstHandcraftItemsArray) &&
-            firstHandcraftItemsArray.map((artwork) => (
-              <ProductItem item={artwork} key={artwork._id} />
-            ))} */}
         </div>
       </motion.div>
     </motion.div>

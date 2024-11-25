@@ -50,9 +50,9 @@ const Layout = () => {
       return 'bg-jinsook-light-pink'
     } else if (path.startsWith('/artworks/') && category == 'childrens-books') {
       return 'bg-jinsook-green'
-    } else if (path.startsWith('/artworks/') && category == 'illustrations') {
+    } else if (path.startsWith('/artworks/') && category == 'goods') {
       return 'bg-jinsook-dark-pink'
-    } else if (path.startsWith('/artworks/') && category == 'handcrafts') {
+    } else if (path.startsWith('/artworks/') && category == 'crafts') {
       return 'bg-jinsook-pink'
     } else {
       return 'bg-jinsook-blue'
@@ -79,15 +79,9 @@ const Layout = () => {
       category == 'childrens-books'
     ) {
       return 'bg-jinsook-light-pink'
-    } else if (
-      currentPath.startsWith('/artworks/') &&
-      category == 'illustrations'
-    ) {
+    } else if (currentPath.startsWith('/artworks/') && category == 'goods') {
       return 'bg-jinsook-blue'
-    } else if (
-      currentPath.startsWith('/artworks/') &&
-      category == 'handcrafts'
-    ) {
+    } else if (currentPath.startsWith('/artworks/') && category == 'crafts') {
       return 'bg-jinsook-yellow'
     } else {
       return 'bg-jinsook-light-pink'

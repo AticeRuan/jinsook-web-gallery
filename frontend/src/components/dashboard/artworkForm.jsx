@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import useCreate from '../../hooks/useCreate'
 import useUpdate from '../../hooks/useUpdate'
 import useUploadImage from '../../hooks/useImageUpload'
@@ -6,17 +6,30 @@ import Heading from '../ui/heading'
 import { useArtworksContext } from '../../hooks/useArtworksContext'
 
 const ArtworkForm = ({ item, onClose }) => {
+  const fileInputRef = useRef(null)
+  const [uploadQueue, setUploadQueue] = useState([])
+  const [uploadProgress, setUploadProgress] = useState({})
   const { artworks } = useArtworksContext()
   const sortedArtworks = artworks?.sort(
     (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt),
   )
   const themes = [...new Set(sortedArtworks?.map((item) => item.theme))]
   const handcraftItems = sortedArtworks?.filter(
-    (item) => item.category === 'handcrafts',
+    (item) => item.category === 'crafts',
   )
-  const handcraftTitles = [
-    ...new Set(handcraftItems?.map((item) => item.title)),
-  ]
+
+  const setHeroImage = (index) => {
+    setFormData((prevData) => {
+      const newImageUrls = [...prevData.imageUrl]
+      const [selectedImage] = newImageUrls.splice(index, 1)
+      newImageUrls.unshift(selectedImage)
+      return {
+        ...prevData,
+        imageUrl: newImageUrls,
+      }
+    })
+  }
+
   const HandcraftTypes = [...new Set(handcraftItems?.map((item) => item.theme))]
   const filteredHandcraftTypes = HandcraftTypes.filter((item) => item !== '')
   const filteredThemes = themes.filter((item) => item !== '')
@@ -26,7 +39,7 @@ const ArtworkForm = ({ item, onClose }) => {
     title: '',
     category: '',
     price: '',
-    imageUrl: '',
+    imageUrl: [],
     featured: false,
     theme: '',
     header: false,
@@ -43,35 +56,144 @@ const ArtworkForm = ({ item, onClose }) => {
     }))
   }
 
-  const isHandcrafts = formData.category === 'handcrafts'
+  const iscrafts = formData.category === 'crafts'
 
   const { createData, loading: createLoading, error: createError } = useCreate()
   const { updateData, loading: updateLoading, error: updateError } = useUpdate()
   const {
-    uploadProgress,
     imageUrl,
     error: uploadError,
     uploadImage,
+    deleteUploadedImages,
+    deleteImageByUrl,
+    addStorageRef,
   } = useUploadImage()
-  const handleFileChange = (event) => {
-    const file = event.target.files[0]
-    uploadImage(file, formData.category)
+
+  // Image upload handling
+  const convertToWebP = async (file) => {
+    return new Promise((resolve) => {
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        const img = new Image()
+        img.onload = () => {
+          const canvas = document.createElement('canvas')
+          canvas.width = img.width
+          canvas.height = img.height
+          const ctx = canvas.getContext('2d')
+          ctx.drawImage(img, 0, 0)
+          canvas.toBlob(
+            (blob) => {
+              resolve(
+                new File([blob], `${file.name.split('.')[0]}.webp`, {
+                  type: 'image/webp',
+                }),
+              )
+            },
+            'image/webp',
+            0.8,
+          )
+        }
+        img.src = e.target.result
+      }
+      reader.readAsDataURL(file)
+    })
+  }
+
+  const handleFileSelect = async (e) => {
+    e.preventDefault()
+    fileInputRef.current?.click()
+  }
+
+  const handleFileChange = async (event) => {
+    const files = Array.from(event.target.files)
+    const newUploadQueue = []
+
+    for (const file of files) {
+      try {
+        const webpFile = await convertToWebP(file)
+        newUploadQueue.push({
+          file: webpFile,
+          id: Math.random().toString(36).substring(7),
+          progress: 0,
+          status: 'pending',
+        })
+      } catch (err) {
+        console.error('Error converting file:', err)
+      }
+    }
+
+    setUploadQueue((prev) => [...prev, ...newUploadQueue])
   }
 
   const handleThemeChange = (theme) => {
-    const newFormData = {
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       theme: theme,
-    }
-    setFormData(newFormData)
+    }))
   }
-  const handleTitleChange = (title) => {
-    const newFormData = {
-      ...formData,
-      title: title,
+
+  // Process upload queue
+  useEffect(() => {
+    const processQueue = async () => {
+      const pending = uploadQueue.find((item) => item.status === 'pending')
+      if (pending) {
+        try {
+          setUploadQueue((prev) =>
+            prev.map((item) =>
+              item.id === pending.id ? { ...item, status: 'uploading' } : item,
+            ),
+          )
+
+          const uploadResult = await uploadImage(
+            pending.file,
+            formData.category,
+            (progress) => {
+              setUploadProgress((prev) => ({
+                ...prev,
+                [pending.id]: progress,
+              }))
+            },
+          )
+
+          if (uploadResult.url) {
+            // Save the storage reference
+            if (uploadResult.ref) {
+              addStorageRef(uploadResult.ref, uploadResult.url)
+            }
+
+            setFormData((prev) => ({
+              ...prev,
+              imageUrl: [...prev.imageUrl, uploadResult.url],
+            }))
+
+            setTimeout(() => {
+              setUploadQueue((prev) =>
+                prev.filter((item) => item.id !== pending.id),
+              )
+              setUploadProgress((prev) => {
+                const newProgress = { ...prev }
+                delete newProgress[pending.id]
+                return newProgress
+              })
+            }, 100)
+          }
+        } catch (error) {
+          setUploadQueue((prev) =>
+            prev.map((item) =>
+              item.id === pending.id ? { ...item, status: 'error' } : item,
+            ),
+          )
+          setTimeout(() => {
+            setUploadQueue((prev) =>
+              prev.filter((item) => item.id !== pending.id),
+            )
+          }, 3000)
+        }
+      }
     }
-    setFormData(newFormData)
-  }
+
+    processQueue()
+  }, [uploadQueue, uploadImage, formData.category, addStorageRef])
 
   useEffect(() => {
     if (isUpdate) {
@@ -79,7 +201,7 @@ const ArtworkForm = ({ item, onClose }) => {
         title: item.title,
         category: item.category,
         price: item.price,
-        imageUrl: item.imageUrl || '',
+        imageUrl: item.imageUrl || [],
         theme: item.theme,
         featured: item.featured,
         header: item.header,
@@ -94,7 +216,7 @@ const ArtworkForm = ({ item, onClose }) => {
     if (imageUrl) {
       setFormData((prevData) => ({
         ...prevData,
-        imageUrl: imageUrl,
+        imageUrl: [...prevData.imageUrl, imageUrl],
       }))
     }
   }, [imageUrl])
@@ -106,8 +228,25 @@ const ArtworkForm = ({ item, onClose }) => {
     })
   }
 
+  const handleRemoveImage = async (index) => {
+    const imageUrlToRemove = formData.imageUrl[index]
+    const deleted = await deleteImageByUrl(imageUrlToRemove)
+    if (!deleted) {
+      console.error('Failed to delete image from storage')
+      return
+    }
+    setFormData((prev) => ({
+      ...prev,
+      imageUrl: prev.imageUrl.filter((_, i) => i !== index),
+    }))
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (formData.imageUrl.length === 0) {
+      alert('Please upload at least one image')
+      return
+    }
 
     if (isUpdate) {
       const endpoint = `artworks/${item.category}/${item._id}`
@@ -125,6 +264,27 @@ const ArtworkForm = ({ item, onClose }) => {
     onClose()
   }
 
+  const handleCancel = async () => {
+    // Delete all uploaded images and their references
+    await deleteUploadedImages()
+    // Reset form data
+    setFormData({
+      title: '',
+      category: '',
+      price: '',
+      imageUrl: [],
+      featured: false,
+      theme: '',
+      header: false,
+      description: '',
+      medium: '',
+      dimensions: '',
+    })
+    // Clear upload queue
+    setUploadQueue([])
+    onClose()
+  }
+
   const loading = isUpdate ? updateLoading : createLoading
   const error = isUpdate ? updateError : createError
 
@@ -137,29 +297,109 @@ const ArtworkForm = ({ item, onClose }) => {
         />
 
         <div className="flex flex-col lg:flex-row gap-10 items-start justify-start">
-          {formData.imageUrl ? (
-            <img
-              src={formData.imageUrl}
-              alt="Preview"
-              className="w-[300px] object-contain rounded-xl"
-            />
-          ) : (
-            <div className="bg-jinsook-light-pink w-[300px] lg:w-[200px] h-[300px] rounded-lg" />
-          )}
+          <div className="flex flex-col gap-4">
+            {formData.imageUrl.length > 0 && (
+              <div className="grid grid-cols-2 gap-4">
+                {formData.imageUrl.map((url, index) => (
+                  <div key={index} className="relative group">
+                    {index === 0 && (
+                      <div className="absolute top-0 left-0 bg-jinsook-dark-pink text-white text-xs px-2 py-1 rounded font-bold">
+                        Hero Image
+                      </div>
+                    )}
+                    <img
+                      src={url}
+                      alt={`Preview ${index + 1}`}
+                      className="w-[150px] h-[150px] object-cover rounded-xl"
+                    />
+                    <div
+                      className={`absolute top-0 right-0 flex gap-2 h-full w-full ${
+                        index !== 0 ? 'group-hover:backdrop-blur-sm' : ''
+                      }`}
+                    >
+                      {index !== 0 && (
+                        <button
+                          onClick={() => setHeroImage(index)}
+                          className="hidden group-hover:flex bg-jinsook-yellow  text-xs px-2 py-1 rounded transition-all duration-300 text-black font-bold backdrop-blur-[1px]   h-[50px] 
+                          items-center justify-center w-full top-[30%] absolute"
+                        >
+                          Set as Hero
+                        </button>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => handleRemoveImage(index)}
+                      className="bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center absolute -top-2 -right-2"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+                {uploadQueue.length > 0 &&
+                  uploadQueue.map((item) => (
+                    <div
+                      key={item.id}
+                      className="w-[150px] h-[150px] bg-gray-100 rounded-xl flex flex-col items-center justify-center relative"
+                    >
+                      {item.status === 'uploading' && (
+                        <>
+                          <div className="text-sm text-gray-500 mb-2">
+                            Uploading...
+                          </div>
+                          <div className="w-4/5 h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-jinsook-green transition-all duration-300"
+                              style={{
+                                width: `${uploadProgress[item.id] || 0}%`,
+                              }}
+                            />
+                          </div>
+                        </>
+                      )}
+                      {item.status === 'error' && (
+                        <div className="text-red-500 text-sm">
+                          Upload failed
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                {/* Add more images button */}
+                {(formData.imageUrl.length > 0 || uploadQueue.length > 0) && (
+                  <button
+                    onClick={handleFileSelect}
+                    className="w-[150px] h-[150px] bg-jinsook-light-pink rounded-xl flex items-center justify-center cursor-pointer hover:bg-jinsook-pink transition-colors duration-300"
+                  >
+                    + Add more images
+                  </button>
+                )}
+              </div>
+            )}
+            {/* Upload Placeholders */}
+
+            {/* Upload Button Placeholder */}
+            {formData.imageUrl.length === 0 && uploadQueue.length === 0 && (
+              <div
+                onClick={handleFileSelect}
+                className="w-[150px] h-[150px] bg-jinsook-light-pink rounded-xl flex items-center justify-center cursor-pointer hover:bg-jinsook-pink transition-colors duration-300"
+              >
+                <div className="text-center">
+                  <div className="text-3xl mb-2">+</div>
+                  <div className="text-sm">Choose Files</div>
+                </div>
+              </div>
+            )}
+          </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
             <div className="flex flex-col gap-2">
               <input
+                ref={fileInputRef}
                 type="file"
                 onChange={handleFileChange}
-                required={!isUpdate}
-                className="rounded-sm appearance-none border  w-full  text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
+                multiple
+                accept="image/*"
+                className="hidden"
               />
-              {uploadProgress > 0 && (
-                <progress value={uploadProgress} max="100" className=" w-full">
-                  {uploadProgress}%
-                </progress>
-              )}
             </div>
             <div className="flex gap-1  px-2 rounded-lg  font-body flex-col items-start text-[0.9rem]">
               <label className="block font-bold  font-heading text-[1rem] ">
@@ -182,13 +422,13 @@ const ArtworkForm = ({ item, onClose }) => {
                   <input
                     type="radio"
                     name="category"
-                    value="illustrations"
-                    checked={formData.category === 'illustrations'}
+                    value="goods"
+                    checked={formData.category === 'goods'}
                     onChange={handleChange}
                     required
                     className="form-radio"
                   />
-                  <span className="ml-2">Illustrations</span>
+                  <span className="ml-2">Goods</span>
                 </label>
                 <label className="inline-flex items-center ">
                   <input
@@ -206,13 +446,13 @@ const ArtworkForm = ({ item, onClose }) => {
                   <input
                     type="radio"
                     name="category"
-                    value="handcrafts"
-                    checked={formData.category === 'handcrafts'}
+                    value="crafts"
+                    checked={formData.category === 'crafts'}
                     onChange={handleChange}
                     required
                     className="form-radio"
                   />
-                  <span className="ml-2">Handcrafts</span>
+                  <span className="ml-2">Crafts</span>
                 </label>
               </div>
             </div>{' '}
@@ -230,27 +470,13 @@ const ArtworkForm = ({ item, onClose }) => {
                   className="rounded-sm appearance-none  w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
                 />
               </div>
-              {isHandcrafts && (
-                <div className="flex flex-wrap gap-2 ">
-                  {handcraftTitles.slice(0, 6).map((title) => (
-                    <span
-                      key={title}
-                      className="p-1 bg-jinsook-light-pink text-[0.6rem] hover:scale-110 cursor-pointer transition-all duration-300 ease-in-out rounded-sm "
-                      onClick={() => handleTitleChange(title)}
-                      name="title"
-                    >
-                      {title}
-                    </span>
-                  ))}
-                </div>
-              )}
             </div>
             <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
               <label className="block font-bold  font-heading ">
                 Price(NZD)
               </label>{' '}
               <input
-                type="text"
+                type="number"
                 name="price"
                 value={formData.price}
                 onChange={handleChange}
@@ -271,7 +497,7 @@ const ArtworkForm = ({ item, onClose }) => {
                 rows={5}
               />
             </div>
-            {isHandcrafts ? (
+            {iscrafts ? (
               <>
                 <div className="flex flex-col gap-3">
                   <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
@@ -378,7 +604,8 @@ const ArtworkForm = ({ item, onClose }) => {
             </div>
             <div className="flex gap-6 w-full justify-center">
               <button
-                onClick={onClose}
+                type="button"
+                onClick={handleCancel}
                 className="hover:bg-jinsook-yellow bg-white hover:text-white text-jinsook-green font-body font-[600] py-2 px-4 rounded-full focus:outline-none focus:shadow-outline hover:border-2 hover:border-jinsook-yellow border-jinsook-green transition duration-500 ease-in-out h-[40px] w-[120px] uppercase flex items-center justify-center"
               >
                 cancel

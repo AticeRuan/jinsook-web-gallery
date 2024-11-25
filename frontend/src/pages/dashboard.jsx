@@ -23,22 +23,15 @@ const Dashboard = () => {
     ...new Set(paintings?.map((artwork) => artwork.theme)),
   ]
 
-  const illustrations = artworks?.filter(
-    (artwork) => artwork.category === 'illustrations',
-  )
-  const illustrationsThemes = [
-    ...new Set(illustrations?.map((artwork) => artwork.theme)),
-  ]
+  const goods = artworks?.filter((artwork) => artwork.category === 'goods')
+  const goodsThemes = [...new Set(goods?.map((artwork) => artwork.theme))]
   const books = artworks?.filter(
     (artwork) => artwork.category === 'childrens-books',
   )
   const booksThemes = [...new Set(books?.map((artwork) => artwork.theme))]
-  const handcrafts = artworks?.filter(
-    (artwork) => artwork.category === 'handcrafts',
-  )
-  const handcraftsThemes = [
-    ...new Set(handcrafts?.map((artwork) => artwork.title)),
-  ]
+  const crafts = artworks?.filter((artwork) => artwork.category === 'crafts')
+  const craftsThemes = [...new Set(crafts?.map((artwork) => artwork.theme))]
+
   const featuredItems = artworks?.filter((artwork) => artwork.featured === true)
   const headers = artworks?.filter((artwork) => artwork.header === true)
 
@@ -111,15 +104,15 @@ const Dashboard = () => {
           user={user}
           data={artworks}
           paintings={paintings}
-          illustrations={illustrations}
+          goods={goods}
           headers={headers}
           books={books}
-          handcrafts={handcrafts}
+          crafts={crafts}
           featured={featuredItems}
           paintingsThemes={paintingsThemes}
-          illustrationsThemes={illustrationsThemes}
+          goodsThemes={goodsThemes}
           booksThemes={booksThemes}
-          handcraftsThemes={handcraftsThemes}
+          craftsThemes={craftsThemes}
           isLoading={loading}
         />
       </div>

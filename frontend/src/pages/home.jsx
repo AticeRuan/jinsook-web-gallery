@@ -77,7 +77,7 @@ const Home = () => {
             />
             <IntroComponent
               imgUrl={intro02}
-              heading="Handcrafts"
+              heading="Crafts"
               desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim"
             />
             <IntroComponent

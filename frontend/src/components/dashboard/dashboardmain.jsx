@@ -9,15 +9,15 @@ import ChangePasswordForm from '../auth/changePassword'
 const DashboardMain = ({
   user,
   paintings,
-  illustrations,
+  goods,
   books,
-  handcrafts,
+  crafts,
   featured,
   headers,
   paintingsThemes,
-  illustrationsThemes,
+  goodsThemes,
   booksThemes,
-  handcraftsThemes,
+  craftsThemes,
   isLoading,
 }) => {
   const [showUpdateModal, setShowUpdateModal] = useState(false)
@@ -38,9 +38,9 @@ const DashboardMain = ({
   useEffect(() => {
     const categoryMapping = {
       paintings: { data: paintings, themes: paintingsThemes },
-      illustrations: { data: illustrations, themes: illustrationsThemes },
+      goods: { data: goods, themes: goodsThemes },
       books: { data: books, themes: booksThemes },
-      handcrafts: { data: handcrafts, themes: handcraftsThemes },
+      crafts: { data: crafts, themes: craftsThemes },
       featured: { data: featured, themes: [] },
       headers: { data: headers, themes: [] },
     }
@@ -53,15 +53,15 @@ const DashboardMain = ({
     }
   }, [
     paintings,
-    illustrations,
+    goods,
     books,
-    handcrafts,
+    crafts,
     featured,
     headers,
     paintingsThemes,
-    illustrationsThemes,
+    goodsThemes,
     booksThemes,
-    handcraftsThemes,
+    craftsThemes,
     activeCategory,
   ])
 
@@ -142,17 +142,17 @@ const DashboardMain = ({
           <button
             className="hover:text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-blue bg-jinsook-green text-white transition duration-500 ease-in-out"
             onClick={() => {
-              setCurrentData(illustrations)
-              setCurrentThemes(illustrationsThemes)
-              setActiveCategory('illustrations')
+              setCurrentData(goods)
+              setCurrentThemes(goodsThemes)
+              setActiveCategory('goods')
             }}
             style={
-              activeCategory === 'illustrations'
+              activeCategory === 'goods'
                 ? { backgroundColor: '#fff', color: '#009379' }
                 : {}
             }
           >
-            Illustrations
+            Goods
           </button>
           <button
             className="hover:text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-blue bg-jinsook-green text-white transition duration-500 ease-in-out"
@@ -172,17 +172,17 @@ const DashboardMain = ({
           <button
             className="hover:text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-blue bg-jinsook-green text-white transition duration-500 ease-in-out"
             onClick={() => {
-              setCurrentData(handcrafts)
-              setCurrentThemes(handcraftsThemes)
-              setActiveCategory('handcrafts')
+              setCurrentData(crafts)
+              setCurrentThemes(craftsThemes)
+              setActiveCategory('crafts')
             }}
             style={
-              activeCategory === 'handcrafts'
+              activeCategory === 'crafts'
                 ? { backgroundColor: '#fff', color: '#009379' }
                 : {}
             }
           >
-            Handcrafts
+            Crafts
           </button>
           <button
             className="hover:text-jinsook-green border-t-2 border-l-2 border-r-2 rounded-tr-lg  rounded-tl-lg p-2 border-jinsook-green lg:mr-2 rotate-[270deg] lg:rotate-0 hover:bg-jinsook-blue bg-jinsook-green text-white transition duration-500 ease-in-out"
@@ -216,53 +216,29 @@ const DashboardMain = ({
           </button>
         </div>
         <div className=" border-l-2 lg:border-none border-jinsook-green  w-full overflow-x-hidden flex flex-col gap-10 -ml-6 lg:ml-0 overflow-y-scroll overscroll-contain h-full">
-          {activeCategory !== 'handcrafts'
-            ? currentThemes &&
-              currentThemes.length !== 0 &&
-              currentThemes.map((theme) => (
-                <div key={theme} className="flex flex-col gap-8">
-                  <h1 className="text-[1.2rem] font-bold font-heading pl-4">
-                    {theme}
-                  </h1>
-                  <div className="flex sm:grid sm:grid-cols-4 md:flex flex-wrap gap-1 sm:justify-items-center md:justify-start justify-between mx-1">
-                    {currectData &&
-                      currectData
-                        .filter((artwork) => artwork.theme === theme)
-                        .map((artwork) => (
-                          <ArtworkItem
-                            item={artwork}
-                            key={artwork._id}
-                            user={user}
-                            onUpdateClick={handleUpdateClick}
-                            onDeleteClick={handleDeleteClick}
-                          />
-                        ))}
-                  </div>
+          {currentThemes &&
+            currentThemes.length !== 0 &&
+            currentThemes.map((theme) => (
+              <div key={theme} className="flex flex-col gap-8">
+                <h1 className="text-[1.2rem] font-bold font-heading pl-4">
+                  {theme}
+                </h1>
+                <div className="flex sm:grid sm:grid-cols-4 md:flex flex-wrap gap-1">
+                  {currectData &&
+                    currectData
+                      .filter((artwork) => artwork.theme === theme)
+                      .map((artwork) => (
+                        <ArtworkItem
+                          item={artwork}
+                          key={artwork._id}
+                          onUpdateClick={handleUpdateClick}
+                          onDeleteClick={handleDeleteClick}
+                          isLoading={isLoading}
+                        />
+                      ))}
                 </div>
-              ))
-            : currentThemes &&
-              currentThemes.length !== 0 &&
-              currentThemes.map((theme) => (
-                <div key={theme} className="flex flex-col gap-8">
-                  <h1 className="text-[1.2rem] font-bold font-heading pl-4">
-                    {theme}
-                  </h1>
-                  <div className="flex sm:grid sm:grid-cols-4 md:flex flex-wrap gap-1 sm:justify-items-center md:justify-start justify-between mx-1">
-                    {currectData &&
-                      currectData
-                        .filter((artwork) => artwork.title === theme)
-                        .map((artwork) => (
-                          <ArtworkItem
-                            item={artwork}
-                            key={artwork._id}
-                            user={user}
-                            onUpdateClick={handleUpdateClick}
-                            onDeleteClick={handleDeleteClick}
-                          />
-                        ))}
-                  </div>
-                </div>
-              ))}
+              </div>
+            ))}
           <div className="flex sm:grid sm:grid-cols-4 md:flex flex-wrap gap-1 sm:justify-items-center md:justify-start justify-between mx-1">
             {isEmpty &&
               currectData &&
