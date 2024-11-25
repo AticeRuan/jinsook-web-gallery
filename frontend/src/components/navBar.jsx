@@ -503,11 +503,11 @@ const NavBar = () => {
       </div>
 
       {/* Responsive menu */}
-      <div className="lg:hidden flex items-center justify-between">
+      <div className="lg:hidden flex items-center justify-between ">
         {/* menu list */}
         {open && (
           <motion.div
-            className={`fixed w-screen h-full ${getBackgroundColor()}   flex flex-col items-center justify-start gap-8 top-0 left-0 py-[50%] overflow-y-scroll overflow-x-hidden `}
+            className={`fixed w-screen h-full min-h-screen ${getBackgroundColor()}   flex flex-col items-center justify-start gap-8 top-0 left-0 py-[50%] overflow-y-scroll overflow-x-hidden `}
             variants={listVariants}
             initial="closed"
             animate="open"
