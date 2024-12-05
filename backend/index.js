@@ -3,6 +3,7 @@ const express = require('express')
 const artworkRoutes = require('./routes/artworks')
 const userRoutes = require('./routes/user')
 const messageRoutes = require('./routes/messages')
+const contentRoutes = require('./routes/content')
 const mongoose = require('mongoose')
 const cors = require('cors')
 const serverless = require('serverless-http')
@@ -29,6 +30,7 @@ app.use(
 app.use('/api/artworks', artworkRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/messages', messageRoutes)
+app.use('/api/contents', contentRoutes)
 
 app.get('/', (req, res) => {
   res.json({ message: 'Hello from Jinsook Gallery!' })

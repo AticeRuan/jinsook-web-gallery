@@ -9,7 +9,7 @@ const IntroComponent = ({ imgUrl, heading, desc }) => {
         height={130}
       />
       <p className="text-[1rem]font-heading font-[800]">{heading}</p>
-      <p className="text-[.75rem] font-body text-center">{desc}</p>
+      <div className="text-[.75rem] font-body text-center">{desc}</div>
     </div>
   )
 }

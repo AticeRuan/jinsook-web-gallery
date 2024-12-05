@@ -67,34 +67,42 @@ const SingleCategory = () => {
         />
       </motion.div>
       <motion.div
-        className="rounded-xl bg-white h-fit  p-10 flex flex-col items-center justify-center gap-10 mt-10  w-auto md:p-10"
+        className={`rounded-xl bg-white h-fit  p-10 flex flex-col items-center justify-center gap-10 mt-10   md:p-10 ${
+          artworks.length > 0 ? 'w-auto' : 'w-[80%]'
+        }`}
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1.2 }}
       >
         <div className="">
-          {themes.map((theme) => (
-            <motion.div
-              key={theme}
-              className="text-center border-gray-200 py-5"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 1.5 }}
-            >
-              <Heading text={theme} color={getBackgroundColor()} />
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
-                {artworks
-                  .filter((artwork) => artwork.theme === theme)
-                  .map((artwork) => (
-                    <ProductItem
-                      item={artwork}
-                      key={artwork._id}
-                      previousPath={previousPath}
-                    />
-                  ))}
-              </div>
-            </motion.div>
-          ))}
+          {artworks.length > 0 ? (
+            themes.map((theme) => (
+              <motion.div
+                key={theme}
+                className="text-center border-gray-200 py-5"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 1.5 }}
+              >
+                <Heading text={theme} color={getBackgroundColor()} />
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
+                  {artworks
+                    .filter((artwork) => artwork.theme === theme)
+                    .map((artwork) => (
+                      <ProductItem
+                        item={artwork}
+                        key={artwork._id}
+                        previousPath={previousPath}
+                      />
+                    ))}
+                </div>
+              </motion.div>
+            ))
+          ) : (
+            <div className="text-center border-gray-200 py-5">
+              <p className="text-gray-600 animate-pulse">Coming Soon...</p>
+            </div>
+          )}
         </div>
       </motion.div>
     </motion.div>

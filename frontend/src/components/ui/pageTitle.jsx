@@ -4,7 +4,7 @@ const PageTitle = ({ heading, desc }) => {
       <p className="md:text-[3rem] font-heading font-bold uppercase text-[2rem]">
         {heading}
       </p>
-      <p className="text-[1rem] font-heading font-[500]">{desc}</p>
+      <div className="text-[1rem] font-heading font-[500] w-fit">{desc}</div>
     </div>
   )
 }

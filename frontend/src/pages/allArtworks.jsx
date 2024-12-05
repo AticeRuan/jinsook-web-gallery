@@ -55,20 +55,22 @@ const AllArtworks = () => {
     return {
       artworkCategories: [
         ...new Set(
-          artworks.map((artwork) => artwork.category.replace('-', ' ')),
+          artworks
+            .filter((artwork) => artwork?.category) // Filter out null/undefined categories
+            .map((artwork) => artwork.category.replace('-', ' ')),
         ),
       ],
       artworkThemes: [
         ...new Set(
           artworks
-            .filter((artwork) => artwork.theme)
+            .filter((artwork) => artwork?.theme) // Only include artworks with themes
             .map((artwork) => artwork.theme),
         ),
       ],
       artworkMediums: [
         ...new Set(
           artworks
-            .filter((artwork) => artwork.medium)
+            .filter((artwork) => artwork?.medium) // Only include artworks with mediums
             .map((artwork) => artwork.medium),
         ),
       ],
