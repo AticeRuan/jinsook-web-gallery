@@ -7,6 +7,11 @@ import placeholder from '../assets/portrait.jpg'
 import usePreviousPath from '../hooks/usePreviousPath'
 import { motion } from 'framer-motion'
 import Refresh from '../components/ui/refresh'
+import { useContentContext } from '../hooks/useContentContext'
+import useUpdate from '../hooks/useUpdate'
+import { useCallback, useEffect, useState } from 'react'
+import ContentEditor from '../components/ui/ContentEditor'
+import EditButton from '../components/ui/EditButton'
 const Artworks = () => {
   const { data, loading, error } = useRead('artworks')
   const headerArtworks = data?.filter((artwork) => artwork.header === true)
@@ -27,7 +32,67 @@ const Artworks = () => {
     (artwork) => artwork.category === 'crafts',
   )
 
-  if (loading) {
+  //content management logic
+  const { content: localContent, dispatch } = useContentContext()
+  const {
+    updateData: updateContent,
+    loading: loadingUpdate,
+    error: errorUpdate,
+  } = useUpdate()
+  const {
+    data: content,
+    loading: loadingContent,
+    error: errorContent,
+  } = useRead('contents/category')
+  const paintingsIntro = localContent?.filter(
+    (content) => content.section === 'paintings',
+  )
+  const craftIntro = localContent?.filter(
+    (content) => content.section === 'crafts',
+  )
+  const goodIntro = localContent?.filter(
+    (content) => content.section === 'goods',
+  )
+  const bookIntro = localContent?.filter(
+    (content) => content.section === 'books',
+  )
+  const headerContent = localContent?.filter(
+    (content) => content.section === 'header',
+  )
+
+  const [isHeaderEditing, setIsHeaderEditing] = useState(false)
+  const [isPaintingEditing, setIsPaintingEditing] = useState(false)
+  const [isGoodEditing, setIsGoodEditing] = useState(false)
+  const [isBookEditing, setIsBookEditing] = useState(false)
+  const [isCraftEditing, setIsCraftEditing] = useState(false)
+
+  useEffect(() => {
+    if (content) {
+      dispatch({ type: 'SET_CONTENT', payload: content })
+    }
+  }, [content, dispatch])
+
+  const handleContentSave = useCallback(
+    async ({ contentId, updateData }) => {
+      try {
+        const endpoint = `contents/${contentId}`
+        const response = await updateContent(endpoint, updateData)
+        if (response) {
+          dispatch({ type: 'UPDATE_CONTENT', payload: response })
+          setIsHeaderEditing(false)
+          setIsPaintingEditing(false)
+          setIsGoodEditing(false)
+          setIsBookEditing(false)
+          setIsCraftEditing(false)
+        }
+      } catch (error) {
+        console.error('Error updating content:', error)
+      }
+    },
+    [dispatch, updateContent],
+  )
+
+  if (loading || loadingContent || loadingUpdate) {
     return (
       <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center justify-center z-10 relative ">
         <Loader />
@@ -35,7 +100,7 @@ const Artworks = () => {
     )
   }
 
-  if (error) {
+  if (error || errorContent || errorUpdate) {
     return (
       <div className="w-screen xl:w-[1000px] min-h-[calc(100vh-120px)] pt-[50px] md:pt-[150px] flex flex-col items-center justify-center z-10 relative font-bold">
         Something went wrong...
@@ -53,14 +118,34 @@ const Artworks = () => {
       transition={{ duration: 0.5 }}
     >
       <motion.div
-        className="text-start w-full mt-10"
+        className="text-start w-full mt-10 flex flex-col items-center justify-center"
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.8 }}
       >
         <PageTitle
           heading="Artworks"
-          desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus."
+          desc={
+            isHeaderEditing && headerContent?.[0] ? (
+              <ContentEditor
+                content={headerContent[0]}
+                section="header"
+                page="category"
+                onSave={handleContentSave}
+              />
+            ) : (
+              headerContent?.[0]?.text.map((paragraph, index) => (
+                <p key={index} className="mb-2">
+                  {paragraph}
+                </p>
+              ))
+            )
+          }
+        />{' '}
+        <EditButton
+          isEditing={isHeaderEditing}
+          onEdit={() => setIsHeaderEditing(true)}
+          className="bg-white p-2 rounded-md"
         />
       </motion.div>
       {/* large screens */}
@@ -74,7 +159,27 @@ const Artworks = () => {
 
         <CategoryCard
           category="paintings"
-          desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
+          desc={
+            isPaintingEditing && paintingsIntro?.[0] ? (
+              <ContentEditor
+                content={paintingsIntro[0]}
+                section="paintings"
+                page="category"
+                onSave={handleContentSave}
+              />
+            ) : (
+              paintingsIntro?.[0]?.text.map((paragraph, index) => (
+                <div key={index}>
+                  <p className="mb-2">{paragraph}</p>{' '}
+                  <EditButton
+                    isEditing={isPaintingEditing}
+                    onEdit={() => setIsPaintingEditing(true)}
+                    className="w-full flex justify-center"
+                  />
+                </div>
+              ))
+            )
+          }
           imgUrl={
             paintingHeader && paintingHeader.length > 0
               ? paintingHeader[0].imageUrl
@@ -84,7 +189,27 @@ const Artworks = () => {
         />
         <CategoryCard
           category="goods"
-          desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
+          desc={
+            isGoodEditing && goodIntro?.[0] ? (
+              <ContentEditor
+                content={goodIntro[0]}
+                section="goods"
+                page="category"
+                onSave={handleContentSave}
+              />
+            ) : (
+              goodIntro?.[0]?.text.map((paragraph, index) => (
+                <div key={index}>
+                  <p className="mb-2">{paragraph}</p>{' '}
+                  <EditButton
+                    isEditing={isGoodEditing}
+                    onEdit={() => setIsGoodEditing(true)}
+                    className="w-full flex justify-center"
+                  />
+                </div>
+              ))
+            )
+          }
           imgUrl={
             goodsHeader && goodsHeader.length > 0
               ? goodsHeader[0].imageUrl
@@ -95,7 +220,27 @@ const Artworks = () => {
         />
         <CategoryCard
           category="childrens-books"
-          desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
+          desc={
+            isBookEditing && bookIntro?.[0] ? (
+              <ContentEditor
+                content={bookIntro[0]}
+                section="books"
+                page="category"
+                onSave={handleContentSave}
+              />
+            ) : (
+              bookIntro?.[0]?.text.map((paragraph, index) => (
+                <div key={index}>
+                  <p className="mb-2">{paragraph}</p>{' '}
+                  <EditButton
+                    isEditing={isBookEditing}
+                    onEdit={() => setIsBookEditing(true)}
+                    className="w-full flex justify-center"
+                  />
+                </div>
+              ))
+            )
+          }
           imgUrl={
             childrensBooksHeader && childrensBooksHeader.length > 0
               ? childrensBooksHeader[0].imageUrl
@@ -105,7 +250,27 @@ const Artworks = () => {
         />
         <CategoryCard
           category="crafts"
-          desc="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris commodo varius dignissim. Nulla maximus sed est sed molestie. Curabitur nec neque volutpat, eleifend neque ut, dignissim orci. Vivamus pellentesque libero lorem, id dictum neque dignissim ac. Vivamus nec dui tincidunt, fringilla magna non, imperdiet risus. "
+          desc={
+            isCraftEditing && craftIntro?.[0] ? (
+              <ContentEditor
+                content={craftIntro[0]}
+                section="crafts"
+                page="category"
+                onSave={handleContentSave}
+              />
+            ) : (
+              craftIntro?.[0]?.text.map((paragraph, index) => (
+                <div key={index}>
+                  <p className="mb-2">{paragraph}</p>{' '}
+                  <EditButton
+                    isEditing={isCraftEditing}
+                    onEdit={() => setIsCraftEditing(true)}
+                    className="w-full flex justify-center"
+                  />
+                </div>
+              ))
+            )
+          }
           imgUrl={
             craftsHeader && craftsHeader.length > 0
               ? craftsHeader[0].imageUrl

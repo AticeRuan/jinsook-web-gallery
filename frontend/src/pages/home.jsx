@@ -19,6 +19,12 @@ import EditButton from '../components/ui/EditButton'
 const Home = () => {
   const { data: artworks, loading, error } = useRead('artworks')
 
+  const featuredArtworks = Array.isArray(artworks)
+    ? artworks.filter((artwork) => artwork.featured === true)
+    : []
+  const previousPath = usePreviousPath()
+
+  //content management logic
   const { content: localContent, dispatch } = useContentContext()
   const {
     updateData: updateContent,
@@ -48,8 +54,6 @@ const Home = () => {
   const [isCraftEditing, setIsCraftEditing] = useState(false)
   const [isBookEditing, setIsBookEditing] = useState(false)
 
-  const previousPath = usePreviousPath()
-
   useEffect(() => {
     if (content) {
       dispatch({ type: 'SET_CONTENT', payload: content })
@@ -74,10 +78,6 @@ const Home = () => {
     },
     [dispatch, updateContent],
   )
-
-  const featuredArtworks = Array.isArray(artworks)
-    ? artworks.filter((artwork) => artwork.featured === true)
-    : []
 
   if (loading || loadingContent || loadingUpdate)
     return (
@@ -162,16 +162,14 @@ const Home = () => {
                   />
                 ) : (
                   artWorkIntro?.[0]?.text.map((paragraph, index) => (
-                    <>
-                      <p key={index} className="mb-2">
-                        {paragraph}
-                      </p>{' '}
+                    <div key={index}>
+                      <p className="mb-2">{paragraph}</p>{' '}
                       <EditButton
                         isEditing={isArtworkEditing}
                         onEdit={() => setIsArtworkEditing(true)}
                         className="w-full flex justify-center"
                       />
-                    </>
+                    </div>
                   ))
                 )
               }
@@ -190,16 +188,14 @@ const Home = () => {
                   />
                 ) : (
                   craftIntro?.[0]?.text.map((paragraph, index) => (
-                    <>
-                      <p key={index} className="mb-2">
-                        {paragraph}
-                      </p>{' '}
+                    <div key={index}>
+                      <p className="mb-2">{paragraph}</p>{' '}
                       <EditButton
                         isEditing={isCraftEditing}
                         onEdit={() => setIsCraftEditing(true)}
                         className="w-full flex justify-center"
                       />
-                    </>
+                    </div>
                   ))
                 )
               }
@@ -217,16 +213,14 @@ const Home = () => {
                   />
                 ) : (
                   bookIntro?.[0]?.text.map((paragraph, index) => (
-                    <>
-                      <p key={index} className="mb-2">
-                        {paragraph}
-                      </p>{' '}
+                    <div key={index}>
+                      <p className="mb-2">{paragraph}</p>{' '}
                       <EditButton
                         isEditing={isBookEditing}
                         onEdit={() => setIsBookEditing(true)}
                         className="w-full flex justify-center"
                       />
-                    </>
+                    </div>
                   ))
                 )
               }

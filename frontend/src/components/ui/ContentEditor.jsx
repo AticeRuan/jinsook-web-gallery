@@ -2,7 +2,9 @@ import { useState } from 'react'
 import { useAuthContext } from '../../hooks/useAuthContext'
 
 const ContentEditor = ({ content, section, onSave, page }) => {
-  const [paragraphs, setParagraphs] = useState(content?.text || [])
+  const [paragraphs, setParagraphs] = useState(
+    content?.text?.length > 0 ? content.text : [''],
+  )
   const { user } = useAuthContext()
 
   const handleParagraphChange = (index, value) => {
@@ -17,23 +19,28 @@ const ContentEditor = ({ content, section, onSave, page }) => {
 
   const handleRemoveParagraph = (index) => {
     const newParagraphs = paragraphs.filter((_, i) => i !== index)
-    setParagraphs(newParagraphs)
+    setParagraphs(newParagraphs.length > 0 ? newParagraphs : [''])
   }
 
   const handleSubmit = () => {
-    if (!content?._id) {
-      console.error('No content ID available')
+    const filteredParagraphs = paragraphs.filter((p) => p.trim() !== '')
+
+    if (filteredParagraphs.length === 0) {
       return
     }
 
     onSave({
-      contentId: content._id,
+      contentId: content?._id,
       updateData: {
         page,
         section,
-        text: paragraphs.filter((p) => p.trim() !== ''),
+        text: filteredParagraphs,
       },
     })
+  }
+
+  const handleReset = () => {
+    setParagraphs(content?.text?.length > 0 ? [...content.text] : [''])
   }
 
   if (!user) return null
@@ -52,29 +59,43 @@ const ContentEditor = ({ content, section, onSave, page }) => {
             className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-jinsook-green"
             rows={3}
           />
-          <button
-            onClick={() => handleRemoveParagraph(index)}
-            className="text-red-500 hover:text-red-700"
-            type="button"
-          >
-            ×
-          </button>
+          <div className="flex flex-col gap-1">
+            <button
+              onClick={() => handleRemoveParagraph(index)}
+              className="text-red-500 hover:text-red-700 disabled:text-gray-500 disabled:cursor-not-allowed disabled:opacity-50"
+              type="button"
+              disabled={paragraphs.length === 1}
+            >
+              Remove
+            </button>
+            {/* <label htmlFor="">
+              <input type="checkbox" className="mr-3" value/>
+              Bold
+            </label> */}
+          </div>
         </div>
       ))}
-      <div className="flex gap-2 flex-col">
+      <div className="flex gap-2 ">
         <button
           onClick={handleAddParagraph}
-          className="text-jinsook-green hover:text-white hover:bg-jinsook-green border border-jinsook-green rounded-full px-4 py-2 text-sm transition-colors"
+          className="bg-blue-200 text-xs p-1 rounded-full  hover:bg-white hover:text-blue-200 border border-blue-200 transition-colors h-fit"
           type="button"
         >
           Add Paragraph
         </button>
         <button
-          onClick={handleSubmit}
-          className="bg-jinsook-green text-white hover:bg-white hover:text-jinsook-green border border-jinsook-green rounded-full px-4 py-2 text-sm transition-colors"
+          onClick={handleReset}
+          className="bg-pink-200 text-xs p-1 rounded-full  hover:bg-white hover:text-pink-200 border border-pink-200 transition-colors h-fit"
           type="button"
         >
-          Save Changes
+          Reset
+        </button>
+        <button
+          onClick={handleSubmit}
+          className="bg-green-300 text-xs p-1 rounded-full  hover:bg-white hover:text-green-200 border border-green-200 transition-colors h-fit"
+          type="button"
+        >
+          {content?._id ? 'Save' : 'Create Content'}
         </button>
       </div>
     </div>
