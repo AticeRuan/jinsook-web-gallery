@@ -162,18 +162,18 @@ const SingleArtwork = () => {
                 </span>
               </p>
             )}
-            <p className="font-heading font-[500] tracking-widest">
-              <span className="font-heading font-[500] tracking-widest text-gray-500">
+            <div className="font-heading font-[500] tracking-widest  flex flex-col">
+              <p className="font-heading font-[500] tracking-widest text-gray-500">
                 Medium:
-              </span>
-              {artwork.medium}
-            </p>
-            <p className="font-heading font-[500] tracking-widest">
-              <span className="font-heading font-[500] tracking-widest text-gray-500">
+              </p>
+              <p> {artwork.medium}</p>
+            </div>
+            <div className="font-heading font-[500] tracking-widest flex flex-col">
+              <p className="font-heading font-[500] tracking-widest text-gray-500">
                 Dimensions:
-              </span>
-              {artwork.dimensions}
-            </p>
+              </p>
+              <p> {artwork.dimensions}</p>
+            </div>
             <Link
               to="/contact"
               state={{
@@ -194,7 +194,7 @@ const SingleArtwork = () => {
               text={
                 iscrafts
                   ? 'Similar products'
-                  : `From the "${artwork.theme}"Theme`
+                  : `From the "${artwork.theme}" Theme`
               }
               color={getBackgroundColor()}
               forSingleItem={true}

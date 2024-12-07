@@ -44,8 +44,10 @@ const ArtworkForm = ({ item, onClose }) => {
     theme: '',
     header: false,
     description: '',
-    medium: '',
-    dimensions: '',
+    medium:
+      '(Information is currently unavailable. Please inquire for details.)',
+    dimensions:
+      '(Information is currently unavailable. Please inquire for details.)',
   })
 
   const handleCheckboxChange = (e) => {
