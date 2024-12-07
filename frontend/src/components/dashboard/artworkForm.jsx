@@ -57,6 +57,7 @@ const ArtworkForm = ({ item, onClose }) => {
   }
 
   const iscrafts = formData.category === 'crafts'
+  const isPaintings = formData.category === 'paintings'
 
   const { createData, loading: createLoading, error: createError } = useCreate()
   const { updateData, loading: updateLoading, error: updateError } = useUpdate()
@@ -557,6 +558,44 @@ const ArtworkForm = ({ item, onClose }) => {
                   </div>
                 </div>
               </>
+            )}{' '}
+            <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
+              <label className="block font-bold  font-heading ">Medium</label>{' '}
+              <input
+                type="text"
+                name="medium"
+                value={formData.medium}
+                onChange={handleChange}
+                className="rounded-sm appearance-none   w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
+              />
+            </div>
+            {isPaintings && (
+              <div className="flex flex-wrap gap-2 ">
+                <span
+                  className="p-1 bg-jinsook-light-pink text-[0.6rem] hover:scale-110 cursor-pointer transition-all duration-300 ease-in-out rounded-sm "
+                  onClick={() => {
+                    setFormData({
+                      ...formData,
+                      medium: 'Digital Painting',
+                      dimensions: 'Available in all sizes',
+                    })
+                  }}
+                >
+                  Digital Painting
+                </span>
+                <span
+                  className="p-1 bg-jinsook-light-pink text-[0.6rem] hover:scale-110 cursor-pointer transition-all duration-300 ease-in-out rounded-sm "
+                  onClick={() => {
+                    setFormData({
+                      ...formData,
+                      medium: 'Hand Painting',
+                      dimensions: '',
+                    })
+                  }}
+                >
+                  Hand Painting
+                </span>
+              </div>
             )}
             <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
               <label className="block font-bold  font-heading ">
@@ -566,16 +605,6 @@ const ArtworkForm = ({ item, onClose }) => {
                 type="text"
                 name="dimensions"
                 value={formData.dimensions}
-                onChange={handleChange}
-                className="rounded-sm appearance-none   w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
-              />
-            </div>
-            <div className="flex gap-4 items-center bg-white px-2 rounded-lg">
-              <label className="block font-bold  font-heading ">Medium</label>{' '}
-              <input
-                type="text"
-                name="medium"
-                value={formData.medium}
                 onChange={handleChange}
                 className="rounded-sm appearance-none   w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-white"
               />
