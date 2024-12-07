@@ -101,7 +101,7 @@ const SingleArtwork = () => {
         transition={{ duration: 0.5, delay: 1.2 }}
       >
         {/* items details */}
-        <div className="flex flex-col md:flex-row gap-12 lg:gap-10">
+        <div className="flex flex-col md:flex-row gap-12 lg:gap-10 ">
           {/* Image Carousel for all product types */}
           <div className="w-full h-1/2 md:h-full md:w-3/5 lg:w-1/2 rounded-lg overflow-hidden">
             {Array.isArray(artwork.imageUrl) && artwork.imageUrl.length > 0 ? (
@@ -135,37 +135,41 @@ const SingleArtwork = () => {
           </div>
 
           {/* Product Details */}
-          <div className="flex flex-col items-start justify-between gap-4 max-w-[50%]">
-            <h1 className="font-heading font-bold text-[1.5rem]">
-              {artwork.title}
-            </h1>
-            <p className="font-body font-[500] text-[1.2rem]">
-              {`$${artwork.price}`}
-            </p>
-            {
-              <p className="font-heading font-[500] tracking-widest">
+          <div className="flex flex-col items-start justify-between gap-4 md:max-w-[50%] w-full ">
+            <div className="flex flex-col gap-4">
+              <h1 className="font-heading font-bold md:text-[1.5rem]">
+                {artwork.title}
+              </h1>
+              <p className="font-body font-[500] text-[1.2rem]">
+                {`$${artwork.price}`}
+              </p>
+            </div>
+            <div className="flex flex-col gap-4">
+              <p className="font-heading font-[500] tracking-widest text-gray-500">
                 Description:
               </p>
-            }
-            <p className="font-body font-[500] text-[0.9rem]">
-              {artwork.description}
-            </p>
+              <p className="font-body font-[500] text-[0.9rem]">
+                {artwork.description}
+              </p>
+            </div>
             {!iscrafts && (
-              <p className="font-heading font-[500] tracking-widest">
-                <span className="font-heading font-[500] tracking-widest">
+              <p className="font-heading tracking-widest font-[500] ">
+                <span className="font-heading text-gray-500 tracking-widest">
                   Theme:
                 </span>
-                {artwork.theme}
+                <span className="font-heading  tracking-widest">
+                  {artwork.theme}
+                </span>
               </p>
             )}
             <p className="font-heading font-[500] tracking-widest">
-              <span className="font-heading font-[500] tracking-widest">
+              <span className="font-heading font-[500] tracking-widest text-gray-500">
                 Medium:
               </span>
               {artwork.medium}
             </p>
             <p className="font-heading font-[500] tracking-widest">
-              <span className="font-heading font-[500] tracking-widest">
+              <span className="font-heading font-[500] tracking-widest text-gray-500">
                 Dimensions:
               </span>
               {artwork.dimensions}
