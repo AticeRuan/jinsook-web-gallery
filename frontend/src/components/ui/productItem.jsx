@@ -34,9 +34,11 @@ const ProductItem = ({ item, forFeatured = false, previousPath = null }) => {
           </p>
         </Link>
       )}
-      <p className="text-[0.8rem] font-body uppercase tracking-wider">
-        {`$${item.price}`}
-      </p>
+      {item.price && (
+        <p className="text-[0.8rem] font-body uppercase tracking-wider">
+          {`$${item.price}`}
+        </p>
+      )}
     </div>
   )
 }
