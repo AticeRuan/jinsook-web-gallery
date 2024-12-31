@@ -7,6 +7,7 @@ import Search from './svg/search'
 import useRead from '../hooks/useRead'
 import LoadingBlue from './svg/loadingBlue'
 import usePreviousPath from '../hooks/usePreviousPath'
+import Caret from './svg/Caret'
 
 const links = [
   { name: 'Home', url: '/' },
@@ -475,7 +476,7 @@ const NavBar = () => {
                             : 'rotate(180deg) scaleX(180%)',
                       }}
                     >
-                      ^
+                      <Caret />
                     </p>
                   )}
                 </div>
