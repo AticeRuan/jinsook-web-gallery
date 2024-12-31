@@ -141,7 +141,7 @@ const SingleArtwork = () => {
                 {artwork.title}
               </h1>
               <p className="font-body font-[500] text-[1.2rem]">
-                {`$${artwork.price}`}
+                {artwork.price && `$${artwork.price}`}
               </p>
             </div>
             <div className="flex flex-col gap-4">
