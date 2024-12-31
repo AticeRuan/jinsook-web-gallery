@@ -140,9 +140,11 @@ const SingleArtwork = () => {
               <h1 className="font-heading font-bold md:text-[1.5rem]">
                 {artwork.title}
               </h1>
-              <p className="font-body font-[500] text-[1.2rem]">
-                {artwork.price && `$${artwork.price}`}
-              </p>
+              {artwork.price && (
+                <p className="font-body font-[500] text-[1.2rem]">
+                  {`$${artwork.price}`}
+                </p>
+              )}
             </div>
             <div className="flex flex-col gap-4">
               <p className="font-heading font-[500] tracking-widest text-gray-500">
