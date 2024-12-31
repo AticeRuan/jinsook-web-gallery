@@ -3,7 +3,7 @@ import NavBar from '../components/navBar'
 import Footer from '../components/footer'
 import AdminTag from '../components/ui/adminTag'
 import { useAuthContext } from '../hooks/useAuthContext'
-// import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useArtworksContext } from '../hooks/useArtworksContext'
@@ -21,6 +21,10 @@ const Layout = () => {
       return artwork ? artwork.title : 'Artwork not found'
     }
   }
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
 
   // const [previousPathToUse, setPreviousPathToUse] = useState('')
   // const [currentPathToUse, setCurrentPathToUse] = useState('')
